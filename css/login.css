@@ -1,0 +1,122 @@
+body {
+    background: linear-gradient(to right, #ffffff, #6f8a7c);
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Estilos del contenedor */
+.container {
+    background-color: rgba(0, 0, 0, 0.7); /* Fondo semi-transparente */
+    padding: 20px;
+    border-radius: 10px;
+    max-width: 500px;
+    width: 100%;
+    max-height: 90%; /* Para evitar que el formulario ocupe toda la pantalla */
+ /*   overflow-y: auto; /* Permite el desplazamiento si el contenido es demasiado largo */
+    color: white;
+}
+
+.a{
+    
+    color: white;               
+    /*    font-weight: bold;*/
+        font-size: 15px; 
+        font-family: 'Atkinson Hyperlegible Mono', monospace;
+}
+
+.a:hover{
+    
+    color: rgb(255, 0, 0);               
+    /*    font-weight: bold;*/
+        font-size: 15px; 
+        font-family: 'Atkinson Hyperlegible Mono', monospace;
+}
+
+input {
+    color: white;
+    font-weight: bold;
+    background-color: #6f8a7c;
+    padding: 10px; /* Espacio dentro de cada celda */
+    width: 70%; /* Ajustado al 70% del contenedor */
+    margin-top: 10px; /* Espacio debajo de cada input */
+    margin-bottom: 10px; /* Espacio debajo de cada input */
+    margin-left: 60px; /* Ajusta el margen izquierdo para mover los inputs hacia la derecha */
+    margin-right: auto; /* Centra los inputs horizontalmente (eliminado si no es necesario) */
+    border-radius: 5px; /* Borde redondeado */
+    border: 1px solid #303030; /* Borde de color */
+}
+
+
+
+
+label{
+    color: white;               
+/*    font-weight: bold;*/
+    font-size: 15px; 
+    font-family: 'Atkinson Hyperlegible Mono', monospace;
+    padding: 65px;
+}
+
+
+p {
+    color: white;               
+    font-weight: bold;
+    font-size: 18px; 
+    font-family: 'Atkinson Hyperlegible Mono', monospace;
+    text-align: center;
+}
+
+header {
+    color: rgb(255, 255, 255);               
+    font-weight: bold;
+    font-size: 35px; /*35 */
+    font-family: 'Atkinson Hyperlegible Mono', monospace;
+    text-align: center;
+}
+
+input[type="submit"]{
+    border-radius: 10px;
+    color: rgb(0, 0, 0);
+    padding: 10px;
+    text-align: center;
+    font-size: 15px;
+    font-family: 'Atkinson Hyperlegible Mono', monospace;
+    width: 300px;
+    margin-top: 10px;
+    background-color: rgb(148, 223, 181);
+    cursor: pointer;
+    margin-left: 95px;  /* Mueve los inputs hacia la derecha */
+ /*  margin: 10px auto;  /* Centra el botÃģn*/
+}
+
+
+input[type="submit"]:hover{
+    background-color: rgb(30, 7, 133);
+    color: rgb(111, 55, 216);
+}
+
+input[type="submit"]:active {/* cuando se presiona boton*/
+    background-color: rgb(101, 70, 240);
+    color: rgb(30, 7, 133);
+}
+
+.link {
+    font-size: 15px; 
+    font-family: 'Atkinson Hyperlegible Mono', monospace;
+    text-align: center;
+    margin-top: 10px;
+    color: #b9bbbe;
+  }
+  
+   .link a {
+    color: #9b59b6; /* Color morado para el enlace */
+    text-decoration: none;
+  }
+  
+  .link a:hover {
+    text-decoration: underline;
+    color: #8e44ad; /* Morado mÃĄs oscuro al pasar el mouse */
+  }

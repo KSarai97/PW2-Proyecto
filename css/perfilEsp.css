@@ -1,0 +1,30 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Atkinson Hyperlegible Mono', monospace;
+
+    /* Hace que el body ocupe toda la pantalla */
+    min-height: 100vh;
+
+    /* Organiza los elementos verticalmente */
+    display: flex;
+    flex-direction: column;
+}
+
+
+
+footer {
+    background-color: rgb(41, 48, 48);
+    color: rgb(228, 240, 240);
+    padding: 20px;
+    text-align: center;
+
+    /* Empuja el footer hacia abajo */
+    margin-top: auto;
+}
+
+/**/

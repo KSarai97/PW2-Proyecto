@@ -1,0 +1,175 @@
+/* Fondo de la página */
+body {
+    font-family: 'Atkinson Hyperlegible Mono', monospace;
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(to right, #fafafa, #6f8a7c);
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Estilos del contenedor */
+.container {
+    background-color: rgba(0, 0, 0, 0.7); /* Fondo semi-transparente */
+    padding: 20px;
+    border-radius: 10px;
+    max-width: 500px; /* Limita el ancho máximo */
+    width: 100%;
+    max-height: 90%; /* Para evitar que el formulario ocupe toda la pantalla */
+    overflow-y: auto; /* Permite el desplazamiento si el contenido es demasiado largo */
+    color: white;
+}
+
+p {
+    color: white;
+    font-weight: bold;
+    font-size: 18px;
+    font-family: 'Atkinson Hyperlegible Mono', monospace;
+    text-align: center;
+}
+
+header {
+    color: rgb(0, 0, 0);
+    font-weight: bold;
+    font-size: 35px; /* 35 */
+    font-family: 'Atkinson Hyperlegible Mono', monospace;
+    text-align: center;
+}
+
+/* Estilo para todos los inputs y select (incluyendo password) */
+input, select {
+    color: rgb(0, 0, 0);
+    font-weight: bold;
+    background-color: #6f8a7c;
+    padding: 10px;
+    width: 80%; /* Establece el mismo ancho para todos los inputs y selects */
+    margin-top: 5px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    border: 1px solid #5b5a5c;
+    display: block;
+    margin-left: auto; /* Centra los inputs/select horizontalmente */
+    margin-right: auto; /* Centra los inputs/select horizontalmente */
+}
+
+/* Estilo específico para el campo de contraseña (sin necesidad de estilo extra aquí) */
+input[type="password"] {
+    background-color: #6f8a7c;
+    color: rgb(15, 15, 15);
+    font-weight: bold;
+    padding: 10px;
+    width: 80%; /* Mismo ancho que los otros inputs */
+    margin-top: 5px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    border: 1px solid #575558;
+    display: block;
+    margin-left: auto; /* Centrado igual que los otros inputs */
+    margin-right: auto; /* Centrado igual que los otros inputs */
+}
+
+
+
+
+/* Estilo para los labels */
+label {
+    color: white;
+    font-size: 15px;
+    font-family: 'Atkinson Hyperlegible Mono', monospace;
+    margin-top: 10px;
+    margin-bottom: 5px;
+    display: block; /* Asegura que el label esté encima del input */
+    margin-left: 40px; /* Mueve el label a la derecha sin afectar a los inputs */
+    text-align: left; /* Alinea el texto del label a la izquierda */
+}
+
+
+/* Estilos para el botón Aceptar */
+input[type="submit"] {
+    border-radius: 10px;
+    color: rgb(0, 0, 0);
+    padding: 10px;
+    text-align: center;
+    font-size: 15px;
+    font-family: 'Atkinson Hyperlegible Mono', monospace;
+    width: 50%;
+    margin-top: 10px;
+    margin: 0 auto; /* Centra el botón horizontalmente */
+    background-color: rgb(139, 212, 182);
+    cursor: pointer;
+    display: block; /* Asegura que el botón ocupe toda la línea */
+    margin-left: auto; /* Centra el botón */
+    margin-right: auto; /* Centra el botón */
+}
+
+/* Efectos cuando se pasa el mouse por encima y cuando se presiona el botón */
+input[type="submit"]:hover {
+    background-color: rgb(30, 7, 133);
+    color: rgb(111, 55, 216);
+}
+
+input[type="submit"]:active {
+    background-color: rgb(101, 70, 240);
+    color: rgb(30, 7, 133);
+}
+
+/* Estilos para los select */
+select {
+    width: 80%;  /* Ajuste el ancho de select igual que el input */
+    padding: 10px;
+    margin-top: 5px;
+    margin-bottom: 10px;
+    background-color: #6f8a7c;
+    color: white;
+    font-weight: bold;
+    border-radius: 5px;
+    border: 1px solid #2e2e2e;
+    display: block;
+    margin-left: auto; /* Asegura que el select esté centrado */
+    margin-right: auto; /* Asegura que el select esté centrado */
+}
+
+/* Estilo básico del input file */
+input[type="file"] {
+    background-color: #6f8a7c;
+    color: white;
+    padding: 10px;
+    border: 2px solid #3b3b3b;
+    border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+/* Cambiar color cuando se selecciona un archivo */
+input[type="file"]:hover {
+    background-color: #45087e;
+    border-color: #021841;
+}
+
+/* Cambiar el estilo del input cuando se ha seleccionado un archivo */
+input[type="file"]:focus {
+    outline: none;
+    border-color: #071a47;
+}
+
+/* Enlace debajo del formulario */
+.link {
+    font-size: 15px;
+    font-family: 'Atkinson Hyperlegible Mono', monospace;
+    text-align: center;
+    margin-top: 10px;
+    color: #b9bbbe;
+}
+
+.link a {
+    color: #9b59b6;
+    text-decoration: none;
+}
+
+.link a:hover {
+    text-decoration: underline;
+    color: #8e44ad;
+}

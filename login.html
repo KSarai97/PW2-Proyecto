@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="login.css">
+    <title>Inicio de sesión</title>
+</head>
+<body>
+    <div class="container">
+    <section class="form login">
+        <header>Inicio de sesión</header>
+        <hr>
+<p>Introduce los datos solicitados: </p>
+<br>
+
+      <form action="prueba.html" method="POST" enctype="multipart/form-data" autocomplete="off">
+        <div class="error-text"></div>
+
+        <div class="field input">
+          <label for="id_email">Correo electrónico o nombre de usuario: </label><br>
+          <input type="text" name="id_email" placeholder="Ingresa ..." required>
+          <br><br>
+        </div>
+
+        <div class="field input">
+          <label for="id_pass">Contraseña: </label><br>
+          <input type="password" name="id_pass" placeholder="Ingresa tu contraseña" required>
+          <br><br>
+        </div>
+
+        <div class="field button">
+          <input type="submit" value="Aceptar" name="ok"> 
+        </div>
+
+      </form>
+      <br>
+      <div class="link">¿Aun no tienes cuenta?<a href="registro.html">  Registrate</a></div>
+    </section>
+  </div>
+
+
+</body>
+</html>
