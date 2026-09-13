@@ -1,122 +1,161 @@
-body {
-    background: linear-gradient(to right, #ffffff, #6f8a7c);
+* {
     margin: 0;
-    height: 100vh;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+html {
+    min-height: 100%;
+}
+
+
+body {
+    min-height: 100vh;
+
     display: flex;
     justify-content: center;
     align-items: center;
+
+    padding: 30px 15px;
+
+    font-family: 'Atkinson Hyperlegible Mono', monospace;
+
+    background: linear-gradient(
+        to right,
+        #ffffff,
+        #6f8a7c
+    );
 }
 
-/* Estilos del contenedor */
 .container {
-    background-color: rgba(0, 0, 0, 0.7); /* Fondo semi-transparente */
-    padding: 20px;
-    border-radius: 10px;
-    max-width: 500px;
     width: 100%;
-    max-height: 90%; /* Para evitar que el formulario ocupe toda la pantalla */
- /*   overflow-y: auto; /* Permite el desplazamiento si el contenido es demasiado largo */
+    max-width: 500px;
+    padding: 25px;
+    background-color: rgba(0, 0, 0, 0.7);
+    border-radius: 10px;
     color: white;
 }
 
-.a{
-    
-    color: white;               
-    /*    font-weight: bold;*/
-        font-size: 15px; 
-        font-family: 'Atkinson Hyperlegible Mono', monospace;
+
+.form-header {
+    text-align: center;
+    margin-bottom: 30px;
 }
 
-.a:hover{
-    
-    color: rgb(255, 0, 0);               
-    /*    font-weight: bold;*/
-        font-size: 15px; 
-        font-family: 'Atkinson Hyperlegible Mono', monospace;
-}
 
-input {
+.form-header h1 {
     color: white;
+    font-size: 35px;
+    margin-bottom: 15px;
+}
+
+
+.form-header p {
+    color: white;
+    font-weight: bold;
+    font-size: 18px;
+    text-align: center;
+}
+
+
+/* FORM */
+
+.field {
+    margin-bottom: 20px;
+}
+
+
+.field label {
+    display: block;
+    margin-bottom: 8px;
+    color: white;
+    font-size: 15px;
+}
+
+.field input[type="email"],
+.field input[type="password"] {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    color: white;
+    font-family: 'Atkinson Hyperlegible Mono', monospace;
     font-weight: bold;
     background-color: #6f8a7c;
-    padding: 10px; /* Espacio dentro de cada celda */
-    width: 70%; /* Ajustado al 70% del contenedor */
-    margin-top: 10px; /* Espacio debajo de cada input */
-    margin-bottom: 10px; /* Espacio debajo de cada input */
-    margin-left: 60px; /* Ajusta el margen izquierdo para mover los inputs hacia la derecha */
-    margin-right: auto; /* Centra los inputs horizontalmente (eliminado si no es necesario) */
-    border-radius: 5px; /* Borde redondeado */
-    border: 1px solid #303030; /* Borde de color */
+    border: 1px solid #303030;
+    border-radius: 5px;
 }
 
 
-
-
-label{
-    color: white;               
-/*    font-weight: bold;*/
-    font-size: 15px; 
-    font-family: 'Atkinson Hyperlegible Mono', monospace;
-    padding: 65px;
+.field input::placeholder {
+    color: #eeeeee;
 }
 
 
-p {
-    color: white;               
-    font-weight: bold;
-    font-size: 18px; 
-    font-family: 'Atkinson Hyperlegible Mono', monospace;
-    text-align: center;
+.field input:focus {
+    outline: 2px solid #94dfb5;
+    outline-offset: 2px;
 }
 
-header {
-    color: rgb(255, 255, 255);               
-    font-weight: bold;
-    font-size: 35px; /*35 */
-    font-family: 'Atkinson Hyperlegible Mono', monospace;
-    text-align: center;
+/* BOTONES FORM */
+
+.form-actions {
+    display: flex;
+    justify-content: center;
+    margin-top: 25px;
 }
 
-input[type="submit"]{
-    border-radius: 10px;
-    color: rgb(0, 0, 0);
+
+.form-actions button {
+    width: 60%;
     padding: 10px;
-    text-align: center;
-    font-size: 15px;
-    font-family: 'Atkinson Hyperlegible Mono', monospace;
-    width: 300px;
-    margin-top: 10px;
+    border: none;
+    border-radius: 10px;
     background-color: rgb(148, 223, 181);
-    cursor: pointer;
-    margin-left: 95px;  /* Mueve los inputs hacia la derecha */
- /*  margin: 10px auto;  /* Centra el botÃģn*/
-}
-
-
-input[type="submit"]:hover{
-    background-color: rgb(30, 7, 133);
-    color: rgb(111, 55, 216);
-}
-
-input[type="submit"]:active {/* cuando se presiona boton*/
-    background-color: rgb(101, 70, 240);
-    color: rgb(30, 7, 133);
-}
-
-.link {
-    font-size: 15px; 
+    color: black;
     font-family: 'Atkinson Hyperlegible Mono', monospace;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+    transition:
+        background-color 0.3s ease,
+        color 0.3s ease;
+}
+
+
+.form-actions button:hover {
+    background-color: rgb(30, 7, 133);
+    color: white;
+}
+
+
+.form-actions button:active {
+    background-color: rgb(101, 70, 240);
+    color: #1e0785;
+}
+
+
+/* PIE FORM */
+
+.form-footer {
+    margin-top: 25px;
     text-align: center;
-    margin-top: 10px;
+}
+
+
+.form-footer p {
     color: #b9bbbe;
-  }
-  
-   .link a {
-    color: #9b59b6; /* Color morado para el enlace */
+    font-size: 15px;
+}
+
+
+.form-footer a {
+    color: #9b59b6;
     text-decoration: none;
-  }
-  
-  .link a:hover {
+}
+
+
+.form-footer a:hover {
+    color: #8e44ad;
     text-decoration: underline;
-    color: #8e44ad; /* Morado mÃĄs oscuro al pasar el mouse */
-  }
+}
