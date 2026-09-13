@@ -1,44 +1,44 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/login.css">
     <title>Inicio de sesión</title>
 </head>
+
 <body>
-    <div class="container">
-    <section class="form login">
-        <header>Inicio de sesión</header>
-        <hr>
-<p>Introduce los datos solicitados: </p>
-<br>
+    <main class="container">
+        <section class="login-form" aria-labelledby="titulo-login">
+            <header class="form-header">
 
-      <form action="prueba.html" method="POST" enctype="multipart/form-data" autocomplete="off">
-        <div class="error-text"></div>
+                <h1 id="titulo-login">Inicio de sesión</h1>
+                    <p>Introduce los datos solicitados</p>
+            </header>
 
-        <div class="field input">
-          <label for="id_email">Correo electrónico o nombre de usuario: </label><br>
-          <input type="text" name="id_email" placeholder="Ingresa ..." required>
-          <br><br>
-        </div>
+            <form action="login.php" method="POST"  autocomplete="off">
 
-        <div class="field input">
-          <label for="id_pass">Contraseña: </label><br>
-          <input type="password" name="id_pass" placeholder="Ingresa tu contraseña" required>
-          <br><br>
-        </div>
+                <div class="field">
+                    <label for="id_email"> Correo electrónico: </label>
+                    <input  type="email"  id="id_email"  name="id_email"  placeholder="Ingresa tu correo electrónico"  autocomplete="email"  required>
+                </div>
 
-        <div class="field button">
-          <input type="submit" value="Aceptar" name="ok"> 
-        </div>
+                <div class="field"> 
+                  <label for="id_pass"> Contraseña: </label>
+                    <input type="password"  id="id_pass"  name="id_pass"  placeholder="Ingresa tu contraseña"  autocomplete="current-password"  required>
+                </div>
 
-      </form>
-      <br>
-      <div class="link">¿Aun no tienes cuenta?<a href="registro.html">  Registrate</a></div>
-    </section>
-  </div>
+                <!-- Botón de inicio de sesión -->
+                <div class="form-actions">
+                    <button  type="submit"  name="ok"> Aceptar</button>
+                </div>
+            </form>
 
+            <footer class="form-footer">
+                <p>¿Aún no tienes cuenta?<a href="registro.html">Regístrate</a></p>
+            </footer>
+        </section>
+    </main>
 
 </body>
 </html>
