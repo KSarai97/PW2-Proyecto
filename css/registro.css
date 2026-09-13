@@ -1,175 +1,356 @@
-/* Fondo de la página */
-body {
-    font-family: 'Atkinson Hyperlegible Mono', monospace;
+* {
     margin: 0;
     padding: 0;
-    background: linear-gradient(to right, #fafafa, #6f8a7c);
-    margin: 0;
-    height: 100vh;
+    box-sizing: border-box;
+}
+
+html {
+    min-height: 100%;
+}
+
+body {
+    min-height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
+    padding: 30px 15px;
+    font-family: 'Atkinson Hyperlegible Mono', monospace;
+    background: linear-gradient(
+        to right,
+        #fafafa,
+        #6f8a7c
+    );
 }
 
-/* Estilos del contenedor */
 .container {
-    background-color: rgba(0, 0, 0, 0.7); /* Fondo semi-transparente */
-    padding: 20px;
-    border-radius: 10px;
-    max-width: 500px; /* Limita el ancho máximo */
     width: 100%;
-    max-height: 90%; /* Para evitar que el formulario ocupe toda la pantalla */
-    overflow-y: auto; /* Permite el desplazamiento si el contenido es demasiado largo */
-    color: white;
-}
+    max-width: 500px;
 
-p {
-    color: white;
-    font-weight: bold;
-    font-size: 18px;
-    font-family: 'Atkinson Hyperlegible Mono', monospace;
-    text-align: center;
-}
+    padding: 25px;
 
-header {
-    color: rgb(0, 0, 0);
-    font-weight: bold;
-    font-size: 35px; /* 35 */
-    font-family: 'Atkinson Hyperlegible Mono', monospace;
-    text-align: center;
-}
+    background-color: rgba(0, 0, 0, 0.7);
 
-/* Estilo para todos los inputs y select (incluyendo password) */
-input, select {
-    color: rgb(0, 0, 0);
-    font-weight: bold;
-    background-color: #6f8a7c;
-    padding: 10px;
-    width: 80%; /* Establece el mismo ancho para todos los inputs y selects */
-    margin-top: 5px;
-    margin-bottom: 10px;
-    border-radius: 5px;
-    border: 1px solid #5b5a5c;
-    display: block;
-    margin-left: auto; /* Centra los inputs/select horizontalmente */
-    margin-right: auto; /* Centra los inputs/select horizontalmente */
-}
-
-/* Estilo específico para el campo de contraseña (sin necesidad de estilo extra aquí) */
-input[type="password"] {
-    background-color: #6f8a7c;
-    color: rgb(15, 15, 15);
-    font-weight: bold;
-    padding: 10px;
-    width: 80%; /* Mismo ancho que los otros inputs */
-    margin-top: 5px;
-    margin-bottom: 10px;
-    border-radius: 5px;
-    border: 1px solid #575558;
-    display: block;
-    margin-left: auto; /* Centrado igual que los otros inputs */
-    margin-right: auto; /* Centrado igual que los otros inputs */
-}
-
-
-
-
-/* Estilo para los labels */
-label {
-    color: white;
-    font-size: 15px;
-    font-family: 'Atkinson Hyperlegible Mono', monospace;
-    margin-top: 10px;
-    margin-bottom: 5px;
-    display: block; /* Asegura que el label esté encima del input */
-    margin-left: 40px; /* Mueve el label a la derecha sin afectar a los inputs */
-    text-align: left; /* Alinea el texto del label a la izquierda */
-}
-
-
-/* Estilos para el botón Aceptar */
-input[type="submit"] {
     border-radius: 10px;
-    color: rgb(0, 0, 0);
-    padding: 10px;
+
+    color: white;
+
+    max-height: 90vh;
+
+    overflow-y: auto;
+}
+
+.form-header {
     text-align: center;
-    font-size: 15px;
-    font-family: 'Atkinson Hyperlegible Mono', monospace;
-    width: 50%;
-    margin-top: 10px;
-    margin: 0 auto; /* Centra el botón horizontalmente */
-    background-color: rgb(139, 212, 182);
-    cursor: pointer;
-    display: block; /* Asegura que el botón ocupe toda la línea */
-    margin-left: auto; /* Centra el botón */
-    margin-right: auto; /* Centra el botón */
+
+    margin-bottom: 25px;
 }
 
-/* Efectos cuando se pasa el mouse por encima y cuando se presiona el botón */
-input[type="submit"]:hover {
-    background-color: rgb(30, 7, 133);
-    color: rgb(111, 55, 216);
-}
 
-input[type="submit"]:active {
-    background-color: rgb(101, 70, 240);
-    color: rgb(30, 7, 133);
-}
-
-/* Estilos para los select */
-select {
-    width: 80%;  /* Ajuste el ancho de select igual que el input */
-    padding: 10px;
-    margin-top: 5px;
-    margin-bottom: 10px;
-    background-color: #6f8a7c;
+.form-header h1 {
     color: white;
+
+    font-size: 35px;
+
+    margin-bottom: 15px;
+}
+
+
+.form-header p {
+    color: white;
+
     font-weight: bold;
-    border-radius: 5px;
-    border: 1px solid #2e2e2e;
-    display: block;
-    margin-left: auto; /* Asegura que el select esté centrado */
-    margin-right: auto; /* Asegura que el select esté centrado */
+
+    font-size: 18px;
 }
 
-/* Estilo básico del input file */
-input[type="file"] {
-    background-color: #6f8a7c;
+
+.error-text {
+    color: #ff8a8a;
+
+    text-align: center;
+
+    margin-bottom: 15px;
+}
+
+
+fieldset {
+    border: 1px solid rgba(255, 255, 255, 0.3);
+
+    border-radius: 8px;
+
+    padding: 20px;
+
+    margin-bottom: 20px;
+}
+
+
+legend {
+    padding: 0 10px;
+
+    color: #8bd4b6;
+
+    font-weight: bold;
+
+    font-size: 17px;
+}
+
+
+.field {
+    margin-bottom: 15px;
+}
+
+
+.field label,
+.file-upload-container label {
+    display: block;
+
+    margin-bottom: 6px;
+
     color: white;
+
+    font-size: 15px;
+
+    text-align: left;
+}
+
+input,
+select {
+    width: 100%;
+
     padding: 10px;
-    border: 2px solid #3b3b3b;
+
+    margin: 0;
+
+    color: black;
+
+    font-family: 'Atkinson Hyperlegible Mono', monospace;
+
+    font-weight: bold;
+
+    background-color: #6f8a7c;
+
+    border: 1px solid #5b5a5c;
+
     border-radius: 5px;
-    font-size: 14px;
+}
+
+
+input::placeholder {
+    color: #222;
+}
+
+input:focus,
+select:focus {
+    outline: 2px solid #8bd4b6;
+
+    outline-offset: 2px;
+}
+
+
+input[type="file"] {
+    color: white;
+
+    padding: 10px;
+
+    background-color: #6f8a7c;
+
+    border: 2px solid #3b3b3b;
+
     cursor: pointer;
 }
 
-/* Cambiar color cuando se selecciona un archivo */
+
 input[type="file"]:hover {
     background-color: #45087e;
+
     border-color: #021841;
 }
 
-/* Cambiar el estilo del input cuando se ha seleccionado un archivo */
-input[type="file"]:focus {
-    outline: none;
-    border-color: #071a47;
-}
 
-/* Enlace debajo del formulario */
-.link {
-    font-size: 15px;
-    font-family: 'Atkinson Hyperlegible Mono', monospace;
+.file-upload-container {
     text-align: center;
-    margin-top: 10px;
-    color: #b9bbbe;
 }
 
-.link a {
+
+.avatar-preview {
+    margin: 20px auto 0;
+
+    text-align: center;
+}
+
+
+.avatar-preview img {
+    display: block;
+
+    width: 175px;
+    height: 175px;
+
+    margin: 0 auto;
+
+    object-fit: cover;
+
+    border-radius: 50%;
+
+    border: 3px solid #8bd4b6;
+}
+
+
+.avatar-preview figcaption {
+    margin-top: 10px;
+
+    color: #ccc;
+
+    font-size: 13px;
+}
+
+.form-actions {
+    margin-top: 25px;
+
+    text-align: center;
+}
+
+
+.form-actions button {
+    width: 50%;
+
+    padding: 10px;
+
+    border: none;
+
+    border-radius: 10px;
+
+    background-color: rgb(139, 212, 182);
+
+    color: black;
+
+    font-family: 'Atkinson Hyperlegible Mono', monospace;
+
+    font-size: 15px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition:
+        background-color 0.3s ease,
+        color 0.3s ease;
+}
+
+
+.form-actions button:hover {
+    background-color: rgb(30, 7, 133);
+
+    color: white;
+}
+
+
+.form-actions button:active {
+    background-color: rgb(101, 70, 240);
+
+    color: #1e0785;
+}
+
+
+.form-footer {
+    margin-top: 25px;
+
+    text-align: center;
+}
+
+
+.form-footer p {
+    color: #b9bbbe;
+
+    font-size: 15px;
+}
+
+
+.form-footer a {
     color: #9b59b6;
+
     text-decoration: none;
 }
 
-.link a:hover {
-    text-decoration: underline;
+
+.form-footer a:hover {
     color: #8e44ad;
+
+    text-decoration: underline;
+}
+
+
+/*PARA GESTION DE USUARIO*/
+.button-group {
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    flex-wrap: wrap;
+
+    gap: 15px;
+
+    margin-top: 10px;
+}
+
+
+/* Botones */
+
+.button-group button,
+.button-group .cancel-button {
+    padding: 10px 20px;
+
+    border: none;
+
+    border-radius: 10px;
+
+    background-color: rgb(139, 212, 182);
+
+    color: black;
+
+    font-family: 'Atkinson Hyperlegible Mono', monospace;
+
+    font-size: 15px;
+
+    font-weight: bold;
+
+    text-decoration: none;
+
+    cursor: pointer;
+
+    transition:
+        background-color 0.3s ease,
+        color 0.3s ease;
+}
+
+
+.button-group button:hover,
+.button-group .cancel-button:hover {
+    background-color: rgb(30, 7, 133);
+
+    color: white;
+}
+
+.button-group button[name="eliminar"] {
+    background-color: #d66b6b;
+}
+
+
+.button-group button[name="eliminar"]:hover {
+    background-color: #a83232;
+
+    color: white;
+}
+
+
+.button-group .cancel-button {
+    background-color: #777;
+
+    color: white;
+}
+
+
+.button-group .cancel-button:hover {
+    background-color: #555;
 }
