@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/perfil.css">
+    <title>Perfil de usuario</title>
+</head>
+
+<body>
+
+    <!-- Barra de navegación -->
+    <header class="site-header">
+        <nav class="navbar" aria-label="Navegación principal">
+            <ul>
+                <li><a href="index.html" title="Regresa a la pagina principal">Pagina principal</a></li>
+                <li><a href="perfilEspecialista.html" title="Conoce a nuestros especialistas">Perfil especialista</a></li>
+                <li><a href="citas.html" title="Agenda una cita con un especialista">Agendar citas</a></li>
+                <li><a href="calendario.html" title="Comprueba las citas registradas">Calendario de citas</a></li>
+                <li><a href="foro.html"title="Mira los artículos creados por nuestros especialistas">Foro</a></li>
+                <li><a href="logout.php" title="Cerrar sesión">Cerrar sesión</a></li>
+            </ul>
+        </nav>
+    </header>
+
+
+    <!-- Contenido principal -->
+    <main class="main-content">
+
+        <section class="container" aria-labelledby="titulo-perfil">
+
+            <article class="profile-box">
+
+                <header class="profile-header">
+                    <h1 id="titulo-perfil">Perfil de <em>NombreUsuario</em></h1>
+                </header>
+
+
+                <!-- inf user -->
+                <section class="user-info" aria-labelledby="informacion-usuario">
+
+                    <h2 id="informacion-usuario">Información del usuario</h2>
+
+                    <p class="registered"><strong>Registrado desde hace:</strong><time datetime="P100D">100 días</time></p>
+
+
+                    <!-- Foto de perfil -->
+                    <figure class="profile-image">
+                        <img src="img/perfil.jpg"
+                             alt="Foto de perfil de NombreUsuario"
+                             width="175"
+                             height="175">
+
+                        <figcaption>
+                            Foto de perfil
+                        </figcaption>
+                    </figure>
+
+
+                    <!-- Datos personales -->
+                    <dl>
+
+                        <dt>Nombre completo</dt>
+                        <dd>
+                            Nombre ApellidoPaterno ApellidoMaterno
+                        </dd>
+
+                        <dt>Nombre de usuario</dt>
+                        <dd>
+                            NombreUsuario
+                        </dd>
+                        <dt>Edad</dt>
+                        <dd>
+                            20 años
+                        </dd>
+                        <dt>Correo electrónico</dt>
+                        <dd>
+                            <a href="mailto:correo@ejemplo.com">correo@ejemplo.com </a>
+                        </dd>
+                        <dt>Fecha de nacimiento</dt>
+                        <dd>
+                            <time datetime="2006-01-01">
+                                01/01/2006
+                            </time>
+                        </dd>
+                        <dt>Género</dt>
+                        <dd>
+                            Masculino
+                        </dd>
+                        <dt>Estado de la cuenta</dt>
+                        <dd>
+                            Público
+                        </dd>
+                        <dt>Rol</dt>
+                        <dd>
+                            Operativo
+                        </dd>
+                    </dl>
+                </section>
+
+
+                <!-- Acciones -->
+                <section class="profile-actions"
+                         aria-labelledby="acciones-perfil">
+
+                    <h2 id="acciones-perfil">
+                        Acciones del perfil
+                    </h2>
+
+                    <nav aria-label="Acciones del perfil">
+                        <ul class="button-group">
+                            <li><a href="gestion.html"title="Modificar o eliminar cuenta">Gestión de usuario</a></li>
+                            <li><a href="comentarioUs.html" title="Ver comentarios hechos por el usuario">Comentarios </a></li>
+                        </ul>
+                    </nav>
+                </section>
+            </article>
+        </section>
+    </main>
+
+
+    <!--pie pag -->
+    <footer class="site-footer">
+        <p>
+         <p>&copy; 2026 Citas psicológicas. Todos los derechos reservados.</p>
+        </p>
+    </footer>
+
+</body>
+</html>
