@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,38 +7,65 @@
     <title>Perfil especialista</title>
 </head>
 <body>
-    
 
- <div class="container">
-        <div class="profile-box"> <!-- Nuevo div para el contenido -->
-            <p name="per">Perfil de </p>
-            <hr>
+    <!-- Header consistente con las demás páginas -->
+    <header class="site-header">
+        <nav class="navbar">
+            <ul>
+                <li><a href="index.html">Página principal</a></li>
+                <li><a href="perfilUs.html">Perfil de usuario</a></li>
+                <li><a href="citas.html">Agendar citas</a></li>
+                <li><a href="calendario.html">Calendario de citas</a></li>
+                <li><a href="foro.html">Foro</a></li>
+                <li><a href="logout.php">Cerrar sesión</a></li>
+            </ul>
+        </nav>
+    </header>
 
-            <label for="id_name">Nombre completo: </label>
-            <br><br>
-            <label for="id_tel">Telefono: </label>
-            <br><br>
-            <label for="id_email">Correo Electrónico: </label>
-            <br><br>
-           
-            <label for="id_esp">Especialidad: </label>
-            <br><br>
-
-            <label for="id_email">horarios: </label>
-            <br><br>
-            <label for="id_email">modalidad: </label>
-            <br><br>
-
-            
-            <label>Rol: </label>
-        </div>
-    </div>
-
-
-     <footer>
+    <main class="main-content">
         <div class="container">
-            <p>&copy; 2026 Citas psicologicas. Todos los derechos reservados.</p>
+            <div class="profile-box">
+                <div class="profile-header">
+                    <h1>Perfil de <em>Especialista</em></h1>
+                </div>
+
+                <div class="profile-image">
+                    <img src="img/default-avatar.png" alt="Foto de perfil">
+                    <figcaption>Especialista verificado</figcaption>
+                </div>
+
+                <div class="user-info">
+                    <h2>Información profesional</h2>
+                    <dl>
+                        <dt>Nombre completo</dt>
+                        <dd>Dr. Nombre Apellido</dd>
+
+                        <dt>Teléfono</dt>
+                        <dd>+52 81 0000 0000</dd>
+
+                        <dt>Correo electrónico</dt>
+                        <dd><a href="mailto:doctor@ejemplo.com">doctor@ejemplo.com</a></dd>
+
+                        <dt>Especialidad</dt>
+                        <dd>Psicología Clínica / Terapia Cognitivo-Conductual</dd>
+
+                        <dt>Horarios</dt>
+                        <dd>Lunes a Viernes: 9:00 AM - 6:00 PM</dd>
+
+                        <dt>Modalidad</dt>
+                        <dd>Presencial y En línea</dd>
+
+                        <dt>Rol</dt>
+                        <dd>Especialista</dd>
+                    </dl>
+                </div>
+            </div>
         </div>
+    </main>
+
+    <footer class="site-footer">
+        <p>&copy; 2026 Citas psicológicas. Todos los derechos reservados.</p>
     </footer>
+
 </body>
 </html>
