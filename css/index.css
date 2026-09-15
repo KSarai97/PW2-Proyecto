@@ -65,11 +65,13 @@ body {
 main {
     flex: 1;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    justify-content: flex-start;
     align-items: center;
     width: 100%;
     padding: 50px 20px;
 }
+
 
 
 /* Sección de bienvenida */
@@ -115,4 +117,355 @@ main {
 .site-footer p {
     margin: 0;
     font-size: 14px;
+}
+
+/* =========================================
+   SERVICIOS Y TARIFAS
+   ========================================= */
+
+.services {
+    width: 100%;
+    max-width: 1000px;
+
+    margin: 30px auto 70px;
+
+    padding: 45px 30px;
+
+    background-color: rgba(0, 0, 0, 0.08);
+
+    border-radius: 15px;
+}
+
+
+/* =========================================
+   ENCABEZADO
+   ========================================= */
+
+.services-header {
+    text-align: center;
+
+    margin-bottom: 35px;
+}
+
+.services-header h2 {
+    font-size: 32px;
+
+    color: rgb(41, 48, 48);
+
+    margin-bottom: 12px;
+}
+
+.services-header h2 em {
+    color: #4f7565;
+
+    font-style: normal;
+}
+
+.services-header p {
+    max-width: 650px;
+
+    margin: 0 auto;
+
+    color: rgb(70, 80, 80);
+
+    font-size: 16px;
+
+    line-height: 1.6;
+}
+
+
+/* =========================================
+   CONTENEDOR DE TARJETAS
+   ========================================= */
+
+.services-container {
+    display: grid;
+
+    grid-template-columns: repeat(2, 1fr);
+
+    gap: 25px;
+
+    max-width: 800px;
+
+    margin: 0 auto;
+}
+
+
+/* =========================================
+   TARJETA
+   ========================================= */
+
+.service-card {
+    display: flex;
+
+    flex-direction: column;
+
+    text-align: center;
+
+    padding: 30px 25px;
+
+    background-color: rgba(255, 255, 255, 0.90);
+
+    border-radius: 12px;
+
+    border: 1px solid rgba(41, 48, 48, 0.15);
+
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+
+    transition:
+        transform 0.3s ease,
+        box-shadow 0.3s ease;
+}
+
+
+/* =========================================
+   EFECTO HOVER
+   ========================================= */
+
+.service-card:hover {
+    transform: translateY(-5px);
+
+    box-shadow: 0 10px 22px rgba(0, 0, 0, 0.22);
+}
+
+
+/* =========================================
+   ICONO
+   ========================================= */
+
+.service-icon {
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    width: 55px;
+    height: 55px;
+
+    margin: 0 auto 18px;
+
+    border-radius: 50%;
+
+    background-color: rgba(139, 212, 182, 0.25);
+
+    color: #4f7565;
+
+    font-size: 28px;
+
+    border: 2px solid #8bd4b6;
+}
+
+
+/* =========================================
+   NOMBRE DEL ESPECIALISTA
+   ========================================= */
+
+.service-card h3 {
+    color: rgb(41, 48, 48);
+
+    font-size: 20px;
+
+    margin-bottom: 8px;
+}
+
+
+/* =========================================
+   ESPECIALIDAD
+   ========================================= */
+
+.specialty {
+    color: #4f7565;
+
+    font-size: 14px;
+
+    font-weight: bold;
+
+    min-height: 42px;
+
+    line-height: 1.5;
+
+    margin-bottom: 20px;
+}
+
+
+/* =========================================
+   INFORMACIÓN
+   ========================================= */
+
+.service-details {
+    display: flex;
+
+    justify-content: space-around;
+
+    gap: 10px;
+
+    padding: 15px 0;
+
+    margin-bottom: 20px;
+
+    border-top: 1px solid rgba(41, 48, 48, 0.15);
+
+    border-bottom: 1px solid rgba(41, 48, 48, 0.15);
+}
+
+
+.detail {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 5px;
+
+    flex: 1;
+}
+
+
+.detail span {
+    color: rgb(100, 100, 100);
+
+    font-size: 12px;
+}
+
+
+.detail strong {
+    color: rgb(41, 48, 48);
+
+    font-size: 13px;
+}
+
+
+/* =========================================
+   PRECIO
+   ========================================= */
+
+.service-price {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 3px;
+
+    margin-bottom: 22px;
+}
+
+
+.service-price small {
+    color: rgb(100, 100, 100);
+
+    font-size: 12px;
+}
+
+
+.service-price strong {
+    color: #4f7565;
+
+    font-size: 28px;
+}
+
+
+/* =========================================
+   BOTÓN
+   ========================================= */
+
+.service-button {
+    display: block;
+
+    width: 100%;
+
+    margin-top: auto;
+
+    padding: 12px 15px;
+
+    background-color: #8bd4b6;
+
+    color: rgb(41, 48, 48);
+
+    border-radius: 8px;
+
+    text-decoration: none;
+
+    font-size: 14px;
+
+    font-weight: bold;
+
+    transition:
+        background-color 0.3s ease,
+        color 0.3s ease,
+        transform 0.2s ease;
+}
+
+
+.service-button:hover {
+    background-color: rgb(30, 7, 133);
+
+    color: white;
+
+    transform: translateY(-2px);
+}
+
+
+/* =========================================
+   TEXTO INFERIOR
+   ========================================= */
+
+.services-footer {
+    text-align: center;
+
+    margin-top: 30px;
+}
+
+
+.services-footer p {
+    color: rgb(70, 80, 80);
+
+    font-size: 13px;
+}
+
+
+/* =========================================
+   RESPONSIVE
+   ========================================= */
+
+@media (max-width: 700px) {
+
+    .services {
+        padding: 35px 20px;
+    }
+
+    .services-header h2 {
+        font-size: 27px;
+    }
+
+    .services-container {
+        grid-template-columns: 1fr;
+    }
+
+}
+
+
+@media (max-width: 450px) {
+
+    .services {
+        padding: 30px 15px;
+    }
+
+    .services-header h2 {
+        font-size: 24px;
+    }
+
+    .services-header p {
+        font-size: 14px;
+    }
+
+    .service-card {
+        padding: 25px 18px;
+    }
+
+    .service-details {
+        flex-direction: column;
+
+        gap: 12px;
+    }
+
 }
