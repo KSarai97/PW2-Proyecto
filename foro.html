@@ -4,65 +4,114 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/foro.css">
-    <link rel="icon" type="image/png" href="img/logo.png">
-
-    <title>Brote psique- Página principal</title>
+    <title>Foro</title>
 </head>
+
 <body>
 
-    <!-- Encabezado de la página -->
     <header class="site-header">
-
-        <!-- Navegación principal -->
-        <nav class="navbar" aria-label="Navegación principal">
-
+        <nav class="navbar">
             <ul>
-                <li>
-                    <a href="perfilUs.html" title="Mira tu perfil">Perfil de usuario</a>
-                </li>
-
-                <li>
-                    <a href="perfilEspecialista.html" title="Conoce a nuestros especialistas">Perfil especialista</a>
-                </li>
-
-                <li>
-                    <a href="citas.html" title="Necesitas agendar una cita con un especialista? Aquí es">Agendar citas</a>
-                </li>
-
-                <li>
-                    <a href="calendario.html" title="Comprueba las citas registradas">Calendario de citas</a>
-                </li>
-
-                <li>
-                    <a href="foro.html" title="Mira los artículos creados por nuestros especialistas">Foro </a>
-                </li>
-
-                <li><a href="login.html"   title="Cerrar sesión">Cerrar sesión</a></li>
+                <li><a href="index.html">Página principal</a></li>
+                <li><a href="perfilUs.html">Perfil de usuario</a></li>
+                <li><a href="perfilEspecialista.html">Perfil especialista</a></li>
+                <li><a href="citas.html">Agendar citas</a></li>
+                <li><a href="calendario.html">Calndario de citas</a></li>
+                <li><a href="logout.php">Cerrar sesión</a></li>
             </ul>
         </nav>
     </header>
 
+    <!-- Contenedor Principal -->
+    <div class="container">
+        
+        <!-- Sidebar de Categorías -->
+        <aside>
+            <h3>Categorías</h3>
+            <ul>
+                <li><a href="#" class="active">Todas las discusiones</a></li>
+                <li><a href="#">Diagnósticos</a></li>
+                <li><a href="#">Consejos</a></li>
+                <li><a href="#">Dudas y Aclaraciones</a></li>
+            </ul>
+        </aside>
 
-    <!-- Contenido principal -->
-    <main>
-        <section class="welcome" aria-labelledby="titulo-bienvenida">
-            <h1 id="titulo-bienvenida">Bienvenido</h1>
-            <img src="img/logo2.png" alt="Logo de Brote Psique" class="welcome-logo">
-            <p>
-            Brote Psique es una página que busca brindar ayuda a quienes necesitan hablar con alguien
-            y ser un apoyo para su crecimiento, bienestar, acompañamiento y desarrollo personal. 
-            En este sitio web podrás concertar citas psicologicas con alguno de nuestros especialistas, 
-            puedes elegir el mas conveniente para ti.
-            Tambien puedes ver los articulos que suben los psicologos y comentar en ellos. 
-            Puedes ver en el calendario las citas programadas y el estado de las mismas.
-            </p>
-        </section>
-    </main>
+        <!-- Área Principal del Foro -->
+        <main>
+            <!-- Barra de Acciones Top -->
+            <div class="actions-bar">
+                <h2>Discusiones Recientes</h2>
+                <button class="btn-new-topic">+ Crear Nuevo Tema</button>
+            </div>
 
+            <!-- Lista de Hilos/Temas -->
+            <div class="topic-list">
+                
+                <!-- Tema 1 -->
+                <div class="topic-item">
+                    <div class="topic-info">
+                        <h4>
+                            <span class="badge badge-dev">Diagnósticos</span>
+                            <a href="#">¿Qué es el TDAH / TDA?</a>
+                        </h4>
+                        <div class="topic-meta">
+                            Creado por <strong>CarlosDev</strong> • Hace 2 horas
+                        </div>
+                    </div>
+                    <div class="topic-stats">
+                        <div>
+                            <span>15</span> Respuestas
+                        </div>
+                        <div>
+                            <span>142</span> Vistas
+                        </div>
+                    </div>
+                </div>
 
-    <footer class="site-footer">
-        <p>&copy; 2026 Brote psique. Todos los derechos reservados. </p>
-    </footer>
+                <!-- Tema 2 -->
+                <div class="topic-item">
+                    <div class="topic-info">
+                        <h4>
+                            <span class="badge badge-design">Consejos</span>
+                            <a href="#">La depresión es silenciosa, cómo distinguirila</a>
+                        </h4>
+                        <div class="topic-meta">
+                            Creado por <strong>AnaDesign</strong> • Hace 5 horas
+                        </div>
+                    </div>
+                    <div class="topic-stats">
+                        <div>
+                            <span>8</span> Respuestas
+                        </div>
+                        <div>
+                            <span>95</span> Vistas
+                        </div>
+                    </div>
+                </div>
 
+                <!-- Tema 3 -->
+                <div class="topic-item">
+                    <div class="topic-info">
+                        <h4>
+                            <span class="badge badge-dev">General</span>
+                            <a href="#">Septiembre Amarillo: porque siempre hay una razón para vivir</a>
+                        </h4>
+                        <div class="topic-meta">
+                            Creado por <strong>TechLead</strong> • Ayer
+                        </div>
+                    </div>
+                    <div class="topic-stats">
+                        <div>
+                            <span>32</span> Respuestas
+                        </div>
+                        <div>
+                            <span>310</span> Vistas
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+    </div>
 </body>
 </html>
