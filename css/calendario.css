@@ -282,15 +282,3 @@ body {
 .site-footer p {
     font-size: 14px;
 }
-
-.btn-confirmed a{
-  background-color: rgba(139, 212, 182, 0.2);
-    color: #8bd4b6;
-    border: 1px solid #8bd4b6;
-
-}
-
-.btn-confirmed a:hover{
-     background-color: rgb(30, 7, 133);
-    color: white;
-}

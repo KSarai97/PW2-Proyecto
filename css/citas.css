@@ -179,3 +179,62 @@ input:focus, select:focus, textarea:focus {
 .site-footer p {
     font-size: 14px;
 }
+
+
+/* Botones */
+
+.button-group button,
+.button-group .cancel-button {
+    padding: 10px 20px;
+
+    border: none;
+
+    border-radius: 10px;
+
+    background-color: rgb(139, 212, 182);
+
+    color: black;
+
+    font-family: 'Atkinson Hyperlegible Mono', monospace;
+
+    font-size: 15px;
+
+    font-weight: bold;
+
+    text-decoration: none;
+
+    cursor: pointer;
+
+    transition:
+        background-color 0.3s ease,
+        color 0.3s ease;
+}
+.button-group button:hover,
+.button-group .cancel-button:hover {
+    background-color: rgb(30, 7, 133);
+
+    color: white;
+}
+
+.button-group button[name="eliminar"] {
+    background-color: #d66b6b;
+}
+
+
+.button-group button[name="eliminar"]:hover {
+    background-color: #a83232;
+
+    color: white;
+}
+
+
+.button-group .cancel-button {
+    background-color: #777;
+
+    color: white;
+}
+
+
+.button-group .cancel-button:hover {
+    background-color: #555;
+}
