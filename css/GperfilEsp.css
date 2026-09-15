@@ -1,0 +1,484 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    min-height: 100%;
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    font-family: 'Atkinson Hyperlegible Mono', monospace;
+    background: linear-gradient(to right, #fafafa, #6f8a7c);
+    color: white;
+}
+
+/* =========================================
+   NAVBAR
+   ========================================= */
+
+.site-header {
+    width: 100%;
+    background-color: rgb(41, 48, 48);
+    padding: 20px;
+}
+
+.navbar {
+    width: 100%;
+}
+
+.navbar ul {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 30px;
+    list-style: none;
+}
+
+.navbar a {
+    display: block;
+    color: rgb(228, 240, 240);
+    text-decoration: none;
+    font-size: 18px;
+    padding: 5px;
+    transition: color 0.3s ease;
+}
+
+.navbar a:hover {
+    color: white;
+    text-decoration: underline;
+}
+
+
+/* =========================================
+   CONTENIDO PRINCIPAL
+   ========================================= */
+
+.main-content {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 40px 15px;
+}
+
+.container {
+    width: 100%;
+    max-width: 550px;
+    display: flex;
+    justify-content: center;
+}
+
+
+/* =========================================
+   CONTENEDOR DEL PERFIL
+   ========================================= */
+
+.profile-box {
+    width: 100%;
+    padding: 30px;
+    background-color: rgba(0, 0, 0, 0.7);
+    border-radius: 10px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
+}
+
+
+/* =========================================
+   ENCABEZADO DEL PERFIL
+   ========================================= */
+
+.profile-header {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.profile-header h1 {
+    color: white;
+    font-size: 28px;
+    margin-bottom: 5px;
+}
+
+.profile-header em {
+    color: #8bd4b6;
+    font-style: normal;
+}
+
+
+/* =========================================
+   IMAGEN DE PERFIL
+   ========================================= */
+
+.profile-image {
+    margin: 20px auto 30px;
+    text-align: center;
+}
+
+.profile-image img {
+    display: block;
+    width: 160px;
+    height: 160px;
+    margin: 0 auto;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #8bd4b6;
+}
+
+.profile-image figcaption {
+    margin-top: 10px;
+    color: #ccc;
+    font-size: 13px;
+}
+
+
+/* =========================================
+   INFORMACIÓN PROFESIONAL
+   ========================================= */
+
+.user-info h2 {
+    margin-bottom: 20px;
+    color: #8bd4b6;
+    font-size: 20px;
+    text-align: center;
+}
+
+
+/* =========================================
+   FORMULARIO
+   ========================================= */
+
+.form-group {
+    margin-bottom: 18px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 7px;
+    color: #8bd4b6;
+    font-weight: bold;
+    font-size: 15px;
+}
+
+
+/* =========================================
+   INPUTS Y SELECTS
+   ========================================= */
+
+.form-group input,
+.form-group select {
+    width: 100%;
+    padding: 11px 12px;
+
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 7px;
+
+    background-color: rgba(255, 255, 255, 0.08);
+
+    color: white;
+
+    font-family: 'Atkinson Hyperlegible Mono', monospace;
+    font-size: 14px;
+
+    outline: none;
+
+    transition:
+        border-color 0.3s ease,
+        background-color 0.3s ease,
+        box-shadow 0.3s ease;
+}
+
+
+/* =========================================
+   INPUTS AL HACER CLIC
+   ========================================= */
+
+.form-group input:focus,
+.form-group select:focus {
+    border-color: #8bd4b6;
+    background-color: rgba(139, 212, 182, 0.12);
+    box-shadow: 0 0 5px rgba(139, 212, 182, 0.3);
+}
+
+
+/* =========================================
+   TEXTO DE LOS INPUTS
+   ========================================= */
+
+.form-group input {
+    color: white;
+}
+
+
+/* =========================================
+   PLACEHOLDER
+   ========================================= */
+
+.form-group input::placeholder {
+    color: #aaa;
+}
+
+
+/* =========================================
+   OPCIONES DE LOS SELECT
+   ========================================= */
+
+.form-group select option {
+    background-color: rgb(41, 48, 48);
+    color: white;
+}
+
+
+/* =========================================
+   FIELDSET
+   ========================================= */
+
+fieldset {
+    margin-top: 25px;
+    padding: 20px;
+
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+}
+
+fieldset legend {
+    padding: 0 10px;
+
+    color: #8bd4b6;
+
+    font-weight: bold;
+    font-size: 15px;
+}
+
+
+/* =========================================
+   GRUPO DE BOTONES
+   ========================================= */
+
+.button-group {
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+
+    flex-wrap: wrap;
+
+    gap: 15px;
+
+    margin-top: 10px;
+
+    padding: 0;
+}
+
+
+/* =========================================
+   BOTONES Y ENLACE CANCELAR
+   ========================================= */
+
+.button-group button,
+.button-group .cancel-button {
+    display: inline-block;
+
+    padding: 10px 20px;
+
+    border: none;
+    border-radius: 10px;
+
+    background-color: rgb(139, 212, 182);
+
+    color: black;
+
+    font-family: 'Atkinson Hyperlegible Mono', monospace;
+
+    font-size: 15px;
+    font-weight: bold;
+
+    text-decoration: none;
+
+    text-align: center;
+
+    cursor: pointer;
+
+    transition:
+        background-color 0.3s ease,
+        color 0.3s ease,
+        transform 0.2s ease;
+}
+
+
+/* =========================================
+   EFECTO HOVER BOTONES
+   ========================================= */
+
+.button-group button:hover,
+.button-group .cancel-button:hover {
+    background-color: rgb(30, 7, 133);
+
+    color: white;
+
+    transform: translateY(-2px);
+}
+
+
+/* =========================================
+   EFECTO AL PRESIONAR
+   ========================================= */
+
+.button-group button:active,
+.button-group .cancel-button:active {
+    transform: translateY(0);
+}
+
+
+/* =========================================
+   BOTÓN ELIMINAR
+   ========================================= */
+
+.button-group button[name="eliminar"] {
+    background-color: #d66b6b;
+
+    color: white;
+}
+
+.button-group button[name="eliminar"]:hover {
+    background-color: #a83232;
+
+    color: white;
+}
+
+
+/* =========================================
+   BOTÓN CANCELAR
+   ========================================= */
+
+.button-group .cancel-button {
+    background-color: #777;
+
+    color: white;
+}
+
+.button-group .cancel-button:hover {
+    background-color: #555;
+
+    color: white;
+}
+
+
+/* =========================================
+   FOOTER
+   ========================================= */
+
+.site-footer {
+    width: 100%;
+
+    background-color: rgb(41, 48, 48);
+
+    color: rgb(228, 240, 240);
+
+    padding: 20px;
+
+    text-align: center;
+
+    margin-top: auto;
+}
+
+.site-footer p {
+    font-size: 14px;
+}
+
+
+/* =========================================
+   DISEÑO RESPONSIVO
+   ========================================= */
+
+@media (max-width: 600px) {
+
+    .site-header {
+        padding: 15px;
+    }
+
+    .navbar ul {
+        gap: 15px;
+    }
+
+    .navbar a {
+        font-size: 15px;
+    }
+
+
+    .main-content {
+        padding: 25px 10px;
+    }
+
+
+    .profile-box {
+        padding: 20px;
+    }
+
+
+    .profile-header h1 {
+        font-size: 24px;
+    }
+
+
+    .profile-image img {
+        width: 130px;
+        height: 130px;
+    }
+
+
+    .button-group {
+        flex-direction: column;
+    }
+
+
+    .button-group button,
+    .button-group .cancel-button {
+        width: 100%;
+    }
+
+}
+
+
+/* =========================================
+   PANTALLAS MUY PEQUEÑAS
+   ========================================= */
+
+@media (max-width: 400px) {
+
+    .profile-box {
+        padding: 15px;
+    }
+
+
+    .profile-header h1 {
+        font-size: 21px;
+    }
+
+
+    .user-info h2 {
+        font-size: 18px;
+    }
+
+
+    .form-group label {
+        font-size: 14px;
+    }
+
+
+    .form-group input,
+    .form-group select {
+        font-size: 13px;
+        padding: 10px;
+    }
+
+
+    fieldset {
+        padding: 15px;
+    }
+
+}
