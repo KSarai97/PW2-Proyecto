@@ -1,0 +1,118 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    min-height: 100%;
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    font-family: 'Atkinson Hyperlegible Mono', monospace;
+    background: linear-gradient(to right, #fafafa, #6f8a7c);
+ /*   background-color: white;*/
+    color: rgb(41, 48, 48);
+}
+
+.site-header {
+    width: 100%;
+    background-color: rgb(41, 48, 48);
+    color: rgb(228, 240, 240);
+    padding: 20px;
+}
+
+.navbar {
+    width: 100%;
+}
+
+.navbar ul {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 30px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.navbar li {
+    margin: 0;
+    padding: 0;
+}
+
+.navbar a {
+    display: block;
+    color: rgb(228, 240, 240);
+    text-decoration: none;
+    font-size: 18px;
+    padding: 5px;
+    transition: color 0.3s ease;
+}
+
+.navbar a:hover {
+    color: white;
+    text-decoration: underline;
+}
+
+
+/*   CONTENIDO PRINCIPAL */
+
+main {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 50px 20px;
+}
+
+
+/* Sección de bienvenida */
+.welcome {
+    width: 100%;
+    max-width: 800px;
+    text-align: center;
+    padding: 50px 30px;
+}
+
+
+.welcome h1 {
+    margin-bottom: 20px;
+    font-size: 40px;
+    color: rgb(41, 48, 48);
+}
+
+.welcome-logo {
+    display: block;
+    width: 220px;/*180*/
+    height: auto;
+    margin: 0 auto 25px;
+}
+
+
+.welcome p {
+    font-size: 20px;
+    color: rgb(70, 80, 80);
+}
+
+
+/*  FOOTER */
+.site-footer {
+    width: 100%;
+    background-color: rgb(41, 48, 48);
+    color: rgb(228, 240, 240);
+    padding: 20px;
+    text-align: center;
+    margin-top: auto;
+}
+
+
+.site-footer p {
+    margin: 0;
+    font-size: 14px;
+}
