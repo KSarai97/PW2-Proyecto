@@ -158,3 +158,44 @@ dd a:hover {
 .site-footer p {
     font-size: 14px;
 }
+
+/*PARA GESTION DE USUARIO*/
+/* BOTONES DEL PERFIL */
+
+.button-group {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-top: 25px;
+    padding: 0;
+    list-style: none;
+}
+
+.button-group li {
+    list-style: none;
+}
+
+.button-group a {
+    display: inline-block;
+    padding: 10px 20px;
+    border-radius: 10px;
+    background-color: rgb(139, 212, 182);
+    color: black;
+    font-family: 'Atkinson Hyperlegible Mono', monospace;
+    font-size: 15px;
+    font-weight: bold;
+    text-decoration: none;
+    text-align: center;
+    cursor: pointer;
+    transition:
+        background-color 0.3s ease,
+        color 0.3s ease;
+}
+
+.button-group a:hover {
+    background-color: rgb(30, 7, 133);
+    color: white;
+}
+
