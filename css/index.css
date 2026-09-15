@@ -13,7 +13,8 @@ body {
     display: flex;
     flex-direction: column;
     font-family: 'Atkinson Hyperlegible Mono', monospace;
-    background-color: white;
+    background: linear-gradient(to right, #fafafa, #6f8a7c);
+ /*   background-color: white;*/
     color: rgb(41, 48, 48);
 }
 
@@ -84,6 +85,13 @@ main {
     margin-bottom: 20px;
     font-size: 40px;
     color: rgb(41, 48, 48);
+}
+
+.welcome-logo {
+    display: block;
+    width: 220px;/*180*/
+    height: auto;
+    margin: 0 auto 25px;
 }
 
 
