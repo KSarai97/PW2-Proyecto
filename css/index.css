@@ -1,3 +1,29 @@
+/* =========================================
+   DISEÑO "REFUGIO"
+   Pensado para personas que viven acoso:
+   colores suaves, sin contrastes agresivos,
+   sin movimientos bruscos, texto legible y
+   una salida rápida siempre a la vista.
+
+   Agrega en el <head> de tu HTML:
+   <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
+   ========================================= */
+
+:root {
+    --fondo: #f1f5f3;
+    --fondo-suave: #e3ece8;
+    --superficie: #ffffff;
+    --tinta: #24393c;
+    --tinta-suave: #4d6366;
+    --salvia: #7fa89a;
+    --salvia-oscuro: #3f6b5e;
+    --bruma: #dfe6f3;
+    --calido: #f6e7d8;
+    --linea: rgba(36, 57, 60, 0.14);
+    --sombra: 0 4px 18px rgba(36, 57, 60, 0.08);
+    --radio: 22px;
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -6,23 +32,43 @@
 
 html {
     min-height: 100%;
+    scroll-behavior: smooth;
 }
 
 body {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
-    font-family: 'Atkinson Hyperlegible Mono', monospace;
-    background: linear-gradient(to right, #fafafa, #6f8a7c);
- /*   background-color: white;*/
-    color: rgb(41, 48, 48);
+    font-family: 'Atkinson Hyperlegible', 'Segoe UI', sans-serif;
+    font-size: 17px;
+    line-height: 1.7;
+    background:
+        radial-gradient(circle at 15% 0%, var(--bruma) 0, transparent 45%),
+        radial-gradient(circle at 90% 30%, var(--calido) 0, transparent 40%),
+        var(--fondo);
+    background-attachment: fixed;
+    color: var(--tinta);
 }
+
+/* Foco visible para quien navega con teclado */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible {
+    outline: 3px solid var(--salvia-oscuro);
+    outline-offset: 3px;
+}
+
+/* =========================================
+   ENCABEZADO Y NAVEGACIÓN
+   (claro, no una barra oscura pesada)
+   ========================================= */
 
 .site-header {
     width: 100%;
-    background-color: rgb(41, 48, 48);
-    color: rgb(228, 240, 240);
-    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.75);
+    border-bottom: 1px solid var(--linea);
+    color: var(--tinta);
+    padding: 16px 20px;
 }
 
 .navbar {
@@ -34,89 +80,127 @@ body {
     justify-content: center;
     align-items: center;
     flex-wrap: wrap;
-    gap: 30px;
+    gap: 12px 28px;
     list-style: none;
-    margin: 0;
-    padding: 0;
-}
-
-.navbar li {
-    margin: 0;
-    padding: 0;
 }
 
 .navbar a {
     display: block;
-    color: rgb(228, 240, 240);
+    color: var(--tinta);
     text-decoration: none;
     font-size: 18px;
-    padding: 5px;
-    transition: color 0.3s ease;
+    padding: 8px 14px;
+    border-radius: 999px;
+    transition: background-color 0.4s ease;
 }
 
 .navbar a:hover {
-    color: white;
-    text-decoration: underline;
+    background-color: var(--fondo-suave);
 }
 
+/* =========================================
+   SALIDA RÁPIDA (opcional)
+   Úsala así al inicio del <body>:
+   <a class="safe-exit" href="https://www.google.com">Salir rápido</a>
+   ========================================= */
 
-/*   CONTENIDO PRINCIPAL */
+.safe-exit {
+    position: fixed;
+    top: 14px;
+    right: 14px;
+    z-index: 100;
+    padding: 10px 18px;
+    background-color: var(--superficie);
+    color: var(--tinta);
+    border: 2px solid var(--salvia-oscuro);
+    border-radius: 999px;
+    font-size: 15px;
+    font-weight: 700;
+    text-decoration: none;
+    box-shadow: var(--sombra);
+}
+
+.safe-exit:hover {
+    background-color: var(--fondo-suave);
+}
+
+/* =========================================
+   CONTENIDO PRINCIPAL
+   ========================================= */
 
 main {
     flex: 1;
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
     align-items: center;
     width: 100%;
     padding: 50px 20px;
 }
 
+/* =========================================
+   BIENVENIDA
+   ========================================= */
 
-
-/* Sección de bienvenida */
 .welcome {
     width: 100%;
-    max-width: 800px;
+    max-width: 760px;
     text-align: center;
-    padding: 50px 30px;
+    padding: 56px 32px;
+    background-color: rgba(255, 255, 255, 0.7);
+    border-radius: 60px 60px 60px 18px;
+    box-shadow: var(--sombra);
 }
 
-
 .welcome h1 {
-    margin-bottom: 20px;
-    font-size: 40px;
-    color: rgb(41, 48, 48);
+    margin-bottom: 18px;
+    font-size: 38px;
+    line-height: 1.25;
+    font-weight: 700;
+    color: var(--tinta);
 }
 
 .welcome-logo {
     display: block;
-    width: 220px;/*180*/
+    width: 200px;
     height: auto;
     margin: 0 auto 25px;
 }
 
-
 .welcome p {
-    font-size: 20px;
-    color: rgb(70, 80, 80);
+    max-width: 56ch;
+    margin: 0 auto;
+    font-size: 19px;
+    color: var(--tinta-suave);
 }
 
+/* Mensaje de privacidad (opcional) */
+.safe-note {
+    display: block;
+    width: fit-content;
+    max-width: 90%;
+    margin: 26px auto 0;
+    padding: 12px 20px;
+    background-color: var(--calido);
+    border-radius: 16px;
+    font-size: 15px;
+    color: var(--tinta);
+}
 
-/*  FOOTER */
+/* =========================================
+   PIE DE PÁGINA
+   ========================================= */
+
 .site-footer {
     width: 100%;
-    background-color: rgb(41, 48, 48);
-    color: rgb(228, 240, 240);
-    padding: 20px;
+    background-color: var(--fondo-suave);
+    color: var(--tinta-suave);
+    padding: 24px 20px;
     text-align: center;
     margin-top: auto;
 }
 
-
 .site-footer p {
-    margin: 0;
-    font-size: 14px;
+    font-size: 15px;
 }
 
 /* =========================================
@@ -126,350 +210,161 @@ main {
 .services {
     width: 100%;
     max-width: 1000px;
-
     margin: 30px auto 70px;
-
-    padding: 45px 30px;
-
-    background-color: rgba(0, 0, 0, 0.08);
-
-    border-radius: 15px;
+    padding: 48px 30px;
+    background-color: rgba(255, 255, 255, 0.45);
+    border-radius: 36px;
 }
-
-
-/* =========================================
-   ENCABEZADO
-   ========================================= */
 
 .services-header {
     text-align: center;
-
-    margin-bottom: 35px;
+    margin-bottom: 38px;
 }
 
 .services-header h2 {
-    font-size: 32px;
-
-    color: rgb(41, 48, 48);
-
+    font-size: 30px;
+    line-height: 1.3;
+    color: var(--tinta);
     margin-bottom: 12px;
 }
 
 .services-header h2 em {
-    color: #4f7565;
-
+    color: var(--salvia-oscuro);
     font-style: normal;
 }
 
 .services-header p {
-    max-width: 650px;
-
+    max-width: 60ch;
     margin: 0 auto;
-
-    color: rgb(70, 80, 80);
-
-    font-size: 16px;
-
-    line-height: 1.6;
+    color: var(--tinta-suave);
+    font-size: 17px;
 }
-
-
-/* =========================================
-   CONTENEDOR DE TARJETAS
-   ========================================= */
 
 .services-container {
     display: grid;
-
     grid-template-columns: repeat(2, 1fr);
-
-    gap: 25px;
-
-    max-width: 800px;
-
+    gap: 26px;
+    max-width: 820px;
     margin: 0 auto;
 }
 
-
-/* =========================================
-   TARJETA
-   ========================================= */
-
 .service-card {
     display: flex;
-
     flex-direction: column;
-
     text-align: center;
-
-    padding: 30px 25px;
-
-    background-color: rgba(255, 255, 255, 0.90);
-
-    border-radius: 12px;
-
-    border: 1px solid rgba(41, 48, 48, 0.15);
-
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
-
-    transition:
-        transform 0.3s ease,
-        box-shadow 0.3s ease;
+    padding: 32px 26px;
+    background-color: var(--superficie);
+    border-radius: var(--radio);
+    border: 1px solid var(--linea);
+    box-shadow: var(--sombra);
+    transition: box-shadow 0.4s ease;
 }
 
-
-/* =========================================
-   EFECTO HOVER
-   ========================================= */
-
+/* Hover discreto: sin saltos ni movimiento */
 .service-card:hover {
-    transform: translateY(-5px);
-
-    box-shadow: 0 10px 22px rgba(0, 0, 0, 0.22);
+    box-shadow: 0 8px 26px rgba(36, 57, 60, 0.14);
 }
-
-
-/* =========================================
-   ICONO
-   ========================================= */
 
 .service-icon {
     display: flex;
-
     justify-content: center;
-
     align-items: center;
-
-    width: 55px;
-    height: 55px;
-
+    width: 60px;
+    height: 60px;
     margin: 0 auto 18px;
-
     border-radius: 50%;
-
-    background-color: rgba(139, 212, 182, 0.25);
-
-    color: #4f7565;
-
+    background-color: var(--fondo-suave);
+    color: var(--salvia-oscuro);
     font-size: 28px;
-
-    border: 2px solid #8bd4b6;
 }
 
-
-/* =========================================
-   NOMBRE DEL ESPECIALISTA
-   ========================================= */
-
 .service-card h3 {
-    color: rgb(41, 48, 48);
-
-    font-size: 20px;
-
+    color: var(--tinta);
+    font-size: 21px;
     margin-bottom: 8px;
 }
 
-
-/* =========================================
-   ESPECIALIDAD
-   ========================================= */
-
 .specialty {
-    color: #4f7565;
-
-    font-size: 14px;
-
-    font-weight: bold;
-
-    min-height: 42px;
-
+    color: var(--salvia-oscuro);
+    font-size: 15px;
+    font-weight: 700;
+    min-height: 46px;
     line-height: 1.5;
-
     margin-bottom: 20px;
 }
-
-
-/* =========================================
-   INFORMACIÓN
-   ========================================= */
 
 .service-details {
     display: flex;
-
     justify-content: space-around;
-
     gap: 10px;
-
-    padding: 15px 0;
-
+    padding: 16px 0;
     margin-bottom: 20px;
-
-    border-top: 1px solid rgba(41, 48, 48, 0.15);
-
-    border-bottom: 1px solid rgba(41, 48, 48, 0.15);
+    border-top: 1px solid var(--linea);
+    border-bottom: 1px solid var(--linea);
 }
-
 
 .detail {
     display: flex;
-
     flex-direction: column;
-
-    gap: 5px;
-
+    gap: 4px;
     flex: 1;
 }
 
-
 .detail span {
-    color: rgb(100, 100, 100);
-
-    font-size: 12px;
+    color: var(--tinta-suave);
+    font-size: 14px;
 }
-
 
 .detail strong {
-    color: rgb(41, 48, 48);
-
-    font-size: 13px;
+    color: var(--tinta);
+    font-size: 15px;
 }
-
-
-/* =========================================
-   PRECIO
-   ========================================= */
 
 .service-price {
     display: flex;
-
     flex-direction: column;
-
     gap: 3px;
-
     margin-bottom: 22px;
 }
 
-
 .service-price small {
-    color: rgb(100, 100, 100);
-
-    font-size: 12px;
+    color: var(--tinta-suave);
+    font-size: 14px;
 }
 
-
 .service-price strong {
-    color: #4f7565;
-
+    color: var(--salvia-oscuro);
     font-size: 28px;
 }
 
-
-/* =========================================
-   BOTÓN
-   ========================================= */
-
+/* Botones: color sólido y suave, el hover solo oscurece un poco */
 .service-button {
     display: block;
-
     width: 100%;
-
     margin-top: auto;
-
-    padding: 12px 15px;
-
-    background-color: #8bd4b6;
-
-    color: rgb(41, 48, 48);
-
-    border-radius: 8px;
-
+    padding: 14px 16px;
+    background-color: var(--salvia-oscuro);
+    color: #ffffff;
+    border-radius: 999px;
     text-decoration: none;
-
-    font-size: 14px;
-
-    font-weight: bold;
-
-    transition:
-        background-color 0.3s ease,
-        color 0.3s ease,
-        transform 0.2s ease;
+    font-size: 16px;
+    font-weight: 700;
+    transition: background-color 0.4s ease;
 }
-
 
 .service-button:hover {
-    background-color: rgb(30, 7, 133);
-
-    color: white;
-
-    transform: translateY(-2px);
+    background-color: #2f5348;
 }
-
-
-/* =========================================
-   TEXTO INFERIOR
-   ========================================= */
 
 .services-footer {
     text-align: center;
-
-    margin-top: 30px;
+    margin-top: 32px;
 }
-
 
 .services-footer p {
-    color: rgb(70, 80, 80);
-
-    font-size: 13px;
+    color: var(--tinta-suave);
+    font-size: 15px;
 }
-
-
-/* =========================================
-   RESPONSIVE
-   ========================================= */
-
-@media (max-width: 700px) {
-
-    .services {
-        padding: 35px 20px;
-    }
-
-    .services-header h2 {
-        font-size: 27px;
-    }
-
-    .services-container {
-        grid-template-columns: 1fr;
-    }
-
-}
-
-
-@media (max-width: 450px) {
-
-    .services {
-        padding: 30px 15px;
-    }
-
-    .services-header h2 {
-        font-size: 24px;
-    }
-
-    .services-header p {
-        font-size: 14px;
-    }
-
-    .service-card {
-        padding: 25px 18px;
-    }
-
-    .service-details {
-        flex-direction: column;
-
-        gap: 12px;
-    }
-
-}
-
 
 /* =========================================
    SECCIÓN DE EVALUACIÓN
@@ -477,370 +372,273 @@ main {
 
 .evaluation {
     width: 100%;
-    max-width: 900px;
-
+    max-width: 860px;
     margin: 30px auto 70px;
-
     padding: 50px 20px;
 }
 
-
-/* ENCABEZADO */
-
 .evaluation-header {
     text-align: center;
-
-    margin-bottom: 35px;
+    margin-bottom: 36px;
 }
 
 .evaluation-header h2 {
-    color: rgb(41, 48, 48);
-
-    font-size: 32px;
-
-    margin-bottom: 15px;
+    color: var(--tinta);
+    font-size: 30px;
+    line-height: 1.3;
+    margin-bottom: 14px;
 }
 
 .evaluation-header em {
-    color: #6f8a7c;
-
+    color: var(--salvia-oscuro);
     font-style: normal;
 }
 
 .evaluation-header p {
-    max-width: 650px;
-
+    max-width: 60ch;
     margin: 0 auto;
-
-    color: rgb(70, 80, 80);
-
-    font-size: 17px;
-
-    line-height: 1.6;
+    color: var(--tinta-suave);
+    font-size: 18px;
 }
 
-
-/* =========================================
-   CAJA DE ENCUESTA
-   ========================================= */
+/* ENCUESTA */
 
 .survey-box {
-    background-color: rgba(255, 255, 255, 0.9);
-
-    border-radius: 12px;
-
-    padding: 30px;
-
-    box-shadow:
-        0 6px 15px rgba(0, 0, 0, 0.15);
-
-    border: 1px solid rgba(41, 48, 48, 0.15);
+    background-color: var(--superficie);
+    border-radius: var(--radio);
+    padding: 34px;
+    box-shadow: var(--sombra);
+    border: 1px solid var(--linea);
 }
 
 .survey-box h3 {
-    color: rgb(41, 48, 48);
-
-    font-size: 22px;
-
+    color: var(--tinta);
+    font-size: 23px;
     margin-bottom: 10px;
 }
 
 .survey-description {
-    color: rgb(90, 90, 90);
-
-    font-size: 14px;
-
-    margin-bottom: 25px;
-
-    line-height: 1.5;
+    color: var(--tinta-suave);
+    font-size: 16px;
+    margin-bottom: 26px;
 }
 
-
-/* =========================================
-   PREGUNTAS
-   ========================================= */
-
 .question {
-    padding: 20px 0;
-
-    border-top: 1px solid rgba(41, 48, 48, 0.15);
+    padding: 22px 0;
+    border-top: 1px solid var(--linea);
 }
 
 .question p {
-    color: rgb(41, 48, 48);
-
-    font-size: 15px;
-
-    margin-bottom: 12px;
-
-    line-height: 1.5;
+    color: var(--tinta);
+    font-size: 17px;
+    margin-bottom: 14px;
 }
 
 .question label {
     display: inline-flex;
-
     align-items: center;
-
-    gap: 7px;
-
-    margin-right: 20px;
-
-    color: rgb(70, 80, 80);
-
-    font-size: 14px;
-
+    gap: 9px;
+    margin: 0 10px 8px 0;
+    padding: 8px 16px;
+    background-color: var(--fondo);
+    border-radius: 999px;
+    color: var(--tinta);
+    font-size: 16px;
     cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.question label:hover {
+    background-color: var(--fondo-suave);
 }
 
 .question input[type="radio"] {
-    accent-color: #6f8a7c;
-
+    width: 18px;
+    height: 18px;
+    accent-color: var(--salvia-oscuro);
     cursor: pointer;
 }
-
-
-/* =========================================
-   BOTÓN DE ENCUESTA
-   ========================================= */
 
 .survey-button {
     display: block;
-
     width: 100%;
-
-    margin-top: 20px;
-
-    padding: 12px;
-
+    margin-top: 22px;
+    padding: 15px;
     border: none;
-
-    border-radius: 8px;
-
-    background-color: #8bd4b6;
-
-    color: rgb(41, 48, 48);
-
-    font-family: 'Atkinson Hyperlegible Mono', monospace;
-
-    font-size: 15px;
-
-    font-weight: bold;
-
+    border-radius: 999px;
+    background-color: var(--salvia-oscuro);
+    color: #ffffff;
+    font-family: inherit;
+    font-size: 17px;
+    font-weight: 700;
     cursor: pointer;
-
-    transition:
-        background-color 0.3s ease,
-        color 0.3s ease;
+    transition: background-color 0.4s ease;
 }
 
 .survey-button:hover {
-    background-color: rgb(30, 7, 133);
-
-    color: white;
+    background-color: #2f5348;
 }
 
-
 /* =========================================
-   RESULTADOS
+   RESULTADOS (tono claro y contenedor)
    ========================================= */
 
 .results-box {
-    margin-top: 35px;
-
-    padding: 30px;
-
-    background-color: rgba(41, 48, 48, 0.92);
-
-    border-radius: 12px;
-
-    box-shadow:
-        0 6px 15px rgba(0, 0, 0, 0.2);
+    margin-top: 36px;
+    padding: 34px;
+    background-color: var(--bruma);
+    border-radius: var(--radio);
 }
 
 .results-box h3 {
-    color: #8bd4b6;
-
-    font-size: 22px;
-
+    color: var(--tinta);
+    font-size: 23px;
     margin-bottom: 10px;
 }
 
 .results-intro {
-    color: #ddd;
-
-    font-size: 14px;
-
-    line-height: 1.5;
-
-    margin-bottom: 25px;
+    color: var(--tinta-suave);
+    font-size: 16px;
+    margin-bottom: 26px;
 }
-
-
-/* =========================================
-   TARJETAS DE RESULTADO
-   ========================================= */
 
 .result-card {
     display: flex;
-
     align-items: flex-start;
-
     gap: 20px;
-
-    padding: 20px;
-
-    margin-bottom: 15px;
-
-    background-color: rgba(255, 255, 255, 0.08);
-
-    border: 1px solid rgba(139, 212, 182, 0.25);
-
-    border-radius: 10px;
+    padding: 22px;
+    margin-bottom: 16px;
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 18px;
 }
-
-
-/* ICONO DEL RESULTADO */
 
 .result-icon {
     display: flex;
-
     justify-content: center;
-
     align-items: center;
-
     flex-shrink: 0;
-
-    width: 55px;
-
-    height: 55px;
-
-    background-color: rgba(139, 212, 182, 0.15);
-
-    border: 1px solid #8bd4b6;
-
+    width: 56px;
+    height: 56px;
+    background-color: var(--fondo-suave);
     border-radius: 50%;
-
-    font-size: 25px;
+    font-size: 26px;
 }
-
-
-/* CONTENIDO */
 
 .result-content {
     flex: 1;
 }
 
 .result-content h4 {
-    color: #8bd4b6;
-
-    font-size: 17px;
-
+    color: var(--tinta);
+    font-size: 18px;
     margin-bottom: 8px;
 }
 
 .result-content p {
-    color: #ddd;
-
-    font-size: 13px;
-
-    line-height: 1.5;
-
-    margin-bottom: 15px;
+    color: var(--tinta-suave);
+    font-size: 15px;
+    margin-bottom: 14px;
 }
-
-
-/* BOTÓN DEL RESULTADO */
 
 .result-button {
     display: inline-block;
-
-    padding: 8px 14px;
-
-    background-color: #8bd4b6;
-
-    color: rgb(41, 48, 48);
-
-    border-radius: 7px;
-
+    padding: 10px 18px;
+    background-color: var(--salvia-oscuro);
+    color: #ffffff;
+    border-radius: 999px;
     text-decoration: none;
-
-    font-size: 12px;
-
-    font-weight: bold;
-
-    transition:
-        background-color 0.3s ease,
-        color 0.3s ease;
+    font-size: 14px;
+    font-weight: 700;
+    transition: background-color 0.4s ease;
 }
 
 .result-button:hover {
-    background-color: white;
-
-    color: rgb(41, 48, 48);
+    background-color: #2f5348;
 }
-
-
-/* =========================================
-   AVISO
-   ========================================= */
 
 .evaluation-warning {
-    margin-top: 25px;
-
+    margin-top: 26px;
     padding-top: 20px;
-
-    border-top: 1px solid rgba(255, 255, 255, 0.15);
-
-    color: #bbb;
-
-    font-size: 12px;
-
-    line-height: 1.5;
-
+    border-top: 1px solid var(--linea);
+    color: var(--tinta-suave);
+    font-size: 14px;
     text-align: center;
 }
-
 
 /* =========================================
    RESPONSIVE
    ========================================= */
 
-@media (max-width: 600px) {
+@media (max-width: 700px) {
+    .welcome {
+        padding: 44px 22px;
+        border-radius: 40px 40px 40px 14px;
+    }
 
+    .welcome h1 {
+        font-size: 30px;
+    }
+
+    .services {
+        padding: 36px 20px;
+    }
+
+    .services-header h2 {
+        font-size: 26px;
+    }
+
+    .services-container {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 600px) {
     .evaluation {
         padding: 35px 15px;
     }
 
     .evaluation-header h2 {
-        font-size: 27px;
+        font-size: 26px;
     }
 
-    .evaluation-header p {
-        font-size: 15px;
-    }
-
-    .survey-box {
-        padding: 20px;
-    }
-
+    .survey-box,
     .results-box {
-        padding: 20px;
+        padding: 22px;
     }
 
     .result-card {
         flex-direction: column;
-
         align-items: center;
-
         text-align: center;
     }
 
-    .result-content {
-        width: 100%;
-    }
-
+    .result-content,
     .result-button {
         width: 100%;
     }
+}
 
+@media (max-width: 450px) {
+    .service-card {
+        padding: 26px 18px;
+    }
+
+    .service-details {
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .safe-exit {
+        top: 8px;
+        right: 8px;
+        padding: 8px 14px;
+    }
+}
+
+/* Respeta a quien prefiere sin animaciones */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        transition: none !important;
+        scroll-behavior: auto !important;
+    }
 }

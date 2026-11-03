@@ -1,3 +1,18 @@
+:root {
+    --fondo: #f1f5f3;
+    --fondo-suave: #e3ece8;
+    --superficie: #ffffff;
+    --tinta: #24393c;
+    --tinta-suave: #4d6366;
+    --salvia: #7fa89a;
+    --salvia-oscuro: #3f6b5e;
+    --bruma: #dfe6f3;
+    --calido: #f6e7d8;
+    --linea: rgba(36, 57, 60, 0.14);
+    --sombra: 0 4px 18px rgba(36, 57, 60, 0.08);
+    --radio: 22px;
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -6,22 +21,46 @@
 
 html {
     min-height: 100%;
+    scroll-behavior: smooth;
 }
 
 body {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
-    font-family: 'Atkinson Hyperlegible Mono', monospace;
-    background: linear-gradient(to right, #fafafa, #6f8a7c);
-    color: white;
+    font-family: 'Atkinson Hyperlegible', 'Segoe UI', sans-serif;
+    font-size: 17px;
+    line-height: 1.7;
+    background:
+        radial-gradient(circle at 15% 0%, var(--bruma) 0, transparent 45%),
+        radial-gradient(circle at 90% 30%, var(--calido) 0, transparent 40%),
+        var(--fondo);
+    background-attachment: fixed;
+    color: var(--tinta);
 }
 
-/* NAVBAR */
+/* Foco visible para quien navega con teclado */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible {
+    outline: 3px solid var(--salvia-oscuro);
+    outline-offset: 3px;
+}
+
+/* =========================================
+   ENCABEZADO Y NAVEGACIÓN
+   ========================================= */
+
 .site-header {
     width: 100%;
-    background-color: rgb(41, 48, 48);
-    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.75);
+    border-bottom: 1px solid var(--linea);
+    color: var(--tinta);
+    padding: 16px 20px;
+}
+
+.navbar {
+    width: 100%;
 }
 
 .navbar ul {
@@ -29,75 +68,22 @@ body {
     justify-content: center;
     align-items: center;
     flex-wrap: wrap;
-    gap: 30px;
+    gap: 12px 28px;
     list-style: none;
 }
 
 .navbar a {
     display: block;
-    color: rgb(228, 240, 240);
+    color: var(--tinta);
     text-decoration: none;
     font-size: 18px;
-    padding: 5px;
-    transition: color 0.3s ease;
+    padding: 8px 14px;
+    border-radius: 999px;
+    transition: background-color 0.4s ease;
 }
 
 .navbar a:hover {
-    color: white;
-    text-decoration: underline;
-}
-
-/* CONTENEDOR */
-.main-content {
-    flex: 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    padding: 40px 15px;
-}
-
-.nav-btn {
-    background-color: #6f8a7c;
-    border: none;
-    color: white;
-    font-weight: bold;
-    font-size: 16px;
-    width: 32px;
-    height: 32px;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.2s;
-}
-
-.nav-btn:hover {
-    background-color: #8bd4b6;
-    color: black;
-}
-
-.event-pill {
-    background-color: #8bd4b6;
-    color: black;
-    font-size: 11px;
-    padding: 2px 4px;
-    border-radius: 4px;
-    font-weight: bold;
-    text-align: center;
-}
-
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
-
-body {
-    background-color: #f4f6f9;
-    color: #333;
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
+    background-color: var(--fondo-suave);
 }
 
 .user-menu img {
@@ -108,32 +94,37 @@ body {
     margin-right: 8px;
 }
 
-/* Layout principal */
+/* =========================================
+   LAYOUT PRINCIPAL DEL FORO
+   ========================================= */
+
 .container {
     display: flex;
     flex: 1;
     max-width: 1200px;
     width: 100%;
-    margin: 20px auto;
-    gap: 20px;
-    padding: 0 15px;
+    margin: 30px auto;
+    gap: 25px;
+    padding: 0 20px;
 }
 
 /* Barra Lateral (Categorías) */
 aside {
-    width: 250px;
-    background: white;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    width: 260px;
+    background: var(--superficie);
+    padding: 24px;
+    border-radius: var(--radio);
+    border: 1px solid var(--linea);
+    box-shadow: var(--sombra);
     height: fit-content;
 }
 
 aside h3 {
-    font-size: 16px;
-    color: #7f8c8d;
+    font-size: 15px;
+    color: var(--tinta-suave);
     margin-bottom: 15px;
     text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 
 aside ul {
@@ -146,17 +137,19 @@ aside ul li {
 
 aside ul li a {
     text-decoration: none;
-    color: #34495e;
+    color: var(--tinta);
     font-weight: 500;
     display: block;
-    padding: 8px 12px;
-    border-radius: 5px;
-    transition: 0.3s;
+    padding: 10px 14px;
+    border-radius: 12px;
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-aside ul li a:hover, aside ul li a.active {
-    background-color: #e8f4f8;
-    color: #2980b9;
+aside ul li a:hover, 
+aside ul li a.active {
+    background-color: var(--fondo-suave);
+    color: var(--salvia-oscuro);
+    font-weight: 700;
 }
 
 /* Sección Principal de Contenido */
@@ -168,29 +161,31 @@ main {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 15px;
+    margin-bottom: 20px;
 }
 
 .btn-new-topic {
-    background-color: #27ae60;
-    color: white;
+    background-color: var(--salvia-oscuro);
+    color: #ffffff;
     border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
+    padding: 12px 22px;
+    border-radius: 999px;
     cursor: pointer;
-    font-weight: bold;
-    transition: background 0.3s;
+    font-weight: 700;
+    font-size: 15px;
+    transition: background-color 0.4s ease;
 }
 
 .btn-new-topic:hover {
-    background-color: #219150;
+    background-color: #2f5348;
 }
 
 /* Lista de Temas */
 .topic-list {
-    background: white;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    background: var(--superficie);
+    border-radius: var(--radio);
+    border: 1px solid var(--linea);
+    box-shadow: var(--sombra);
     overflow: hidden;
 }
 
@@ -198,9 +193,9 @@ main {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 15px 20px;
-    border-bottom: 1px solid #eee;
-    transition: background 0.2s;
+    padding: 20px 24px;
+    border-bottom: 1px solid var(--linea);
+    transition: background-color 0.2s ease;
 }
 
 .topic-item:last-child {
@@ -208,64 +203,105 @@ main {
 }
 
 .topic-item:hover {
-    background-color: #fcfcfc;
+    background-color: var(--fondo);
 }
 
 .topic-info h4 {
-    font-size: 16px;
-    margin-bottom: 5px;
+    font-size: 17px;
+    margin-bottom: 6px;
 }
 
 .topic-info h4 a {
     text-decoration: none;
-    color: #2c3e50;
+    color: var(--tinta);
+    font-weight: 700;
+    transition: color 0.3s ease;
 }
 
 .topic-info h4 a:hover {
-    color: #2980b9;
+    color: var(--salvia-oscuro);
 }
 
 .topic-meta {
-    font-size: 12px;
-    color: #95a5a6;
+    font-size: 13px;
+    color: var(--tinta-suave);
 }
 
 .topic-stats {
     display: flex;
-    gap: 20px;
+    gap: 24px;
     text-align: center;
-    font-size: 13px;
-    color: #7f8c8d;
+    font-size: 14px;
+    color: var(--tinta-suave);
 }
 
 .topic-stats span {
     display: block;
-    font-weight: bold;
-    color: #333;
+    font-weight: 700;
+    color: var(--tinta);
+    font-size: 16px;
 }
 
-/* Etiqueta / Tag */
+/* Etiquetas / Tags */
 .badge {
-    background: #e0e0e0;
-    padding: 2px 8px;
-    border-radius: 4px;
-    font-size: 11px;
-    margin-right: 5px;
+    background: var(--fondo-suave);
+    color: var(--tinta);
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 700;
+    margin-right: 8px;
 }
 
-.badge-dev { background: #d4edda; color: #155724; }
-.badge-design { background: #f8d7da; color: #721c24; }
+.badge-dev { 
+    background-color: var(--bruma); 
+    color: var(--tinta); 
+}
+
+.badge-design { 
+    background-color: var(--calido); 
+    color: var(--tinta); 
+}
+
+/* Botones auxiliares y elementos del foro */
+.nav-btn {
+    background-color: var(--fondo-suave);
+    border: 1px solid var(--linea);
+    color: var(--tinta);
+    font-weight: bold;
+    font-size: 16px;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.nav-btn:hover {
+    background-color: var(--salvia-oscuro);
+    color: white;
+}
+
+.event-pill {
+    background-color: var(--salvia);
+    color: white;
+    font-size: 12px;
+    padding: 4px 8px;
+    border-radius: 999px;
+    font-weight: bold;
+    text-align: center;
+}
 
 /* FOOTER */
 .site-footer {
     width: 100%;
-    background-color: rgb(41, 48, 48);
-    color: rgb(228, 240, 240);
-    padding: 20px;
+    background-color: var(--fondo-suave);
+    color: var(--tinta-suave);
+    padding: 24px 20px;
     text-align: center;
     margin-top: auto;
 }
 
 .site-footer p {
-    font-size: 14px;
+    font-size: 15px;
 }
