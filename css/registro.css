@@ -267,7 +267,7 @@ input[type="file"]:hover {
 }
 
 
-/*PARA GESTION DE USUARIO*/
+
 .button-group {
     display: flex;
 
@@ -283,7 +283,7 @@ input[type="file"]:hover {
 }
 
 
-/* Botones */
+
 button, 
 .form-actions button,
 .button-group button {
@@ -305,7 +305,7 @@ button:hover,
     background-color: #2f5348;
 }
 
-/* Botón especial para eliminar (manteniendo un tono rojo suave y sobrio acorde al diseño) */
+
 .button-group button[name="eliminar"] {
     background-color: #a85858;
 }
@@ -341,4 +341,25 @@ button:hover,
 
 .form-footer a:hover {
     text-decoration: underline;
+}
+
+.toggle-password-btn {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: transparent !important;
+    border: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    cursor: pointer;
+    font-size: 18px;
+    line-height: 1;
+}
+
+.toggle-password-btn:hover {
+    background: transparent !important;
+    color: inherit !important;
 }

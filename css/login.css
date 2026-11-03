@@ -194,3 +194,24 @@ button:hover,
 .survey-button:hover {
     background-color: #2f5348;
 }
+
+.toggle-password-btn {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: transparent !important;
+    border: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    cursor: pointer;
+    font-size: 18px;
+    line-height: 1;
+}
+
+.toggle-password-btn:hover {
+    background: transparent !important;
+    color: inherit !important;
+}

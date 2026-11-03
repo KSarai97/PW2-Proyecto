@@ -42,7 +42,7 @@ body {
     color: var(--tinta);
 }
 
-/* NAVBAR */
+
 .site-header {
     width: 100%;
     background-color: rgba(255, 255, 255, 0.75);
@@ -78,7 +78,7 @@ body {
     background-color: var(--fondo-suave);
 }
 
-/* CONTENIDO PRINCIPAL */
+
 .main-content {
     flex: 1;
     display: flex;
@@ -174,7 +174,7 @@ dd a:hover {
     text-decoration: underline;
 }
 
-/* FOOTER */
+
 .site-footer {
     width: 100%;
     background-color: var(--fondo-suave);
@@ -188,8 +188,8 @@ dd a:hover {
     font-size: 15px;
 }
 
-/*PARA GESTION DE USUARIO*/
-/* BOTONES DEL PERFIL */
+
+
 
 .button-group {
     display: flex;
@@ -225,3 +225,9 @@ dd a:hover {
     background-color: #2f5348;
     color: #ffffff;
 }
+
+
+
+
+
+

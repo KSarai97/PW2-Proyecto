@@ -6,7 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <link rel="stylesheet" href="css/registro.css">
-<link rel="icon" type="image/png" href="img/logo.png">
+    <link rel="icon" type="image/png" href="img/logo.png">
+    <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="css/calendario.css">
     <title>Registro de usuario</title>
 </head>
 
@@ -31,12 +33,7 @@
 
 
             <!-- Formulario -->
-            <form
-                action="registro.php"
-                method="POST"
-                enctype="multipart/form-data"
-                autocomplete="off"
-                onsubmit="return validateForm()"
+            <form action="registro.php" method="POST" enctype="multipart/form-data" autocomplete="off" onsubmit="return validateForm()"
             >
 
                 <!-- Mensajes de error -->
@@ -144,21 +141,13 @@
                     </div>
 
 
-                    <div class="field">
-
-                        <label for="id_pass">
-                            Contraseña:
-                        </label>
-
-                        <input
-                            type="password"
-                            id="id_pass"
-                            name="id_pass"
-                            placeholder="Ingresa tu contraseña"
-                            required
-                        >
-
+                <div class="field"> 
+                    <label for="id_pass">Contraseña:</label>
+                    <div style="position: relative;">
+                        <input type="password" id="id_pass" name="id_pass" placeholder="Ingresa tu contraseña" autocomplete="current-password" required style="padding-right: 45px;">
+                        <button type="button" id="toggle-password" class="toggle-password-btn" onclick="togglePassword()" title="Mostrar u ocultar contraseña">👁️</button>
                     </div>
+                </div>
 
                 </fieldset>
 
@@ -206,26 +195,63 @@
 
                 <!-- Datos adicionales -->
                 <fieldset>
-
-                    <legend>
-                        Datos adicionales
-                    </legend>
-
-
                     <div class="field">
+                        <fieldset>
+                            <legend>
+                                Datos adicionales
+                            </legend>
 
-                        <label for="id_fech">
-                            Fecha de nacimiento:
-                        </label>
+                            <!-- CALENDARIO INTERACTIVO PARA FECHA DE NACIMIENTO -->
+                            <div class="field">
+                                <label>Fecha de nacimiento:</label>
+                                
+                                <div class="picker" style="background: var(--fondo); border: 1px solid var(--linea); border-radius: 12px; padding: 15px; margin-top: 5px;">
+                                    <div class="month-navigation">
+                                        <button type="button" class="nav-btn" id="mes-anterior" aria-label="Mes anterior">&lt;</button>
+                                        <h2 id="mes-titulo" aria-live="polite" style="font-size: 16px; color: var(--tinta);"></h2>
+                                        <button type="button" class="nav-btn" id="mes-siguiente" aria-label="Mes siguiente">&gt;</button>
+                                    </div>
 
-                        <input
-                            type="date"
-                            id="id_fech"
-                            name="id_fech"
-                        >
+                                    <div class="calendar-grid" id="calendario-grid">
+                                        <div class="day-label">Dom</div>
+                                        <div class="day-label">Lun</div>
+                                        <div class="day-label">Mar</div>
+                                        <div class="day-label">Mié</div>
+                                        <div class="day-label">Jue</div>
+                                        <div class="day-label">Vie</div>
+                                        <div class="day-label">Sáb</div>
+                                    </div>
 
-                    </div>
+                                    <!-- Campo oculto que enviará la fecha seleccionada a registro.php -->
+                                    <input type="hidden" id="fecha" name="id_fech" required>
+                                    <p class="picked-date" id="fecha-elegida" aria-live="polite" style="margin-top: 10px; font-size: 14px; color: var(--tinta-suave);">Aún no eliges un día.</p>
+                                </div>
+                            </div>
 
+                            <div class="field">
+                                <label for="prefe">Género:</label>
+                                <select name="pref" id="prefe">
+                                    <option value="0">Masculino</option>
+                                    <option value="1">Femenino</option>
+                                </select>
+                            </div>
+
+                            <div class="field">
+                                <label for="est">Estado:</label>
+                                <select name="est" id="est">
+                                    <option value="0">Público</option>
+                                    <option value="1">Privado</option>
+                                </select>
+                            </div>
+
+                            <div class="field">
+                                <label for="rol">Rol:</label>
+                                <select name="rol" id="rol">
+                                    <option value="0">Operativo</option>
+                                    <option value="1">Administrador</option>
+                                </select>
+                            </div>
+                        </fieldset>
 
                     <div class="field">
 
@@ -304,12 +330,7 @@
                 <!-- Botón de envío -->
                 <div class="form-actions">
 
-                    <button
-                        type="submit"
-                        name="Aceptar"
-                    >
-                        Aceptar
-                    </button>
+                    <button type="submit" name="registrar">Aceptar</button>
 
                 </div>
 
@@ -321,9 +342,7 @@
 
                 <p>
                     ¿Ya te has registrado?
-                    <a href="login.html">
-                        Ingresa desde aquí
-                    </a>
+                    <a href="login.html"> Ingresa desde aquí </a>
                 </p>
 
             </footer>
@@ -333,7 +352,22 @@
     </main>
 
 
-    <script src="js/registro_foto.js"></script>
 
+    <script src="js/registro_foto.js"></script>
+    <script src="js/Calendario_registro.js"></script>
+    <script>
+        function togglePassword() {
+            const passwordInput = document.getElementById('id_pass');
+            const toggleBtn = document.getElementById('toggle-password');
+            
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                toggleBtn.textContent = 'V'; // Icono cuando la contraseña está visible
+            } else {
+                passwordInput.type = 'password';
+                toggleBtn.textContent = 'C'; // Icono cuando la contraseña está oculta
+            }
+        }
+    </script>
 </body>
 </html>

@@ -1,14 +1,3 @@
-/* =========================================
-   DISEÑO "REFUGIO"
-   Pensado para personas que viven acoso:
-   colores suaves, sin contrastes agresivos,
-   sin movimientos bruscos, texto legible y
-   una salida rápida siempre a la vista.
-
-   Agrega en el <head> de tu HTML:
-   <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
-   ========================================= */
-
 :root {
     --fondo: #f1f5f3;
     --fondo-suave: #e3ece8;
@@ -50,7 +39,7 @@ body {
     color: var(--tinta);
 }
 
-/* Foco visible para quien navega con teclado */
+
 a:focus-visible,
 button:focus-visible,
 input:focus-visible {
@@ -173,7 +162,7 @@ main {
     color: var(--tinta-suave);
 }
 
-/* Mensaje de privacidad (opcional) */
+
 .safe-note {
     display: block;
     width: fit-content;
@@ -260,7 +249,7 @@ main {
     transition: box-shadow 0.4s ease;
 }
 
-/* Hover discreto: sin saltos ni movimiento */
+
 .service-card:hover {
     box-shadow: 0 8px 26px rgba(36, 57, 60, 0.14);
 }
@@ -337,7 +326,7 @@ main {
     font-size: 28px;
 }
 
-/* Botones: color sólido y suave, el hover solo oscurece un poco */
+
 .service-button {
     display: block;
     width: 100%;
@@ -401,7 +390,7 @@ main {
     font-size: 18px;
 }
 
-/* ENCUESTA */
+
 
 .survey-box {
     background-color: var(--superficie);
@@ -635,7 +624,7 @@ main {
     }
 }
 
-/* Respeta a quien prefiere sin animaciones */
+
 @media (prefers-reduced-motion: reduce) {
     * {
         transition: none !important;

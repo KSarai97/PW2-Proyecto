@@ -39,7 +39,7 @@ body {
     color: var(--tinta);
 }
 
-/* Foco visible para quien navega con teclado */
+
 a:focus-visible,
 button:focus-visible,
 input:focus-visible {
@@ -108,7 +108,7 @@ input:focus-visible {
     padding: 0 20px;
 }
 
-/* Barra Lateral (Categorías) */
+
 aside {
     width: 260px;
     background: var(--superficie);
@@ -152,7 +152,7 @@ aside ul li a.active {
     font-weight: 700;
 }
 
-/* Sección Principal de Contenido */
+
 main {
     flex: 1;
 }
@@ -180,7 +180,7 @@ main {
     background-color: #2f5348;
 }
 
-/* Lista de Temas */
+
 .topic-list {
     background: var(--superficie);
     border-radius: var(--radio);
@@ -242,7 +242,7 @@ main {
     font-size: 16px;
 }
 
-/* Etiquetas / Tags */
+
 .badge {
     background: var(--fondo-suave);
     color: var(--tinta);
@@ -263,7 +263,7 @@ main {
     color: var(--tinta); 
 }
 
-/* Botones auxiliares y elementos del foro */
+
 .nav-btn {
     background-color: var(--fondo-suave);
     border: 1px solid var(--linea);
@@ -292,7 +292,7 @@ main {
     text-align: center;
 }
 
-/* FOOTER */
+
 .site-footer {
     width: 100%;
     background-color: var(--fondo-suave);

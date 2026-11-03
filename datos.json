@@ -1,0 +1,19 @@
+{
+    "usuarios": [
+        {
+            "id": 1793734451,
+            "nombre": "Hyun Soo",
+            "apellido_paterno": "Moon",
+            "apellido_materno": "Solis",
+            "usuario": "Hyun",
+            "email": "hyunsms@gmail.com",
+            "password": "$2y$10$6hmen4nypexUcmFCM3oUfe2jMCqTsJIglB2qxnoDng0KKmUw6SYt.",
+            "fecha_nacimiento": "2004-01-27",
+            "genero": "0",
+            "estado": "0",
+            "rol": "0",
+            "avatar": "foto_perfil\/default.png"
+        }
+    ],
+    "citas": []
+}
