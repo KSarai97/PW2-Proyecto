@@ -3,12 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/index.css">
     <link rel="stylesheet" href="css/calendario.css">
     <link rel="icon" type="image/png" href="img/logo.png">
     <title>Calendario de Citas</title>
 </head>
 <body>
-
     <header class="site-header">
         <nav class="navbar">
             <ul>
@@ -17,7 +18,7 @@
                 <li><a href="perfilEspecialista.html">Perfil especialista</a></li>
                 <li><a href="citas.html">Agendar citas</a></li>
                 <li><a href="foro.html">Foro</a></li>
-                 <li><a href="login.html"   title="Cerrar sesión">Cerrar sesión</a></li>
+                <li><a href="login.html" title="Cerrar sesión">Cerrar sesión</a></li>
             </ul>
         </nav>
     </header>
@@ -25,16 +26,16 @@
     <main class="main-content">
         <div class="calendar-container">
             <div class="calendar-header">
-                <h1>Calendario de <em>Citas</em></h1>
+                <h1>Calendario de citas</h1>
                 <div class="month-navigation">
-                    <button class="nav-btn">&lt;</button>
-                    <h2>Octubre 2026</h2>
-                    <button class="nav-btn">&gt;</button>
+                    <button class="nav-btn" id="mes-anterior" aria-label="Mes anterior">&lt;</button>
+                    <h2 id="mes-titulo" aria-live="polite"></h2>
+                    <button class="nav-btn" id="mes-siguiente" aria-label="Mes siguiente">&gt;</button>
                 </div>
             </div>
 
-            <!-- Grilla del calendario -->
-            <div class="calendar-grid">
+            <!-- Grilla: los días se generan en js/calendario.js -->
+            <div class="calendar-grid" id="calendario-grid">
                 <div class="day-label">Dom</div>
                 <div class="day-label">Lun</div>
                 <div class="day-label">Mar</div>
@@ -42,96 +43,20 @@
                 <div class="day-label">Jue</div>
                 <div class="day-label">Vie</div>
                 <div class="day-label">Sáb</div>
-
-                <!-- Días del mes (ejemplo) -->
-                <div class="calendar-day empty"></div>
-                <div class="calendar-day empty"></div>
-                <div class="calendar-day empty"></div>
-                <div class="calendar-day empty"></div>
-                <div class="calendar-day">1</div>
-                <div class="calendar-day">2</div>
-                <div class="calendar-day">3</div>
-
-                <div class="calendar-day">4</div>
-                <div class="calendar-day">5</div>
-                <div class="calendar-day">6</div>
-                <div class="calendar-day">7</div>
-                <div class="calendar-day has-event">
-                    8
-                    <span class="event-pill">11:00 AM</span>
-                </div>
-                <div class="calendar-day">9</div>
-                <div class="calendar-day">10</div>
-
-                <div class="calendar-day">11</div>
-                <div class="calendar-day">12</div>
-                <div class="calendar-day">13</div>
-                <div class="calendar-day">14</div>
-                <div class="calendar-day">15</div>
-                <div class="calendar-day">16</div>
-                <div class="calendar-day">17</div>
-
-                <div class="calendar-day">18</div>
-                <div class="calendar-day">19</div>
-                <div class="calendar-day">20</div>
-                <div class="calendar-day">21</div>
-                <div class="calendar-day has-event">
-                    22
-                    <span class="event-pill">4:00 PM</span>
-                </div>
-                <div class="calendar-day">23</div>
-                <div class="calendar-day">24</div>
-
-                <div class="calendar-day">25</div>
-                <div class="calendar-day">26</div>
-                <div class="calendar-day">27</div>
-                <div class="calendar-day">28</div>
-                <div class="calendar-day">29</div>
-                <div class="calendar-day">30</div>
-                <div class="calendar-day">31</div>
             </div>
 
-            <!-- Listado de citas próximas debajo del calendario -->
+            <!-- Citas del mes: se generan en js/calendario.js -->
             <div class="upcoming-appointments">
-                <h3>Próximas citas programadas</h3>
-                <div class="appointment-card">
-                    <div class="appointment-date">
-                        <span class="day">08</span>
-                        <span class="month">OCT</span>
-                    </div>
-                    <div class="appointment-info">
-                        <strong>Dra. María Fernández</strong>
-                        <p>11:00 AM - Modalidad: Presencial</p>
-                    </div>
-
-         <!--                   <div class="appointment-status status-confirmed" title="Mirar detalles de la cita">Confirmada
-                 </div>  -->  
-
-               <a href="Gestion_citas.html" class="appointment-status status-confirmed" title="Mirar detalles de la cita">Confirmada</a>
-          
-                </div>
-                </div>
-
-                <div class="appointment-card">
-                    <div class="appointment-date">
-                        <span class="day">22</span>
-                        <span class="month">OCT</span>
-                    </div>
-                    <div class="appointment-info">
-                        <strong>Lic. Roberto Sánchez</strong>
-                        <p>04:00 PM - Modalidad: En línea</p>
-                    </div>
-               <!--    <div class="appointment-status status-pending" title="Mirar detalles de la cita">Pendiente</div>
-                 -->  <a href="Gestion_citas.html" class="appointment-status status-pending" title="Mirar detalles de la cita">Pendiente</a>
-          
-                </div>
+                <h3 id="citas-titulo">Citas del mes</h3>
+                <div id="citas-lista"></div>
             </div>
         </div>
     </main>
 
     <footer class="site-footer">
-          <p>&copy; 2026 Brote psique. Todos los derechos reservados. </p>
+        <p>&copy; 2026 Brote psique. Todos los derechos reservados.</p>
     </footer>
 
+    <script src="js/calendario.js"></script>
 </body>
 </html>

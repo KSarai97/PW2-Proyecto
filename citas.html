@@ -3,12 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="css/calendario.css">
     <link rel="stylesheet" href="css/citas.css">
     <link rel="icon" type="image/png" href="img/logo.png">
     <title>Agendar Cita</title>
 </head>
 <body>
-
     <header class="site-header">
         <nav class="navbar">
             <ul>
@@ -17,7 +19,7 @@
                 <li><a href="perfilEspecialista.html">Perfil especialista</a></li>
                 <li><a href="calendario.html">Calendario de citas</a></li>
                 <li><a href="foro.html">Foro</a></li>
-                <li><a href="login.html"   title="Cerrar sesión">Cerrar sesión</a></li>
+                <li><a href="login.html" title="Cerrar sesión">Cerrar sesión</a></li>
             </ul>
         </nav>
     </header>
@@ -25,25 +27,25 @@
     <main class="main-content">
         <div class="container">
             <div class="form-header">
-                <h1>Agendar <em>Cita</em></h1>
-                <p>Selecciona a tu especialista y el horario de tu preferencia</p>
+                <h1>Agendar cita</h1>
+                <p>Elige a tu especialista y el día y la hora que mejor te acomoden.</p>
             </div>
 
-            <form action="procesar_cita.php" method="POST">
+            <form action="procesar_cita.php" method="POST" id="form-cita">
                 <fieldset>
-                    <legend>Detalles del especialista</legend>
+                    <legend>Tu especialista</legend>
 
                     <div class="field">
-                        <label for="especialista">Seleccionar Especialista:</label>
+                        <label for="especialista">Especialista</label>
                         <select id="especialista" name="id_especialista" required>
-                            <option value="" disabled selected>-- Elige un profesional --</option>
+                            <option value="" disabled selected>Elige un profesional</option>
                             <option value="1">Dra. María Fernández - Psicología Clínica</option>
                             <option value="2">Lic. Roberto Sánchez - Terapia Cognitivo-Conductual</option>
                         </select>
                     </div>
 
                     <div class="field">
-                        <label for="modalidad">Modalidad:</label>
+                        <label for="modalidad">Modalidad</label>
                         <select id="modalidad" name="modalidad" required>
                             <option value="presencial">Presencial (Consultorio)</option>
                             <option value="online">En línea (Videollamada)</option>
@@ -52,46 +54,61 @@
                 </fieldset>
 
                 <fieldset>
-                    <legend>Fecha y Horario</legend>
+                    <legend>Fecha y horario</legend>
 
-                    <div class="field-grid">
-                        <div class="field">
-                            <label for="fecha">Fecha:</label>
-                            <input type="date" id="fecha" name="fecha" required>
+                    <!-- Calendario para elegir el día: se genera en js/citas.js -->
+                    <div class="picker">
+                        <div class="month-navigation">
+                            <button type="button" class="nav-btn" id="mes-anterior" aria-label="Mes anterior">&lt;</button>
+                            <h2 id="mes-titulo" aria-live="polite"></h2>
+                            <button type="button" class="nav-btn" id="mes-siguiente" aria-label="Mes siguiente">&gt;</button>
                         </div>
 
-                        <div class="field">
-                            <label for="hora">Horario disponible:</label>
-                            <select id="hora" name="hora" required>
-                                <option value="" disabled selected>-- Selecciona hora --</option>
-                                <option value="10:00">10:00 AM</option>
-                                <option value="11:00">11:00 AM</option>
-                                <option value="12:00">12:00 PM</option>
-                                <option value="16:00">04:00 PM</option>
-                                <option value="17:00">05:00 PM</option>
-                            </select>
+                        <div class="calendar-grid" id="calendario-grid">
+                            <div class="day-label">Dom</div>
+                            <div class="day-label">Lun</div>
+                            <div class="day-label">Mar</div>
+                            <div class="day-label">Mié</div>
+                            <div class="day-label">Jue</div>
+                            <div class="day-label">Vie</div>
+                            <div class="day-label">Sáb</div>
                         </div>
+
+                        <input type="hidden" id="fecha" name="fecha">
+                        <p class="picked-date" id="fecha-elegida" aria-live="polite">Aún no eliges un día.</p>
+                    </div>
+
+                    <p class="group-label" id="horas-label">Horario disponible</p>
+                    <div class="time-slots" role="group" aria-labelledby="horas-label">
+                        <label class="time-option"><input type="radio" name="hora" value="10:00" required><span>10:00 AM</span></label>
+                        <label class="time-option"><input type="radio" name="hora" value="11:00"><span>11:00 AM</span></label>
+                        <label class="time-option"><input type="radio" name="hora" value="12:00"><span>12:00 PM</span></label>
+                        <label class="time-option"><input type="radio" name="hora" value="16:00"><span>04:00 PM</span></label>
+                        <label class="time-option"><input type="radio" name="hora" value="17:00"><span>05:00 PM</span></label>
                     </div>
                 </fieldset>
 
                 <fieldset>
-                    <legend>Motivo o Notas (Opcional)</legend>
+                    <legend>Motivo o notas (opcional)</legend>
                     <div class="field">
-                        <label for="motivo">Breve motivo de la consulta:</label>
-                        <textarea id="motivo" name="motivo" rows="3" placeholder="Describe brevemente tus inquietudes o síntomas..."></textarea>
+                        <label for="motivo">Lo que quieras compartir</label>
+                        <textarea id="motivo" name="motivo" rows="3" placeholder="Cuéntanos lo que quieras. Si prefieres, déjalo en blanco y hablarlo en la sesión."></textarea>
                     </div>
                 </fieldset>
 
+                <p class="form-error" id="fecha-error" role="alert" hidden>Elige un día en el calendario para continuar.</p>
+
                 <div class="form-actions">
-                    <button type="submit">Confirmar Cita</button>
+                    <button type="submit">Confirmar cita</button>
                 </div>
             </form>
         </div>
     </main>
 
     <footer class="site-footer">
-           <p>&copy; 2026 Brote psique. Todos los derechos reservados. </p>
+        <p>&copy; 2026 Brote psique. Todos los derechos reservados.</p>
     </footer>
 
+    <script src="js/citas.js"></script>
 </body>
 </html>

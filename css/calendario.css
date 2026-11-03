@@ -1,84 +1,35 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
+/* =========================================
+   CALENDARIO
+   Usa las variables y la base de index.css
+   (cárgalo antes que este archivo).
+   ========================================= */
 
-html {
-    min-height: 100%;
-}
-
-body {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    font-family: 'Atkinson Hyperlegible Mono', monospace;
-    background: linear-gradient(to right, #fafafa, #6f8a7c);
-    color: white;
-}
-
-/* NAVBAR */
-.site-header {
-    width: 100%;
-    background-color: rgb(41, 48, 48);
-    padding: 20px;
-}
-
-.navbar ul {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 30px;
-    list-style: none;
-}
-
-.navbar a {
-    display: block;
-    color: rgb(228, 240, 240);
-    text-decoration: none;
-    font-size: 18px;
-    padding: 5px;
-    transition: color 0.3s ease;
-}
-
-.navbar a:hover {
-    color: white;
-    text-decoration: underline;
-}
-
-/* CONTENEDOR */
 .main-content {
     flex: 1;
-    display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
-    width: 100%;
-    padding: 40px 15px;
+    padding: 40px 15px 70px;
 }
 
 .calendar-container {
     width: 100%;
-    max-width: 850px;
-    padding: 30px;
-    background-color: rgba(0, 0, 0, 0.7);
-    border-radius: 10px;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
+    max-width: 860px;
+    padding: 34px;
+    background-color: var(--superficie);
+    border: 1px solid var(--linea);
+    border-radius: 36px;
+    box-shadow: var(--sombra);
 }
 
 .calendar-header {
     text-align: center;
-    margin-bottom: 25px;
+    margin-bottom: 26px;
 }
 
 .calendar-header h1 {
-    font-size: 28px;
-    margin-bottom: 15px;
-}
-
-.calendar-header em {
-    color: #8bd4b6;
-    font-style: normal;
+    font-size: 30px;
+    margin-bottom: 16px;
+    color: var(--tinta);
 }
 
 .month-navigation {
@@ -89,97 +40,129 @@ body {
 }
 
 .month-navigation h2 {
-    font-size: 20px;
-    color: #8bd4b6;
+    min-width: 190px;
+    font-size: 21px;
+    color: var(--salvia-oscuro);
 }
 
 .nav-btn {
-    background-color: #6f8a7c;
+    width: 44px;
+    height: 44px;
     border: none;
-    color: white;
-    font-weight: bold;
-    font-size: 16px;
-    width: 32px;
-    height: 32px;
-    border-radius: 5px;
+    border-radius: 50%;
+    background-color: var(--fondo-suave);
+    color: var(--tinta);
+    font-family: inherit;
+    font-size: 18px;
+    font-weight: 700;
     cursor: pointer;
-    transition: background-color 0.2s;
+    transition: background-color 0.4s ease;
 }
 
 .nav-btn:hover {
-    background-color: #8bd4b6;
-    color: black;
+    background-color: var(--salvia);
+    color: #ffffff;
+}
+
+.nav-btn:focus-visible {
+    outline: 3px solid var(--salvia-oscuro);
+    outline-offset: 3px;
 }
 
 /* GRILLA */
+
 .calendar-grid {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
     gap: 6px;
-    margin-bottom: 30px;
+    margin-bottom: 32px;
 }
 
 .day-label {
     text-align: center;
-    font-weight: bold;
-    color: #8bd4b6;
+    font-weight: 700;
+    color: var(--tinta-suave);
     padding: 10px 0;
-    font-size: 14px;
+    font-size: 15px;
 }
 
 .calendar-day {
-    background-color: rgba(111, 138, 124, 0.25);
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    border-radius: 6px;
-    min-height: 70px;
-    padding: 8px;
-    font-size: 14px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    gap: 4px;
+    min-height: 78px;
+    padding: 8px;
+    background-color: var(--fondo);
+    border: 1px solid transparent;
+    border-radius: 14px;
+    font-size: 15px;
+    color: var(--tinta);
 }
 
 .calendar-day.empty {
     background: transparent;
-    border: none;
 }
 
 .calendar-day.has-event {
-    border-color: #8bd4b6;
-    background-color: rgba(139, 212, 182, 0.15);
+    background-color: var(--fondo-suave);
+    border-color: var(--salvia);
+}
+
+/* Hoy: anillo suave, sin colores de alarma */
+.calendar-day.today {
+    border-color: var(--salvia-oscuro);
+    border-width: 2px;
+    font-weight: 700;
 }
 
 .event-pill {
-    background-color: #8bd4b6;
-    color: black;
-    font-size: 11px;
-    padding: 2px 4px;
-    border-radius: 4px;
-    font-weight: bold;
+    display: block;
+    padding: 3px 6px;
+    background-color: var(--salvia-oscuro);
+    color: #ffffff;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 700;
     text-align: center;
+    text-decoration: none;
+}
+
+.event-pill.pendiente {
+    background-color: var(--calido);
+    color: var(--tinta);
+}
+
+.event-pill:hover {
+    text-decoration: underline;
+}
+
+.event-pill:focus-visible {
+    outline: 3px solid var(--tinta);
+    outline-offset: 2px;
 }
 
 /* LISTADO DE CITAS */
+
 .upcoming-appointments {
-    border-top: 1px solid rgba(255, 255, 255, 0.2);
-    padding-top: 20px;
+    border-top: 1px solid var(--linea);
+    padding-top: 24px;
 }
 
 .upcoming-appointments h3 {
-    font-size: 18px;
-    color: #8bd4b6;
-    margin-bottom: 15px;
+    font-size: 19px;
+    color: var(--tinta);
+    margin-bottom: 16px;
 }
 
 .appointment-card {
     display: flex;
     align-items: center;
-    background-color: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 8px;
-    padding: 12px 15px;
-    margin-bottom: 10px;
-    gap: 15px;
+    gap: 16px;
+    padding: 14px 16px;
+    margin-bottom: 12px;
+    background-color: var(--fondo);
+    border-radius: 18px;
 }
 
 .appointment-date {
@@ -187,21 +170,22 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background-color: #6f8a7c;
-    color: white;
-    border-radius: 6px;
-    width: 50px;
-    height: 50px;
+    flex-shrink: 0;
+    width: 56px;
+    height: 56px;
+    background-color: var(--salvia-oscuro);
+    color: #ffffff;
+    border-radius: 16px;
 }
 
 .appointment-date .day {
-    font-size: 18px;
-    font-weight: bold;
+    font-size: 19px;
+    font-weight: 700;
     line-height: 1;
 }
 
 .appointment-date .month {
-    font-size: 11px;
+    font-size: 12px;
 }
 
 .appointment-info {
@@ -209,76 +193,89 @@ body {
 }
 
 .appointment-info strong {
-    font-size: 15px;
-    color: white;
+    font-size: 16px;
+    color: var(--tinta);
 }
 
 .appointment-info p {
-    font-size: 13px;
-    color: #ccc;
-    margin-top: 3px;
-}
-/*
-.appointment-status {
-    font-size: 12px;
-    font-weight: bold;
-    padding: 5px 10px;
-    border-radius: 6px;
+    font-size: 14px;
+    color: var(--tinta-suave);
+    margin-top: 2px;
 }
 
-.status-confirmed {
-    background-color: rgba(139, 212, 182, 0.2);
-    color: #8bd4b6;
-    border: 1px solid #8bd4b6;
-}*/
 .appointment-status {
-    font-size: 12px;
-    font-weight: bold;
-    padding: 5px 10px;
-    border-radius: 6px;
+    padding: 8px 16px;
+    border-radius: 999px;
+    font-size: 14px;
+    font-weight: 700;
     text-decoration: none;
-    cursor: pointer;
+    transition: background-color 0.4s ease;
 }
 
 .status-confirmed {
-    background-color: rgba(139, 212, 182, 0.2);
-    color: #8bd4b6;
-    border: 1px solid #8bd4b6;
+    background-color: var(--salvia-oscuro);
+    color: #ffffff;
 }
 
 .status-confirmed:hover {
-    background-color: #8bd4b6;
-    color: black;
+    background-color: #2f5348;
 }
+
 .status-pending {
-    background-color: rgba(255, 193, 7, 0.2);
-    color: #ffc107;
-    border: 1px solid #ffc107;
+    background-color: var(--calido);
+    color: var(--tinta);
 }
+
 .status-pending:hover {
-    background-color:  #ffc107;
-    color: black;
-    border: 1px solid #ffc107;
+    background-color: #efd6bd;
 }
 
-
-/*---------------------------
-.status-pending {
-    background-color: rgba(255, 193, 7, 0.2);
-    color: #ffc107;
-    border: 1px solid #ffc107;
-}*/
-
-/* FOOTER */
-.site-footer {
-    width: 100%;
-    background-color: rgb(41, 48, 48);
-    color: rgb(228, 240, 240);
-    padding: 20px;
-    text-align: center;
-    margin-top: auto;
+.no-citas {
+    padding: 18px;
+    background-color: var(--fondo);
+    border-radius: 18px;
+    color: var(--tinta-suave);
 }
 
-.site-footer p {
-    font-size: 14px;
+.no-citas a {
+    color: var(--salvia-oscuro);
+    font-weight: 700;
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 700px) {
+    .calendar-container {
+        padding: 22px 14px;
+        border-radius: 28px;
+    }
+
+    .calendar-grid {
+        gap: 3px;
+    }
+
+    .calendar-day {
+        min-height: 58px;
+        padding: 5px;
+        font-size: 13px;
+        border-radius: 10px;
+    }
+
+    /* En móvil el pill se reduce a un punto; el detalle está en la lista */
+    .event-pill {
+        font-size: 0;
+        width: 10px;
+        height: 10px;
+        padding: 0;
+        align-self: center;
+    }
+
+    .appointment-card {
+        flex-wrap: wrap;
+    }
+
+    .appointment-status {
+        width: 100%;
+        text-align: center;
+    }
 }
