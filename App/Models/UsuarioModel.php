@@ -1,0 +1,48 @@
+<?php
+namespace App\Models;
+
+use MongoDB\Client;
+
+class UsuarioModel {
+    private $collection;
+
+    public function __construct() {
+        // Conexión a MongoDB local
+        $client = new Client("mongodb://localhost:27017");
+        // Selecciona tu base de datos (por ejemplo, 'brote_psique') y tu colección 'usuarios'
+        $this->collection = $client->PW2_Proyecto->Usuarios;
+    }
+
+    public function registrarUsuario($datos) {
+        // Verificar si el correo ya existe
+        $existente = $this->collection->findOne(['correo' => $datos['correo']]);
+        if ($existente) {
+            return ["exito" => false, "mensaje" => "El correo electrónico ya está registrado."];
+        }
+
+        // Insertar en MongoDB
+        $resultado = $this->collection->insertOne($datos);
+        
+        if ($resultado->getInsertedCount() > 0) {
+            return ["exito" => true, "mensaje" => "Registro exitoso."];
+        }
+
+        return ["exito" => false, "mensaje" => "No se pudo completar el registro."];
+    }
+
+    public function verificarCredenciales($correo, $passwordPlano) {
+        $usuario = $this->collection->findOne(['correo' => $correo]);
+
+        if ($usuario && password_verify($passwordPlano, $usuario['password'])) {
+            return [
+                "exito" => true,
+                "usuario" => $usuario
+            ];
+        }
+
+        return [
+            "exito" => false,
+            "mensaje" => "Correo electrónico o contraseña incorrectos."
+        ];
+    }
+}
