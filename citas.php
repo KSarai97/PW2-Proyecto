@@ -1,0 +1,190 @@
+
+<?php
+// Obtener los especialistas disponibles.
+// Por ahora utilizamos los dos especialistas de tu HTML.
+$especialistas = [
+    1 => 'Dra. María Fernández - Psicología Clínica',
+    2 => 'Lic. Roberto Sánchez - Terapia Cognitivo-Conductual'
+];
+
+// Obtener la fecha actual para evitar seleccionar fechas pasadas.
+$fechaMinima = date('Y-m-d');
+?>
+
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="css/citas.css">
+    <link rel="icon" type="image/png" href="img/logo.png">
+
+    <title>Detalles Cita</title>
+</head>
+
+<body>
+
+    <header class="site-header">
+        <nav class="navbar">
+            <ul>
+                <li><a href="index.php">Página principal</a></li>
+                <li><a href="perfilUs.php">Perfil de usuario</a></li>
+                <li><a href="perfilEspecialista.php">Perfil especialista</a></li>
+                <li><a href="calendario.html">Calendario de citas</a></li>
+                <li><a href="foro.html">Foro</a></li>
+                <li><a href="login.html" title="Cerrar sesión">Cerrar sesión</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="main-content">
+
+        <div class="container">
+
+            <div class="form-header">
+                <h1>Agendar <em>Cita</em></h1>
+                <p>Selecciona a tu especialista y el horario de tu preferencia</p>
+            </div>
+
+            <form action="procesar_cita.php" method="POST">
+
+                <fieldset>
+                    <legend>Detalles del especialista</legend>
+
+                    <div class="field">
+                        <label for="especialista">Seleccionar Especialista:</label>
+
+                        <select id="especialista" name="id_especialista" required>
+
+                            <option value="" disabled selected>
+                                -- Elige un profesional --
+                            </option>
+
+                            <?php foreach ($especialistas as $id => $nombre): ?>
+
+                                <option value="<?= $id ?>">
+                                    <?= htmlspecialchars($nombre, ENT_QUOTES, 'UTF-8') ?>
+                                </option>
+
+                            <?php endforeach; ?>
+
+                        </select>
+                    </div>
+
+                    <div class="field">
+                        <label for="modalidad">Modalidad:</label>
+
+                        <select id="modalidad" name="modalidad" required>
+                            <option value="presencial">
+                                Presencial (Consultorio)
+                            </option>
+
+                            <option value="online">
+                                En línea (Videollamada)
+                            </option>
+                        </select>
+                    </div>
+
+                </fieldset>
+
+                <fieldset>
+
+                    <legend>Fecha y Horario</legend>
+
+                    <div class="field-grid">
+
+                        <div class="field">
+
+                            <label for="fecha">Fecha:</label>
+
+                            <input
+                                type="date"
+                                id="fecha"
+                                name="fecha"
+                                min="<?= $fechaMinima ?>"
+                                required
+                            >
+
+                        </div>
+
+                        <div class="field">
+
+                            <label for="hora">Horario disponible:</label>
+
+                            <select id="hora" name="hora" required>
+
+                                <option value="" disabled selected>
+                                    -- Selecciona hora --
+                                </option>
+
+                                <option value="10:00">10:00 AM</option>
+                                <option value="11:00">11:00 AM</option>
+                                <option value="12:00">12:00 PM</option>
+                                <option value="16:00">04:00 PM</option>
+                                <option value="17:00">05:00 PM</option>
+
+                            </select>
+
+                        </div>
+
+                    </div>
+
+                </fieldset>
+
+                <fieldset>
+
+                    <legend>Motivo o Notas (Opcional)</legend>
+
+                    <div class="field">
+
+                        <label for="motivo">
+                            Breve motivo de la consulta:
+                        </label>
+
+                        <textarea
+                            id="motivo"
+                            name="motivo"
+                            rows="3"
+                            placeholder="Describe brevemente tus inquietudes o síntomas..."
+                        ></textarea>
+
+                    </div>
+
+                </fieldset>
+
+                <fieldset>
+
+                    <legend>Acciones</legend>
+
+                    <div class="button-group">
+
+                        <button
+                            type="submit"
+                            name="registrar"
+                            value="Registrar"
+                        >
+                            Agendar cita
+                        </button>
+
+                        <a href="Gestion_citas.html" class="button cancel-button">
+                            Cancelar
+                        </a>
+
+                    </div>
+
+                </fieldset>
+
+            </form>
+
+        </div>
+
+    </main>
+
+    <footer class="site-footer">
+        <p>&copy; 2026 Brote psique. Todos los derechos reservados.</p>
+    </footer>
+
+</body>
+</html>
