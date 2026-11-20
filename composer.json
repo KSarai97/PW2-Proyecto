@@ -1,0 +1,8 @@
+
+{
+    "name": "brote-psique/proyecto",
+    "description": "Proyecto Brote Psique",
+    "require": {
+        "mongodb/mongodb": "^2.0"
+    }
+}
