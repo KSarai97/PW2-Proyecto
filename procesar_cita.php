@@ -58,12 +58,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             'fecha_registro' => new MongoDB\BSON\UTCDateTime()
         ];
 
-        // guardar en MongoDB
-        $resultado = $coleccion->insertOne($nuevaCita);
+       // Guardar en MongoDB
+$resultado = $coleccion->insertOne($nuevaCita);
 
-        // confirmar el registro
-        echo "¡Cita registrada correctamente!";
-        echo "<br>ID de la cita: " . $resultado->getInsertedId();
+// Comprobar que se guardó
+if ($resultado->getInsertedCount() === 1) {
+
+    echo "<h2>¡Cita registrada correctamente!</h2>";
+
+    echo "<p>ID del documento: " .
+        htmlspecialchars((string)$resultado->getInsertedId()) .
+        "</p>";
+
+    echo "<p>Base de datos: PW2_Proyecto</p>";
+    echo "<p>Colección: citas</p>";
+
+} else {
+    echo "No se pudo guardar la cita.";
+}
 
         echo '<br><a href="citas.php">Regresar al formulario</a>';
 
