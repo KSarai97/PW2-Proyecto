@@ -60,4 +60,30 @@ class UsuarioModel {
             return null;
         }
     }
+
+    public function actualizarUsuario(string $correoActual, array $datosActualizados): bool {
+        if (empty($datosActualizados)) {
+            return true;
+        }
+
+        $resultado = $this->collection->updateOne(
+            ['correo' => $correoActual],
+            ['$set' => $datosActualizados]
+        );
+
+        return $resultado->getMatchedCount() > 0;
+    }
+
+    public function obtenerEspecialistas(): array {
+        $cursor = $this->collection->find([
+            'rol' => ['$in' => ['1', 1]]
+        ]);
+
+        $especialistas = [];
+        foreach ($cursor as $doc) {
+            $especialistas[] = $doc;
+        }
+
+        return $especialistas;
+    }
 }

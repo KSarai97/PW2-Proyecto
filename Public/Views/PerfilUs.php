@@ -30,10 +30,10 @@ $e = fn($val) => htmlspecialchars((string) $val, ENT_QUOTES, 'UTF-8');
         <nav class="navbar" aria-label="Navegación principal">
             <ul>
                 <li><a href="/../index.php" title="Regresa a la pagina principal">Pagina principal</a></li>
-                <li><a href="perfilEspecialista.html" title="Conoce a nuestros especialistas">Perfil especialista</a></li>
+                <li><a href="Especialistas.php" title="Conoce a nuestros especialistas">Especialistas</a></li>
                 <li><a href="citas.html" title="Agenda una cita con un especialista">Agendar citas</a></li>
                 <li><a href="calendario.html" title="Comprueba las citas registradas">Calendario de citas</a></li>
-                <li><a href="foro.html" title="Mira los artículos creados por nuestros especialistas">Foro</a></li>
+                <li><a href="Foro.php" title="Mira los artículos creados por nuestros especialistas">Foro</a></li>
                 <li><a href="logout.php" title="Cerrar sesión">Cerrar sesión</a></li>
             </ul>
         </nav>

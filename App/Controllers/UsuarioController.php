@@ -29,7 +29,6 @@ class UsuarioController {
                 $fechaNacimiento = $_POST['id_fech'] ?? '';
                 $genero = $_POST['pref'] ?? '0';
                 $estado = $_POST['est'] ?? '0';
-                $rol = '0';
 
                 // Procesar la imagen de perfil (avatar)
                 $rutaAvatar = 'img/default.png'; // Valor por defecto
@@ -295,6 +294,14 @@ class UsuarioController {
             }
         }
 
+        $esEspecialista = (string) ($usuarioActual['rol'] ?? '0') === '1';
+        if ($esEspecialista) {
+            $camposActualizar['telefono'] = trim($_POST['telefono'] ?? '');
+            $camposActualizar['especialidad'] = trim($_POST['especialidad'] ?? '');
+            $camposActualizar['horarios'] = trim($_POST['horarios'] ?? '');
+            $camposActualizar['modalidad'] = trim($_POST['modalidad'] ?? 'Presencial y En línea');
+        }
+
         $actualizado = $modelo->actualizarUsuario($correoActual, $camposActualizar);
 
         if ($actualizado) {
@@ -311,5 +318,47 @@ class UsuarioController {
 
         echo "<script>alert('No se pudieron guardar los cambios en el perfil.'); window.history.back();</script>";
         exit();
+    }
+    public function obtenerEspecialistasVista(): array {
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+
+        if (empty($_SESSION['correo'])) {
+            header("Location: login.html");
+            exit();
+        }
+
+        $modelo = new UsuarioModel();
+        $docs = $modelo->obtenerEspecialistas();
+        $lista = [];
+
+        foreach ($docs as $doc) {
+            $nombreCompleto = trim(
+                (string) ($doc['nombre'] ?? '') . ' ' .
+                (string) ($doc['apellido_paterno'] ?? '') . ' ' .
+                (string) ($doc['apellido_materno'] ?? '')
+            );
+
+            $avatarRaw = (string) ($doc['avatar'] ?? 'img/default-avatar.png');
+            if (str_starts_with($avatarRaw, 'http') || str_starts_with($avatarRaw, '../')) {
+                $avatarUrl = $avatarRaw;
+            } else {
+                $avatarUrl = '../' . ltrim($avatarRaw, '/');
+            }
+
+            $lista[] = [
+                'id' => (string) $doc['_id'],
+                'nombre_completo' => $nombreCompleto !== '' ? $nombreCompleto : ((string) ($doc['usuario'] ?? 'Especialista')),
+                'correo' => (string) ($doc['correo'] ?? ''),
+                'telefono' => (string) ($doc['telefono'] ?? '+52 81 0000 0000'),
+                'especialidad' => (string) ($doc['especialidad'] ?? 'Psicología Clínica / Terapia Cognitivo-Conductual'),
+                'horarios' => (string) ($doc['horarios'] ?? 'Lunes a Viernes: 9:00 AM - 6:00 PM'),
+                'modalidad' => (string) ($doc['modalidad'] ?? 'Presencial y En línea'),
+                'avatar' => $avatarUrl,
+            ];
+        }
+
+        return $lista;
     }
 }

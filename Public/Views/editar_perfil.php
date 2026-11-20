@@ -39,7 +39,7 @@ $rolActual = (string) ($doc['rol'] ?? '0');
                 <p>Modifica los datos que desees actualizar</p>
             </header>
 
-            <form action="editar_perfil.php" method="POST" enctype="multipart/form-data" autocomplete="off">
+            <form action="Editar_Post.php" method="POST" enctype="multipart/form-data" autocomplete="off">
                 <fieldset>
                     <legend>Información personal</legend>
 
@@ -114,6 +114,49 @@ $rolActual = (string) ($doc['rol'] ?? '0');
                         </select>
                     </div>
                 </fieldset>
+
+                <?php if ($rolActual === '1'): ?>
+                    <fieldset>
+                        <legend>Información profesional (Especialista)</legend>
+
+                        <div class="field">
+                            <label for="telefono">Teléfono:</label>
+                            <input type="text"
+                                   id="telefono"
+                                   name="telefono"
+                                   value="<?= $e($doc['telefono'] ?? '') ?>"
+                                   placeholder="+52 81 0000 0000">
+                        </div>
+
+                        <div class="field">
+                            <label for="especialidad">Especialidad:</label>
+                            <input type="text"
+                                   id="especialidad"
+                                   name="especialidad"
+                                   value="<?= $e($doc['especialidad'] ?? '') ?>"
+                                   placeholder="Psicología Clínica / Terapia Cognitivo-Conductual">
+                        </div>
+
+                        <div class="field">
+                            <label for="horarios">Horarios:</label>
+                            <input type="text"
+                                   id="horarios"
+                                   name="horarios"
+                                   value="<?= $e($doc['horarios'] ?? '') ?>"
+                                   placeholder="Lunes a Viernes: 9:00 AM - 6:00 PM">
+                        </div>
+
+                        <div class="field">
+                            <label for="modalidad">Modalidad:</label>
+                            <select name="modalidad" id="modalidad">
+                                <?php $modalidadActual = (string) ($doc['modalidad'] ?? 'Presencial y En línea'); ?>
+                                <option value="Presencial" <?= $modalidadActual === 'Presencial' ? 'selected' : '' ?>>Presencial</option>
+                                <option value="En línea" <?= $modalidadActual === 'En línea' ? 'selected' : '' ?>>En línea</option>
+                                <option value="Presencial y En línea" <?= $modalidadActual === 'Presencial y En línea' ? 'selected' : '' ?>>Presencial y En línea</option>
+                            </select>
+                        </div>
+                    </fieldset>
+                <?php endif; ?>
 
                 <div class="form-actions">
                     <button type="submit">Guardar cambios</button>
