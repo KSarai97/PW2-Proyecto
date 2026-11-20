@@ -1,0 +1,33 @@
+{
+    "usuarios": [
+        {
+            "id": 1793734451,
+            "nombre": "Hyun Soo",
+            "apellido_paterno": "Moon",
+            "apellido_materno": "Solis",
+            "usuario": "Hyun",
+            "email": "hyunsms@gmail.com",
+            "password": "$2y$10$6hmen4nypexUcmFCM3oUfe2jMCqTsJIglB2qxnoDng0KKmUw6SYt.",
+            "fecha_nacimiento": "2004-01-27",
+            "genero": "0",
+            "estado": "0",
+            "rol": "0",
+            "avatar": "foto_perfil\/default.png"
+        },
+        {
+            "id": 1795205045,
+            "nombre": "Keila",
+            "apellido_paterno": "Ruiz",
+            "apellido_materno": "Garcia",
+            "usuario": "Haru",
+            "email": "correo12@gmail.com",
+            "password": "$2y$12$KRoWnP.1OvaPsiMFv.V9Le9nrEPpqZRtFbPteS4bcx0hM2Ax5JQ6q",
+            "fecha_nacimiento": "2006-11-01",
+            "genero": "1",
+            "estado": "1",
+            "rol": "0",
+            "avatar": "foto_perfil\/default.png"
+        }
+    ],
+    "citas": []
+}

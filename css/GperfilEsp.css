@@ -17,10 +17,6 @@ body {
     color: white;
 }
 
-/* =========================================
-   NAVBAR
-   ========================================= */
-
 .site-header {
     width: 100%;
     background-color: rgb(41, 48, 48);
@@ -54,11 +50,6 @@ body {
     text-decoration: underline;
 }
 
-
-/* =========================================
-   CONTENIDO PRINCIPAL
-   ========================================= */
-
 .main-content {
     flex: 1;
     display: flex;
@@ -76,9 +67,6 @@ body {
 }
 
 
-/* =========================================
-   CONTENEDOR DEL PERFIL
-   ========================================= */
 
 .profile-box {
     width: 100%;
@@ -110,10 +98,6 @@ body {
 }
 
 
-/* =========================================
-   IMAGEN DE PERFIL
-   ========================================= */
-
 .profile-image {
     margin: 20px auto 30px;
     text-align: center;
@@ -136,21 +120,12 @@ body {
 }
 
 
-/* =========================================
-   INFORMACIÓN PROFESIONAL
-   ========================================= */
-
 .user-info h2 {
     margin-bottom: 20px;
     color: #8bd4b6;
     font-size: 20px;
     text-align: center;
 }
-
-
-/* =========================================
-   FORMULARIO
-   ========================================= */
 
 .form-group {
     margin-bottom: 18px;
@@ -163,11 +138,6 @@ body {
     font-weight: bold;
     font-size: 15px;
 }
-
-
-/* =========================================
-   INPUTS Y SELECTS
-   ========================================= */
 
 .form-group input,
 .form-group select {
@@ -192,11 +162,6 @@ body {
         box-shadow 0.3s ease;
 }
 
-
-/* =========================================
-   INPUTS AL HACER CLIC
-   ========================================= */
-
 .form-group input:focus,
 .form-group select:focus {
     border-color: #8bd4b6;
@@ -204,38 +169,18 @@ body {
     box-shadow: 0 0 5px rgba(139, 212, 182, 0.3);
 }
 
-
-/* =========================================
-   TEXTO DE LOS INPUTS
-   ========================================= */
-
 .form-group input {
     color: white;
 }
-
-
-/* =========================================
-   PLACEHOLDER
-   ========================================= */
-
 .form-group input::placeholder {
     color: #aaa;
 }
 
 
-/* =========================================
-   OPCIONES DE LOS SELECT
-   ========================================= */
-
 .form-group select option {
     background-color: rgb(41, 48, 48);
     color: white;
 }
-
-
-/* =========================================
-   FIELDSET
-   ========================================= */
 
 fieldset {
     margin-top: 25px;
@@ -254,11 +199,6 @@ fieldset legend {
     font-size: 15px;
 }
 
-
-/* =========================================
-   GRUPO DE BOTONES
-   ========================================= */
-
 .button-group {
     display: flex;
 
@@ -273,11 +213,6 @@ fieldset legend {
 
     padding: 0;
 }
-
-
-/* =========================================
-   BOTONES Y ENLACE CANCELAR
-   ========================================= */
 
 .button-group button,
 .button-group .cancel-button {
@@ -309,11 +244,6 @@ fieldset legend {
         transform 0.2s ease;
 }
 
-
-/* =========================================
-   EFECTO HOVER BOTONES
-   ========================================= */
-
 .button-group button:hover,
 .button-group .cancel-button:hover {
     background-color: rgb(30, 7, 133);
@@ -324,19 +254,11 @@ fieldset legend {
 }
 
 
-/* =========================================
-   EFECTO AL PRESIONAR
-   ========================================= */
-
 .button-group button:active,
 .button-group .cancel-button:active {
     transform: translateY(0);
 }
 
-
-/* =========================================
-   BOTÓN ELIMINAR
-   ========================================= */
 
 .button-group button[name="eliminar"] {
     background-color: #d66b6b;
@@ -350,11 +272,6 @@ fieldset legend {
     color: white;
 }
 
-
-/* =========================================
-   BOTÓN CANCELAR
-   ========================================= */
-
 .button-group .cancel-button {
     background-color: #777;
 
@@ -367,10 +284,6 @@ fieldset legend {
     color: white;
 }
 
-
-/* =========================================
-   FOOTER
-   ========================================= */
 
 .site-footer {
     width: 100%;
@@ -389,11 +302,6 @@ fieldset legend {
 .site-footer p {
     font-size: 14px;
 }
-
-
-/* =========================================
-   DISEÑO RESPONSIVO
-   ========================================= */
 
 @media (max-width: 600px) {
 
@@ -442,11 +350,6 @@ fieldset legend {
     }
 
 }
-
-
-/* =========================================
-   PANTALLAS MUY PEQUEÑAS
-   ========================================= */
 
 @media (max-width: 400px) {
 

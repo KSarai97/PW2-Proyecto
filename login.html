@@ -25,10 +25,13 @@
                 </div>
 
                 <div class="field"> 
-                  <label for="id_pass"> Contraseña: </label>
-                    <input type="password"  id="id_pass"  name="id_pass"  placeholder="Ingresa tu contraseña"  autocomplete="current-password"  required>
+                    <label for="id_pass">Contraseña:</label>
+                    <div style="position: relative;">
+                        <input type="password" id="id_pass" name="id_pass" placeholder="Ingresa tu contraseña" autocomplete="current-password" required style="padding-right: 45px;">
+                        <button type="button" id="toggle-password" class="toggle-password-btn" onclick="togglePassword()" title="Mostrar u ocultar contraseña">👁️</button>
+                    </div>
                 </div>
-
+                
                 <!-- Botón de inicio de sesión -->
                 <div class="form-actions">
                     <button  type="submit"  name="ok"> Aceptar</button>
@@ -41,5 +44,19 @@
         </section>
     </main>
 
+    <script>
+        function togglePassword() {
+            const passwordInput = document.getElementById('id_pass');
+            const toggleBtn = document.getElementById('toggle-password');
+            
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                toggleBtn.textContent = 'V'; // Icono cuando la contraseña está visible
+            } else {
+                passwordInput.type = 'password';
+                toggleBtn.textContent = 'C'; // Icono cuando la contraseña está oculta
+            }
+        }
+    </script>
 </body>
 </html>
