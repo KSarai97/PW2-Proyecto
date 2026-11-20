@@ -2,6 +2,7 @@
 namespace App\Models;
 
 use MongoDB\Client;
+use MongoDB\BSON\ObjectId;
 
 class UsuarioModel {
     private $collection;
@@ -44,5 +45,19 @@ class UsuarioModel {
             "exito" => false,
             "mensaje" => "Correo electrónico o contraseña incorrectos."
         ];
+
+        
+    }
+
+    public function obtenerPorCorreo(string $correo) {
+        return $this->collection->findOne(['correo' => $correo]);
+    }
+
+    public function obtenerPorId(string $id) {
+        try {
+            return $this->collection->findOne(['_id' => new ObjectId($id)]);
+        } catch (\Exception $e) {
+            return null;
+        }
     }
 }

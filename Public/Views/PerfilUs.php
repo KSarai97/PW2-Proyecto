@@ -1,0 +1,122 @@
+<?php
+require_once __DIR__ . '/../../../vendor/autoload.php';
+
+use App\Controllers\UsuarioController;
+
+$controller = new UsuarioController();
+$perfil = $controller->obtenerDatosPerfil();
+
+if (!$perfil) {
+    header("Location: login.html");
+    exit();
+}
+
+$e = fn($val) => htmlspecialchars((string) $val, ENT_QUOTES, 'UTF-8');
+?>
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/perfil.css">
+    <link rel="icon" type="image/png" href="../img/logo.png">
+    <title>Perfil de usuario</title>
+</head>
+
+<body>
+
+    <header class="site-header">
+        <nav class="navbar" aria-label="Navegación principal">
+            <ul>
+                <li><a href="/../index.php" title="Regresa a la pagina principal">Pagina principal</a></li>
+                <li><a href="perfilEspecialista.html" title="Conoce a nuestros especialistas">Perfil especialista</a></li>
+                <li><a href="citas.html" title="Agenda una cita con un especialista">Agendar citas</a></li>
+                <li><a href="calendario.html" title="Comprueba las citas registradas">Calendario de citas</a></li>
+                <li><a href="foro.html" title="Mira los artículos creados por nuestros especialistas">Foro</a></li>
+                <li><a href="logout.php" title="Cerrar sesión">Cerrar sesión</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="main-content">
+
+        <section class="container" aria-labelledby="titulo-perfil">
+
+            <article class="profile-box">
+
+                <header class="profile-header">
+                    <h1 id="titulo-perfil">Perfil de <em><?= $e($perfil['usuario']) ?></em></h1>
+                </header>
+
+                <section class="user-info" aria-labelledby="informacion-usuario">
+
+                    <h2 id="informacion-usuario">Información del usuario</h2>
+
+                    <p class="registered">
+                        <strong>Registrado desde hace:</strong>
+                        <time datetime="P<?= (int) $perfil['dias_registrado'] ?>D"><?= (int) $perfil['dias_registrado'] ?> días</time>
+                    </p>
+
+                    <figure class="profile-image">
+                        <img src="<?= $e($perfil['avatar']) ?>"
+                             alt="Foto de perfil de <?= $e($perfil['usuario']) ?>"
+                             width="175"
+                             height="175">
+                        <figcaption>Foto de perfil</figcaption>
+                    </figure>
+
+                    <dl>
+                        <dt>Nombre completo</dt>
+                        <dd><?= $e($perfil['nombre_completo']) ?></dd>
+
+                        <dt>Nombre de usuario</dt>
+                        <dd><?= $e($perfil['usuario']) ?></dd>
+
+                        <dt>Edad</dt>
+                        <dd><?= $e($perfil['edad']) ?></dd>
+
+                        <dt>Correo electrónico</dt>
+                        <dd>
+                            <a href="mailto:<?= $e($perfil['correo']) ?>"><?= $e($perfil['correo']) ?></a>
+                        </dd>
+
+                        <dt>Fecha de nacimiento</dt>
+                        <dd>
+                            <time datetime="<?= $e($perfil['fecha_nacimiento_iso']) ?>">
+                                <?= $e($perfil['fecha_nacimiento_fmt']) ?>
+                            </time>
+                        </dd>
+
+                        <dt>Género</dt>
+                        <dd><?= $e($perfil['genero']) ?></dd>
+
+                        <dt>Estado de la cuenta</dt>
+                        <dd><?= $e($perfil['estado']) ?></dd>
+
+                        <dt>Rol</dt>
+                        <dd><?= $e($perfil['rol']) ?></dd>
+                    </dl>
+                </section>
+
+                <section class="profile-actions" aria-labelledby="acciones-perfil">
+                    <h2 id="acciones-perfil">Acciones del perfil</h2>
+                    <nav aria-label="Acciones del perfil">
+                        <ul class="button-group">
+                            <li><a href="editar_Perfil.php" title="Editar información del perfil">Editar perfil</a></li>
+                        </ul>
+                    </nav>
+                </section>
+
+            </article>
+
+        </section>
+
+    </main>
+
+    <footer class="site-footer">
+        <p>&copy; 2026 Brote psique. Todos los derechos reservados.</p>
+    </footer>
+
+</body>
+</html>

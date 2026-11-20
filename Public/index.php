@@ -19,12 +19,15 @@ define('BASE_URL', 'http://localhost:8000/');
         <nav class="navbar" aria-label="Navegación principal">
             <ul>
                 <?php if ($usuarioAutenticado): ?>
-                    <li><a href="perfilUs.php" title="Mira tu perfil">Perfil de usuario</a></li>
-                    <li><a href="perfilEspecialista.php" title="Conoce a nuestros especialistas">Perfil especialista</a></li>
-                    <li><a href="citas.php" title="Agendar cita">Agendar citas</a></li>
-                    <li><a href="calendario.php" title="Calendario">Calendario de citas</a></li>
-                    <li><a href="foro.php" title="Foro">Foro</a></li>
-                    <li><a href="logout.php" title="Cerrar sesión">Cerrar sesión</a></li>
+                    <li><a href="/Views/perfilUs.php" title="Mira tu perfil">Perfil de usuario</a></li>
+                    <?php if (($_SESSION['rol'] ?? '') === '2'): ?>
+                        <li><a href="/Views/adminRegistro.php" title="Registrar usuarios y asignar roles">Administrar usuarios</a></li>
+                    <?php endif; ?>
+                    <li><a href="/Views/pesrfilEspecialista.html" title="Conoce a nuestros especialistas">Perfil especialista</a></li>
+                    <li><a href="/Views/citas.html" title="Agendar cita">Agendar citas</a></li>
+                    <li><a href="/Views/calendario.html" title="Calendario">Calendario de citas</a></li>
+                    <li><a href="/Views/foro.html" title="Foro">Foro</a></li>
+                    <li><a href="/Views/logout.php" title="Cerrar sesión">Cerrar sesión</a></li>
                 <?php else: ?>
                     <li><a href="Views/login.html" title="Iniciar sesión">Iniciar sesión</a></li>
                 <?php endif; ?>
