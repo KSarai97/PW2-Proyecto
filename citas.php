@@ -1,15 +1,59 @@
 
 <?php
-// Obtener los especialistas disponibles.
-// Por ahora utilizamos los dos especialistas de tu HTML.
+
+require_once __DIR__ . '/Data/Conexion.php';
+
+// Especialistas disponibles
 $especialistas = [
     1 => 'Dra. María Fernández - Psicología Clínica',
     2 => 'Lic. Roberto Sánchez - Terapia Cognitivo-Conductual'
 ];
 
-// Obtener la fecha actual para evitar seleccionar fechas pasadas.
 $fechaMinima = date('Y-m-d');
+
+$citaEditar = null;
+
+// Comprobar si se quiere modificar una cita
+if (isset($_GET['id'])) {
+
+    try {
+
+        $id = $_GET['id'];
+
+        // Validar identificador de MongoDB
+        if (!MongoDB\BSON\ObjectId::isValid($id)) {
+            throw new Exception('Identificador de cita no válido.');
+        }
+
+        $db = Conexion::conectar();
+
+        $coleccion = $db->citas;
+
+        // Buscar la cita
+        $citaEditar = $coleccion->findOne([
+            '_id' => new MongoDB\BSON\ObjectId($id)
+        ]);
+
+        if (!$citaEditar) {
+            throw new Exception('No se encontró la cita.');
+        }
+
+    } catch (Throwable $e) {
+
+        http_response_code(404);
+
+        exit(htmlspecialchars(
+            $e->getMessage(),
+            ENT_QUOTES,
+            'UTF-8'
+        ));
+
+    }
+
+}
+
 ?>
+
 
 <!DOCTYPE html>
 <html lang="es">
@@ -58,17 +102,17 @@ $fechaMinima = date('Y-m-d');
 
                         <select id="especialista" name="id_especialista" required>
 
-                            <option value="" disabled selected>
-                                -- Elige un profesional --
-                            </option>
-
-                            <?php foreach ($especialistas as $id => $nombre): ?>
-
-                                <option value="<?= $id ?>">
-                                    <?= htmlspecialchars($nombre, ENT_QUOTES, 'UTF-8') ?>
-                                </option>
-
-                            <?php endforeach; ?>
+                           <option value="" disabled
+                                    <?= !$citaEditar ? 'selected' : '' ?>>
+                                        </option>
+                                          <?php foreach ($especialistas as $id => $nombre): ?>
+                                         <option value="<?= $id ?>"
+                                         <?= $citaEditar &&
+                                            $citaEditar['id_especialista'] == $id
+                                            ? 'selected' : '' ?>>
+                                            <?= htmlspecialchars($nombre, ENT_QUOTES, 'UTF-8') ?>
+                                        </option>
+                                <?php endforeach; ?>
 
                         </select>
                     </div>
@@ -77,55 +121,67 @@ $fechaMinima = date('Y-m-d');
                         <label for="modalidad">Modalidad:</label>
 
                         <select id="modalidad" name="modalidad" required>
-                            <option value="presencial">
-                                Presencial (Consultorio)
-                            </option>
 
-                            <option value="online">
-                                En línea (Videollamada)
-                            </option>
-                        </select>
+                <option value="presencial"
+                     <?= $citaEditar &&
+                     $citaEditar['modalidad'] === 'presencial'
+                        ? 'selected' : '' ?>>
+                        Presencial (Consultorio)
+                </option>
+
+                <option value="online"
+                    <?= $citaEditar &&
+                        $citaEditar['modalidad'] === 'online'
+                        ? 'selected' : '' ?>>
+                    En línea (Videollamada)
+                </option>
+
+                    </select>
                     </div>
 
                 </fieldset>
 
                 <fieldset>
-
                     <legend>Fecha y Horario</legend>
-
                     <div class="field-grid">
-
                         <div class="field">
-
                             <label for="fecha">Fecha:</label>
-
-                            <input
+                           <input
                                 type="date"
                                 id="fecha"
                                 name="fecha"
                                 min="<?= $fechaMinima ?>"
+                                value="<?= $citaEditar
+                                    ? htmlspecialchars($citaEditar['fecha'], ENT_QUOTES, 'UTF-8')
+                                    : '' ?>"
                                 required
                             >
 
                         </div>
 
                         <div class="field">
+                        <label for="hora">Horario disponible:</label>
+                           <select id="hora" name="hora" required>
 
-                            <label for="hora">Horario disponible:</label>
+                        <option value="" disabled
+                            <?= !$citaEditar ? 'selected' : '' ?>>
+                            -- Selecciona hora --
+                        </option>
 
-                            <select id="hora" name="hora" required>
+               <?php foreach (['10:00', '11:00', '12:00', '16:00', '17:00'] as $hora): ?>
 
-                                <option value="" disabled selected>
-                                    -- Selecciona hora --
-                                </option>
+                    <option value="<?= $hora ?>"
+                        <?= $citaEditar &&
+                            $citaEditar['hora'] === $hora
+                            ? 'selected' : '' ?>>
 
-                                <option value="10:00">10:00 AM</option>
-                                <option value="11:00">11:00 AM</option>
-                                <option value="12:00">12:00 PM</option>
-                                <option value="16:00">04:00 PM</option>
-                                <option value="17:00">05:00 PM</option>
+                        <?= $hora ?>
 
-                            </select>
+                    </option>
+
+    <?php endforeach; ?>
+
+</select>
 
                         </div>
 
@@ -148,7 +204,9 @@ $fechaMinima = date('Y-m-d');
                             name="motivo"
                             rows="3"
                             placeholder="Describe brevemente tus inquietudes o síntomas..."
-                        ></textarea>
+                        ><?= $citaEditar
+                            ? htmlspecialchars($citaEditar['motivo'] ?? '', ENT_QUOTES, 'UTF-8')
+                            : '' ?></textarea>
 
                     </div>
 
@@ -156,25 +214,41 @@ $fechaMinima = date('Y-m-d');
 
                 <fieldset>
 
-                    <legend>Acciones</legend>
+                <legend>Acciones</legend>
 
-                    <div class="button-group">
+            <div class="button-group">
 
-                        <button
-                            type="submit"
-                            name="registrar"
-                            value="Registrar"
-                        >
-                            Agendar cita
-                        </button>
+                <?php if ($citaEditar): ?>
 
-                        <a href="Gestion_citas.html" class="button cancel-button">
-                            Cancelar
-                        </a>
+                    <input
+                        type="hidden"
+                        name="id_cita"
+                        value="<?= htmlspecialchars(
+                            (string) $citaEditar['_id'],
+                            ENT_QUOTES,
+                            'UTF-8'
+                        ) ?>"
+                    >
 
-                    </div>
+                    <button type="submit" name="actualizar" value="Actualizar">
+                        Guardar cambios
+                    </button>
 
-                </fieldset>
+                <?php else: ?>
+
+                    <button type="submit" name="registrar" value="Registrar">
+                        Agendar cita
+                    </button>
+
+                <?php endif; ?>
+
+                <a href="calendario.php" class="button cancel-button">
+                    Cancelar
+                </a>
+
+            </div>
+
+                    </fieldset>
 
             </form>
 

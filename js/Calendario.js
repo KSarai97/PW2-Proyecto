@@ -21,6 +21,7 @@ const hoy = new Date();
 let anio = hoy.getFullYear();
 let mes = hoy.getMonth();
 
+
 // =========================================
 // OBTENER CITAS DESDE MONGODB
 // =========================================
@@ -57,6 +58,7 @@ async function cargarCitas() {
 
 }
 
+
 // =========================================
 // FUNCIONES AUXILIARES
 // =========================================
@@ -81,6 +83,7 @@ function crear(etiqueta, clase, texto) {
 
 }
 
+
 // =========================================
 // OBTENER CITAS DEL MES
 // =========================================
@@ -104,6 +107,7 @@ function citasDelMes() {
         });
 
 }
+
 
 // =========================================
 // DIBUJAR CALENDARIO
@@ -192,6 +196,7 @@ function dibujarCalendario() {
 
 }
 
+
 // =========================================
 // DIBUJAR LISTA DE CITAS
 // =========================================
@@ -233,7 +238,10 @@ function dibujarLista() {
 
         const tarjeta = crear('div', 'appointment-card');
 
-        // Fecha
+        // =====================================
+        // FECHA
+        // =====================================
+
         const fecha = crear('div', 'appointment-date');
 
         fecha.appendChild(
@@ -244,7 +252,11 @@ function dibujarLista() {
             crear('span', 'month', MESES[mes].slice(0, 3).toUpperCase())
         );
 
-        // Información
+
+        // =====================================
+        // INFORMACIÓN DE LA CITA
+        // =====================================
+
         const info = crear('div', 'appointment-info');
 
         info.appendChild(
@@ -259,7 +271,11 @@ function dibujarLista() {
             )
         );
 
-        // Estado
+
+        // =====================================
+        // ESTADO DE LA CITA
+        // =====================================
+
         const confirmada = c.estado === 'confirmada';
 
         const estado = crear(
@@ -270,13 +286,40 @@ function dibujarLista() {
             confirmada ? 'Confirmada' : 'Pendiente'
         );
 
-        tarjeta.append(fecha, info, estado);
+
+        // =====================================
+        // BOTÓN MODIFICAR CITA
+        // =====================================
+
+        const botonModificar = crear(
+            'a',
+            'btn-modificar',
+            'Modificar cita'
+        );
+
+        botonModificar.href =
+            'citas.php?id=' + encodeURIComponent(c.id);
+
+        botonModificar.title = 'Modificar esta cita';
+
+
+        // =====================================
+        // AGREGAR ELEMENTOS A LA TARJETA
+        // =====================================
+
+        tarjeta.append(
+            fecha,
+            info,
+            estado,
+            botonModificar
+        );
 
         lista.appendChild(tarjeta);
 
     });
 
 }
+
 
 // =========================================
 // CAMBIAR DE MES
@@ -305,6 +348,7 @@ function cambiarMes(delta) {
 
 }
 
+
 // =========================================
 // EVENTOS DE NAVEGACIÓN
 // =========================================
@@ -316,6 +360,7 @@ document
 document
     .getElementById('mes-siguiente')
     .addEventListener('click', () => cambiarMes(1));
+
 
 // =========================================
 // INICIAR CALENDARIO

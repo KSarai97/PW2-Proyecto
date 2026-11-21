@@ -272,3 +272,34 @@
         text-align: center;
     }
 }
+
+
+/* BOTÓN MODIFICAR CITA */
+
+.btn-modificar {
+    display: inline-block;
+    padding: 8px 14px;
+    background-color: var(--salvia-oscuro);
+    color: #ffffff;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 700;
+    text-decoration: none;
+    text-align: center;
+    transition: background-color 0.3s ease;
+}
+
+.btn-modificar:hover {
+    background-color: #2f5348;
+}
+
+.btn-modificar:focus-visible {
+    outline: 3px solid var(--tinta);
+    outline-offset: 3px;
+}
+
+@media (max-width: 700px) {
+    .btn-modificar {
+        width: 100%;
+    }
+}
