@@ -272,49 +272,122 @@ function dibujarLista() {
         );
 
 
-        // =====================================
-        // ESTADO DE LA CITA
-        // =====================================
+        
+// =====================================
+// ESTADO DE LA CITA
+// =====================================
 
-        const confirmada = c.estado === 'confirmada';
+const cancelada = c.estado === 'cancelada';
+const confirmada = c.estado === 'confirmada';
 
-        const estado = crear(
-            'span',
-            'appointment-status ' +
-            (confirmada ? 'status-confirmed' : 'status-pending'),
+let textoEstado = 'Pendiente';
+let claseEstado = 'status-pending';
 
-            confirmada ? 'Confirmada' : 'Pendiente'
+if (confirmada) {
+    textoEstado = 'Confirmada';
+    claseEstado = 'status-confirmed';
+}
+
+if (cancelada) {
+    textoEstado = 'Cancelada';
+    claseEstado = 'status-cancelled';
+}
+
+const estado = crear(
+    'span',
+    'appointment-status ' + claseEstado,
+    textoEstado
+);
+
+
+// =====================================
+// BOTONES DE ACCIONES
+// =====================================
+
+const acciones = crear('div', 'appointment-actions');
+
+// Si la cita no está cancelada, mostrar botones
+if (!cancelada) {
+
+    // Botón modificar
+    const botonModificar = crear(
+        'a',
+        'btn-accion btn-modificar',
+        '✎'
+    );
+
+    botonModificar.href =
+        'citas.php?id=' + encodeURIComponent(c.id);
+
+    botonModificar.title = 'Modificar cita';
+
+    botonModificar.setAttribute(
+        'aria-label',
+        'Modificar cita'
+    );
+
+
+    // Formulario para cancelar
+    const formularioCancelar = crear('form', '');
+
+    formularioCancelar.action = 'cancelar_cita.php';
+    formularioCancelar.method = 'POST';
+
+    // ID de la cita
+    const campoId = crear('input', '');
+
+    campoId.type = 'hidden';
+    campoId.name = 'id_cita';
+    campoId.value = c.id;
+
+    // Botón cancelar
+    const botonCancelar = crear(
+        'button',
+        'btn-accion btn-cancelar',
+        '×'
+    );
+
+    botonCancelar.type = 'submit';
+    botonCancelar.title = 'Cancelar cita';
+
+    botonCancelar.setAttribute(
+        'aria-label',
+        'Cancelar cita'
+    );
+
+    // Confirmación antes de cancelar
+    formularioCancelar.addEventListener('submit', function(event) {
+
+        const confirmar = window.confirm(
+            '¿Estás seguro de que deseas cancelar esta cita?'
         );
 
+        if (!confirmar) {
+            event.preventDefault();
+        }
 
-        // =====================================
-        // BOTÓN MODIFICAR CITA
-        // =====================================
+    });
 
-        const botonModificar = crear(
-            'a',
-            'btn-modificar',
-            'Modificar cita'
-        );
+    formularioCancelar.append(campoId, botonCancelar);
 
-        botonModificar.href =
-            'citas.php?id=' + encodeURIComponent(c.id);
+    acciones.append(botonModificar, formularioCancelar);
 
-        botonModificar.title = 'Modificar esta cita';
+}
 
 
-        // =====================================
-        // AGREGAR ELEMENTOS A LA TARJETA
-        // =====================================
+// =====================================
+// AGREGAR ELEMENTOS A LA TARJETA
+// =====================================
 
-        tarjeta.append(
-            fecha,
-            info,
-            estado,
-            botonModificar
-        );
+tarjeta.append(
+    fecha,
+    info,
+    estado,
+    acciones
+);
 
-        lista.appendChild(tarjeta);
+lista.appendChild(tarjeta);
+
 
     });
 

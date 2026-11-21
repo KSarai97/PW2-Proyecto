@@ -303,3 +303,97 @@
         width: 100%;
     }
 }
+
+/* =====================================
+   ESTADO DE CITA CANCELADA
+===================================== */
+
+.status-cancelled {
+    background-color: #f5dddd;
+    color: #a33d3d;
+}
+
+/* Citas canceladas en el calendario */
+
+.event-pill.cancelada {
+    background-color: #c45151;
+    color: #ffffff;
+    text-decoration: line-through;
+}
+
+/* =====================================
+   BOTONES CIRCULARES DE ACCIONES
+===================================== */
+
+.appointment-actions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    flex-shrink: 0;
+}
+
+.btn-accion {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 32px;
+    height: 32px;
+
+    border: none;
+    border-radius: 50%;
+
+    font-family: inherit;
+    font-size: 19px;
+    font-weight: 700;
+
+    text-decoration: none;
+    cursor: pointer;
+
+    transition: background-color 0.3s ease,
+                transform 0.2s ease;
+}
+
+/* Modificar */
+
+.btn-modificar {
+    background-color: #e1eee7;
+    color: #426d5b;
+}
+
+.btn-modificar:hover {
+    background-color: #426d5b;
+    color: #ffffff;
+    transform: scale(1.08);
+}
+
+/* Cancelar */
+
+.btn-cancelar {
+    background-color: #f5dddd;
+    color: #b34444;
+}
+
+.btn-cancelar:hover {
+    background-color: #b34444;
+    color: #ffffff;
+    transform: scale(1.08);
+}
+
+/* Accesibilidad */
+
+.btn-accion:focus-visible {
+    outline: 3px solid var(--tinta);
+    outline-offset: 3px;
+}
+
+/* Responsive */
+
+@media (max-width: 700px) {
+
+    .appointment-actions {
+        margin-left: auto;
+    }
+
+}
