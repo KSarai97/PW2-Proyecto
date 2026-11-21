@@ -16,7 +16,7 @@
                 <li><a href="index.php">Página principal</a></li>
                 <li><a href="perfilUs.php">Perfil de usuario</a></li>
                 <li><a href="perfilEspecialista.php">Perfil especialista</a></li>
-                <li><a href="citas.html">Agendar citas</a></li>
+                <li><a href="citas.php">Agendar citas</a></li>
                 <li><a href="foro.html">Foro</a></li>
                 <li><a href="login.html" title="Cerrar sesión">Cerrar sesión</a></li>
             </ul>

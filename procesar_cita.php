@@ -62,22 +62,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 $resultado = $coleccion->insertOne($nuevaCita);
 
 // Comprobar que se guardó
+
 if ($resultado->getInsertedCount() === 1) {
 
-    echo "<h2>¡Cita registrada correctamente!</h2>";
-
-    echo "<p>ID del documento: " .
-        htmlspecialchars((string)$resultado->getInsertedId()) .
-        "</p>";
-
-    echo "<p>Base de datos: PW2_Proyecto</p>";
-    echo "<p>Colección: citas</p>";
+    // Redirigir al calendario después de guardar la cita
+    header("Location: calendario.php?registro=exitoso");
+    exit();
 
 } else {
+
     echo "No se pudo guardar la cita.";
+
 }
 
-        echo '<br><a href="citas.php">Regresar al formulario</a>';
 
     } catch (Throwable $e) {
 
