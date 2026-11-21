@@ -62,10 +62,17 @@ if (isset($_GET['id'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
+
+    <!-- Estilos generales -->
+    <link rel="stylesheet" href="css/index.css">
+
+    <!-- Estilos específicos del formulario -->
     <link rel="stylesheet" href="css/citas.css">
+
     <link rel="icon" type="image/png" href="img/logo.png">
 
-    <title>Detalles Cita</title>
+    <title>Detalles de la cita</title>
 </head>
 
 <body>
