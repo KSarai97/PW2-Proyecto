@@ -21,9 +21,9 @@ if (isset($_GET['id'])) {
         $id = $_GET['id'];
 
         // Validar identificador de MongoDB
-        if (!MongoDB\BSON\ObjectId::isValid($id)) {
-            throw new Exception('Identificador de cita no válido.');
-        }
+        if (!preg_match('/^[a-fA-F0-9]{24}$/', $id)) {
+    throw new Exception('ID de cita no válido.');
+}
 
         $db = Conexion::conectar();
 

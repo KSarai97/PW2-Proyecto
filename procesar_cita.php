@@ -93,11 +93,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if (!empty($idCita)) {
 
             // Validar identificador de MongoDB
-            if (!MongoDB\BSON\ObjectId::isValid($idCita)) {
+            if (!preg_match('/^[a-fA-F0-9]{24}$/', $idCita)) {
 
-                throw new Exception("El identificador de la cita no es válido.");
+    throw new Exception("El identificador de la cita no es válido.");
 
-            }
+}
 
             // Convertir ID a ObjectId
             $objectId = new MongoDB\BSON\ObjectId($idCita);
