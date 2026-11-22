@@ -30,7 +30,10 @@ async function cargarCitas() {
 
     try {
 
-        const respuesta = await fetch('obtener_citas.php');
+      //  const respuesta = await fetch('obtener_citas.php');
+      const respuesta = await fetch(
+    'obtener_citas.php?t=' + Date.now()
+);
 
         if (!respuesta.ok) {
             throw new Error('Error al consultar las citas.');
@@ -276,23 +279,21 @@ function dibujarLista() {
 // =====================================
 // ESTADO DE LA CITA
 // =====================================
-
 const cancelada = c.estado === 'cancelada';
-const confirmada = c.estado === 'confirmada';
+const completada = c.estado === 'completada';
 
 let textoEstado = 'Pendiente';
 let claseEstado = 'status-pending';
 
-if (confirmada) {
-    textoEstado = 'Confirmada';
-    claseEstado = 'status-confirmed';
+if (completada) {
+    textoEstado = 'Completada';
+    claseEstado = 'status-completed';
 }
 
 if (cancelada) {
     textoEstado = 'Cancelada';
     claseEstado = 'status-cancelled';
 }
-
 const estado = crear(
     'span',
     'appointment-status ' + claseEstado,
@@ -307,7 +308,7 @@ const estado = crear(
 const acciones = crear('div', 'appointment-actions');
 
 // Si la cita no está cancelada, mostrar botones
-if (!cancelada) {
+if (!cancelada && !completada) {
 
     // Botón modificar
     const botonModificar = crear(

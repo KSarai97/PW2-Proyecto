@@ -5,15 +5,69 @@ require_once __DIR__ . '/Data/Conexion.php';
 
 header('Content-Type: application/json; charset=utf-8');
 
+// Zona horaria de Monterrey, México
+date_default_timezone_set('America/Monterrey');
+
 try {
 
-    // Conectar con MongoDB
+    // =====================================
+    // 1. CONECTAR CON MONGODB
+    // =====================================
+
     $db = Conexion::conectar();
 
-    // Obtener la colección de citas
+    // Obtener colección de citas
     $coleccion = $db->citas;
 
-    // Consultar todas las citas registradas
+    // Fecha actual
+    $hoy = date('Y-m-d');
+
+
+    // =====================================
+    // 2. ACTUALIZAR CITAS VENCIDAS
+    // =====================================
+
+    $coleccion->updateMany(
+
+        [
+            'fecha' => ['$lt' => $hoy],
+            'estado' => ['$ne' => 'cancelada']
+        ],
+
+        [
+            '$set' => [
+                'estado' => 'completada'
+            ]
+        ]
+
+    );
+
+
+    // =====================================
+    // 3. REGRESAR A PENDIENTES
+    //    LAS CITAS DE HOY O FUTURAS
+    // =====================================
+
+    $coleccion->updateMany(
+
+        [
+            'fecha' => ['$gte' => $hoy],
+            'estado' => 'completada'
+        ],
+
+        [
+            '$set' => [
+                'estado' => 'pendiente'
+            ]
+        ]
+
+    );
+
+
+    // =====================================
+    // 4. CONSULTAR TODAS LAS CITAS
+    // =====================================
+
     $resultado = $coleccion->find(
         [],
         [
@@ -40,11 +94,16 @@ try {
 
     }
 
-    // Enviar las citas en formato JSON
+
+    // =====================================
+    // 5. ENVIAR CITAS EN FORMATO JSON
+    // =====================================
+
     echo json_encode(
         $citas,
         JSON_UNESCAPED_UNICODE
     );
+
 
 } catch (Throwable $e) {
 
@@ -55,3 +114,5 @@ try {
     ]);
 
 }
+
+?>
