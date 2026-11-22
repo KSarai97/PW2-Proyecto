@@ -112,4 +112,17 @@ class ForoModel {
         $resultado = $this->respuestasCollection->insertOne($datos);
         return $resultado->getInsertedCount() > 0;
     }
+
+    public function eliminarRespuesta(string $respuestaId): bool {
+        try {
+            $objectId = new ObjectId($respuestaId);
+        } catch (\Exception $e) {
+            return false;
+        }
+
+        $resultado = $this->respuestasCollection->deleteOne(['_id' => $objectId]);
+        return $resultado->getDeletedCount() > 0;
+    }
+
 }
+

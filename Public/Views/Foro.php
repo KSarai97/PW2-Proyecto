@@ -15,6 +15,7 @@ $categorias = ['Todas las discusiones', 'Diagnósticos', 'Consejos', 'Dudas y Ac
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/index.css">
     <link rel="stylesheet" href="../css/foro.css">
     <title>Foro</title>
 </head>
@@ -52,32 +53,40 @@ $categorias = ['Todas las discusiones', 'Diagnósticos', 'Consejos', 'Dudas y Ac
             <div class="actions-bar">
                 <h2><?= $e($data['categoriaActiva']) ?></h2>
                 <?php if ($data['puedeCrearTema']): ?>
-                    <button type="button" class="btn-new-topic" onclick="document.getElementById('form-nuevo-tema').style.display = document.getElementById('form-nuevo-tema').style.display === 'none' ? 'block' : 'none'">
+                    <button type="button" class="btn-new-topic" onclick="toggleNuevoTema()">
                         + Crear Nuevo Tema
                     </button>
                 <?php endif; ?>
             </div>
 
             <?php if ($data['puedeCrearTema']): ?>
-                <form id="form-nuevo-tema" action="CrearTema.php" method="POST" style="display: none; margin-bottom: 20px; padding: 15px; border: 1px solid #ccc; border-radius: 8px;">
+                <form id="form-nuevo-tema"
+                    action="CrearTema.php"
+                    method="POST"
+                    class="foro-form-box"
+                    style="display: none;">
                     <h3>Publicar nuevo tema</h3>
-                    <div>
-                        <label for="titulo">Título:</label><br>
-                        <input type="text" id="titulo" name="titulo" required style="width: 100%; margin-bottom: 10px;">
+
+                    <div class="foro-field">
+                        <label for="titulo">Título:</label>
+                        <input type="text" id="titulo" name="titulo" class="foro-input" required>
                     </div>
-                    <div>
-                        <label for="categoria">Categoría:</label><br>
-                        <select id="categoria" name="categoria" style="margin-bottom: 10px;">
+
+                    <div class="foro-field">
+                        <label for="categoria">Categoría:</label>
+                        <select id="categoria" name="categoria" class="foro-select">
                             <option value="Diagnósticos">Diagnósticos</option>
                             <option value="Consejos">Consejos</option>
                             <option value="Dudas y Aclaraciones">Dudas y Aclaraciones</option>
                         </select>
                     </div>
-                    <div>
-                        <label for="contenido">Contenido:</label><br>
-                        <textarea id="contenido" name="contenido" rows="4" required style="width: 100%; margin-bottom: 10px;"></textarea>
+
+                    <div class="foro-field">
+                        <label for="contenido">Contenido:</label>
+                        <textarea id="contenido" name="contenido" rows="4" class="foro-textarea" required></textarea>
                     </div>
-                    <button type="submit">Publicar tema</button>
+
+                    <button type="submit" class="btn-foro-primary">Publicar tema</button>
                 </form>
             <?php endif; ?>
 
@@ -110,5 +119,20 @@ $categorias = ['Todas las discusiones', 'Diagnósticos', 'Consejos', 'Dudas y Ac
             </div>
         </main>
     </div>
+
+    <script>
+        function toggleNuevoTema() {
+            const formTema = document.getElementById('form-nuevo-tema');
+            const listaTemas = document.getElementById('lista-temas');
+            if (!formTema) return;
+
+            const seVaAMostrar = formTema.style.display === 'none' || formTema.style.display === '';
+            formTema.style.display = seVaAMostrar ? 'block' : 'none';
+
+            if (listaTemas) {
+                listaTemas.style.display = seVaAMostrar ? 'none' : 'block';
+            }
+        }
+    </script>
 </body>
 </html>

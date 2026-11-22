@@ -95,6 +95,7 @@ class ForoController {
         return [
             'tema' => $tema,
             'respuestas' => $modelo->obtenerRespuestas($id),
+            'puedeEliminarComentario' => $this->puedeEliminarComentario(),
         ];
     }
 
@@ -133,6 +134,45 @@ class ForoController {
         }
 
         echo "<script>alert('No se pudo guardar la respuesta.'); window.history.back();</script>";
+        exit();
+    }
+
+    public function puedeEliminarComentario(): bool {
+        $this->asegurarSesion();
+        $rol = (string) ($_SESSION['rol'] ?? '');
+        // Solo Administrador ('2'). Si quieres incluir Especialista ('1'), usa ['1', '2'].
+        return $rol === '2';
+    }
+
+    public function eliminarRespuesta(): void {
+        $this->asegurarSesion();
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            header("Location: foro.php");
+            exit();
+        }
+
+        if (empty($_SESSION['correo']) || !$this->puedeEliminarComentario()) {
+            echo "<script>alert('No tienes permisos para eliminar comentarios.'); window.location.href='foro.php';</script>";
+            exit();
+        }
+
+        $respuestaId = trim($_POST['respuesta_id'] ?? '');
+        $temaId = trim($_POST['tema_id'] ?? '');
+
+        if ($respuestaId === '') {
+            header("Location: foro.php");
+            exit();
+        }
+
+        $modelo = new ForoModel();
+        $modelo->eliminarRespuesta($respuestaId);
+
+        if ($temaId !== '') {
+            header("Location: tema.php?id=" . urlencode($temaId));
+            exit();
+        }
+
+        header("Location: foro.php");
         exit();
     }
 }

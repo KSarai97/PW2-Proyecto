@@ -116,34 +116,96 @@ $rolActual = (string) ($doc['rol'] ?? '0');
                 </fieldset>
 
                 <?php if ($rolActual === '1'): ?>
+                    <?php
+                    $diasActuales = (string) ($doc['dias_semana'] ?? 'Lunes a Viernes');
+                    $horaInicioActual = (string) ($doc['hora_inicio'] ?? '09:00');
+                    $horaFinActual = (string) ($doc['hora_fin'] ?? '17:00');
+                    $mesesActuales = (string) ($doc['meses_disponibles'] ?? 'Todos los meses');
+
+                    $opcionesDias = [
+                        'Lunes a Viernes',
+                        'Lunes a Sábado',
+                        'Lunes, Miércoles y Viernes',
+                        'Martes y Jueves',
+                        'Sábados y Domingos',
+                    ];
+
+                    $opcionesMeses = [
+                        'Todos los meses',
+                        'Enero - Junio',
+                        'Julio - Diciembre',
+                        'Noviembre - Diciembre',
+                    ];
+
+                    // Horas de 07:00 a 21:00
+                    $horas = [];
+                    for ($h = 7; $h <= 21; $h++) {
+                        $horas[] = sprintf('%02d:00', $h);
+                    }
+                    ?>
                     <fieldset>
                         <legend>Información profesional (Especialista)</legend>
 
                         <div class="field">
                             <label for="telefono">Teléfono:</label>
                             <input type="text"
-                                   id="telefono"
-                                   name="telefono"
-                                   value="<?= $e($doc['telefono'] ?? '') ?>"
-                                   placeholder="+52 81 0000 0000">
+                                id="telefono"
+                                name="telefono"
+                                value="<?= $e($doc['telefono'] ?? '') ?>"
+                                placeholder="+52 81 0000 0000">
                         </div>
 
                         <div class="field">
                             <label for="especialidad">Especialidad:</label>
                             <input type="text"
-                                   id="especialidad"
-                                   name="especialidad"
-                                   value="<?= $e($doc['especialidad'] ?? '') ?>"
-                                   placeholder="Psicología Clínica / Terapia Cognitivo-Conductual">
+                                id="especialidad"
+                                name="especialidad"
+                                value="<?= $e($doc['especialidad'] ?? '') ?>"
+                                placeholder="Psicología Clínica / Terapia Cognitivo-Conductual">
                         </div>
 
                         <div class="field">
-                            <label for="horarios">Horarios:</label>
-                            <input type="text"
-                                   id="horarios"
-                                   name="horarios"
-                                   value="<?= $e($doc['horarios'] ?? '') ?>"
-                                   placeholder="Lunes a Viernes: 9:00 AM - 6:00 PM">
+                            <label for="dias_semana">Días de la semana:</label>
+                            <select name="dias_semana" id="dias_semana">
+                                <?php foreach ($opcionesDias as $diaOp): ?>
+                                    <option value="<?= $e($diaOp) ?>" <?= $diasActuales === $diaOp ? 'selected' : '' ?>>
+                                        <?= $e($diaOp) ?>
+                                    </option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+
+                        <div class="field">
+                            <label for="hora_inicio">Hora de inicio:</label>
+                            <select name="hora_inicio" id="hora_inicio">
+                                <?php foreach ($horas as $hr): ?>
+                                    <option value="<?= $e($hr) ?>" <?= $horaInicioActual === $hr ? 'selected' : '' ?>>
+                                        <?= $e($hr) ?>
+                                    </option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+
+                        <div class="field">
+                            <label for="hora_fin">Hora final:</label>
+                            <select name="hora_fin" id="hora_fin">
+                                <?php foreach ($horas as $hr): ?>
+                                    <option value="<?= $e($hr) ?>" <?= $horaFinActual === $hr ? 'selected' : '' ?>>
+                                        <?= $e($hr) ?>
+                                    </option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+
+                        <div class="field">
+                            <label for="meses_disponibles">Meses de atención:</label>
+                            <select name="meses_disponibles" id="meses_disponibles">
+                                <?php foreach ($opcionesMeses as $mesOp): ?>
+                                    <option value="<?= $e($mesOp) ?>" <?= $mesesActuales === $mesOp ? 'selected' : '' ?>>
+                                        <?= $e($mesOp) ?>
+                                    </option>
+                                <?php endforeach; ?>
+                            </select>
                         </div>
 
                         <div class="field">

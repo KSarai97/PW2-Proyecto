@@ -101,7 +101,7 @@ input:focus-visible {
 .container {
     display: flex;
     flex: 1;
-    max-width: 1200px;
+    max-width: 1320px;
     width: 100%;
     margin: 30px auto;
     gap: 25px;
@@ -152,9 +152,11 @@ aside ul li a.active {
     font-weight: 700;
 }
 
-
 main {
     flex: 1;
+    width: 100%;
+    min-width: 0;
+    align-items: stretch;
 }
 
 .actions-bar {
@@ -187,6 +189,8 @@ main {
     border: 1px solid var(--linea);
     box-shadow: var(--sombra);
     overflow: hidden;
+    width: 100%;
+    max-width: 100%;
 }
 
 .topic-item {
@@ -196,6 +200,8 @@ main {
     padding: 20px 24px;
     border-bottom: 1px solid var(--linea);
     transition: background-color 0.2s ease;
+    width: 100%;
+    max-width: 100%;
 }
 
 .topic-item:last-child {
@@ -304,4 +310,102 @@ main {
 
 .site-footer p {
     font-size: 15px;
+}
+
+/* Tarjeta / marco del formulario de nuevo tema y de respuestas */
+.foro-form-box {
+    background-color: var(--superficie);
+    border: 1px solid var(--linea);
+    border-radius: var(--radio);
+    padding: 24px;
+    margin: 20px 0;
+    box-shadow: var(--sombra);
+    width: 100%;
+    max-width: 100%;
+}
+
+.foro-form-box h3 {
+    color: var(--tinta);
+    font-size: 20px;
+    margin-bottom: 14px;
+}
+
+.foro-field {
+    margin-bottom: 14px;
+}
+
+.foro-field label {
+    display: block;
+    color: var(--tinta);
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+
+/* Marco para inputs, select y textarea */
+.foro-input,
+.foro-select,
+.foro-textarea {
+    width: 100%;
+    padding: 12px 14px;
+    background-color: var(--fondo);
+    color: var(--tinta);
+    border: 1px solid var(--linea);
+    border-radius: 14px;
+    font-family: inherit;
+    font-size: 16px;
+    line-height: 1.5;
+    transition: border-color 0.3s ease, background-color 0.3s ease;
+}
+
+.foro-textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
+.foro-input:focus,
+.foro-select:focus,
+.foro-textarea:focus {
+    outline: 3px solid var(--salvia-oscuro);
+    outline-offset: 2px;
+    background-color: var(--superficie);
+}
+
+/* Botón principal (Crear tema / Publicar tema / Responder) */
+.btn-foro-primary {
+    display: inline-block;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 999px;
+    background-color: var(--salvia-oscuro);
+    color: #ffffff;
+    font-family: inherit;
+    font-size: 16px;
+    font-weight: 700;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 0.4s ease;
+}
+
+.btn-foro-primary:hover {
+    background-color: #2f5348;
+}
+
+/* Botón para eliminar comentario (mismo estilo píldora y tipografía, tono cálido/alerta suave) */
+.btn-foro-delete {
+    display: inline-block;
+    padding: 8px 18px;
+    border: none;
+    border-radius: 999px;
+    background-color: #b5705f;
+    color: #ffffff;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background-color 0.4s ease;
+}
+
+.btn-foro-delete:hover {
+    background-color: #98584a;
 }

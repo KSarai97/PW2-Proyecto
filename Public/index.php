@@ -24,8 +24,8 @@ define('BASE_URL', 'http://localhost:8000/');
                         <li><a href="/Views/adminRegistro.php" title="Registrar usuarios y asignar roles">Administrar usuarios</a></li>
                     <?php endif; ?>
                     <li><a href="/Views/Especialistas.php" title="Conoce a nuestros especialistas">Especialistas</a></li>
-                    <li><a href="/Views/citas.html" title="Agendar cita">Agendar citas</a></li>
-                    <li><a href="/Views/calendario.html" title="Calendario">Calendario de citas</a></li>
+                    <li><a href="/Views/citas.php" title="Agendar cita">Agendar citas</a></li>
+                    <li><a href="/Views/calendario.php" title="Calendario">Calendario de citas</a></li>
                     <li><a href="/Views/Foro.php" title="Foro">Foro</a></li>
                     <li><a href="/Views/logout.php" title="Cerrar sesión">Cerrar sesión</a></li>
                 <?php else: ?>

@@ -1,13 +1,7 @@
-.main-content {
-    flex: 1;
-    justify-content: flex-start;
-    align-items: center;
-    padding: 40px 15px 70px;
-}
-
 .calendar-container {
     width: 100%;
     max-width: 860px;
+    margin: 0 auto;
     padding: 34px;
     background-color: var(--superficie);
     border: 1px solid var(--linea);
@@ -21,9 +15,15 @@
 }
 
 .calendar-header h1 {
-    font-size: 30px;
+    font-size: 32px;
+    line-height: 1.25;
     margin-bottom: 16px;
     color: var(--tinta);
+}
+
+.calendar-header h1 em {
+    color: var(--salvia-oscuro);
+    font-style: normal;
 }
 
 .month-navigation {
@@ -103,7 +103,6 @@
     border-color: var(--salvia);
 }
 
-/* Hoy: anillo suave, sin colores de alarma */
 .calendar-day.today {
     border-color: var(--salvia-oscuro);
     border-width: 2px;
@@ -235,8 +234,6 @@
     color: var(--salvia-oscuro);
     font-weight: 700;
 }
-
-/* RESPONSIVE */
 
 @media (max-width: 700px) {
     .calendar-container {

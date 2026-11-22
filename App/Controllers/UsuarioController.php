@@ -296,9 +296,26 @@ class UsuarioController {
 
         $esEspecialista = (string) ($usuarioActual['rol'] ?? '0') === '1';
         if ($esEspecialista) {
+            $diasSemana = trim($_POST['dias_semana'] ?? 'Lunes a Viernes');
+            $horaInicio = trim($_POST['hora_inicio'] ?? '09:00');
+            $horaFin = trim($_POST['hora_fin'] ?? '17:00');
+            $mesesDisp = trim($_POST['meses_disponibles'] ?? 'Todos los meses');
+
+            if ($horaFin <= $horaInicio) {
+                echo "<script>alert('La hora final debe ser mayor que la hora de inicio.'); window.history.back();</script>";
+                exit();
+            }
+
+            $horariosFormateados = "{$diasSemana}: {$horaInicio} a {$horaFin}"
+                . ($mesesDisp !== 'Todos los meses' ? " ({$mesesDisp})" : '');
+
             $camposActualizar['telefono'] = trim($_POST['telefono'] ?? '');
             $camposActualizar['especialidad'] = trim($_POST['especialidad'] ?? '');
-            $camposActualizar['horarios'] = trim($_POST['horarios'] ?? '');
+            $camposActualizar['dias_semana'] = $diasSemana;
+            $camposActualizar['hora_inicio'] = $horaInicio;
+            $camposActualizar['hora_fin'] = $horaFin;
+            $camposActualizar['meses_disponibles'] = $mesesDisp;
+            $camposActualizar['horarios'] = $horariosFormateados;
             $camposActualizar['modalidad'] = trim($_POST['modalidad'] ?? 'Presencial y En línea');
         }
 
