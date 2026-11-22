@@ -5,7 +5,7 @@ require_once __DIR__ . '/Data/Conexion.php';
 
 header('Content-Type: application/json; charset=utf-8');
 
-// Zona horaria de Monterrey, México
+// Zona horaria de Monterrey
 date_default_timezone_set('America/Monterrey');
 
 try {
@@ -15,57 +15,101 @@ try {
     // =====================================
 
     $db = Conexion::conectar();
-
-    // Obtener colección de citas
     $coleccion = $db->citas;
 
-    // Fecha actual
-    $hoy = date('Y-m-d');
+    $zonaHoraria = new DateTimeZone('America/Monterrey');
+
+    // Fecha y hora actuales
+    $ahora = new DateTimeImmutable('now', $zonaHoraria);
 
 
     // =====================================
-    // 2. ACTUALIZAR CITAS VENCIDAS
+    // 2. REVISAR ESTADOS DE LAS CITAS
     // =====================================
 
-    $coleccion->updateMany(
+    $resultadoRevision = $coleccion->find([]);
 
-        [
-            'fecha' => ['$lt' => $hoy],
-            'estado' => ['$ne' => 'cancelada']
-        ],
+    foreach ($resultadoRevision as $cita) {
 
-        [
-            '$set' => [
-                'estado' => 'completada'
-            ]
-        ]
+        $fecha = $cita['fecha'] ?? '';
+        $hora = $cita['hora'] ?? '';
+        $estadoActual = $cita['estado'] ?? 'pendiente';
 
-    );
+        // No modificar citas canceladas
+        if ($estadoActual === 'cancelada') {
+            continue;
+        }
+
+        // Validar formato de fecha y hora
+        if (
+            !preg_match('/^\d{4}-\d{2}-\d{2}$/', $fecha) ||
+            !preg_match('/^\d{2}:\d{2}(:\d{2})?$/', $hora)
+        ) {
+            continue;
+        }
+
+        // Construir fecha y hora de la cita
+        $hora = substr($hora, 0, 5);
+
+        $fechaHoraTexto = $fecha . ' ' . $hora;
+
+        $fechaHoraCita = DateTimeImmutable::createFromFormat(
+            '!Y-m-d H:i',
+            $fechaHoraTexto,
+            $zonaHoraria
+        );
+
+        // Comprobar que la fecha sea válida
+        if (
+            !$fechaHoraCita ||
+            $fechaHoraCita->format('Y-m-d H:i') !== $fechaHoraTexto
+        ) {
+            continue;
+        }
+
+
+        // =====================================
+        // 3. DETERMINAR EL ESTADO CORRECTO
+        // =====================================
+
+        if ($fechaHoraCita < $ahora) {
+
+            $nuevoEstado = 'completada';
+
+        } else {
+
+            $nuevoEstado = 'pendiente';
+
+        }
+
+
+        // =====================================
+        // 4. ACTUALIZAR SI ES NECESARIO
+        // =====================================
+
+        if ($estadoActual !== $nuevoEstado) {
+
+            $coleccion->updateOne(
+
+                [
+                    '_id' => $cita['_id']
+                ],
+
+                [
+                    '$set' => [
+                        'estado' => $nuevoEstado
+                    ]
+                ]
+
+            );
+
+        }
+
+    }
 
 
     // =====================================
-    // 3. REGRESAR A PENDIENTES
-    //    LAS CITAS DE HOY O FUTURAS
-    // =====================================
-
-    $coleccion->updateMany(
-
-        [
-            'fecha' => ['$gte' => $hoy],
-            'estado' => 'completada'
-        ],
-
-        [
-            '$set' => [
-                'estado' => 'pendiente'
-            ]
-        ]
-
-    );
-
-
-    // =====================================
-    // 4. CONSULTAR TODAS LAS CITAS
+    // 5. CONSULTAR TODAS LAS CITAS
     // =====================================
 
     $resultado = $coleccion->find(
@@ -96,7 +140,7 @@ try {
 
 
     // =====================================
-    // 5. ENVIAR CITAS EN FORMATO JSON
+    // 6. ENVIAR CITAS EN FORMATO JSON
     // =====================================
 
     echo json_encode(
