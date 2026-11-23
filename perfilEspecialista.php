@@ -66,7 +66,7 @@ $generoTexto = (isset($datosPerfil['genero']) && $datosPerfil['genero'] == '1') 
             <ul>
                 <li><a href="index.php">Página principal</a></li>
                 <li><a href="citas.html">Agendar citas</a></li>
-                <li><a href="calendario.html">Calendario de citas</a></li>
+                <li><a href="calendario.php">Calendario de citas</a></li>
                 <li><a href="foro.html">Foro</a></li>
                 <li><a href="login.html" title="Cerrar sesión">Cerrar sesión</a></li>
             </ul>

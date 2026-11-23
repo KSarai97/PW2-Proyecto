@@ -48,7 +48,7 @@ $esEspecialista = (
                 </li>
 
                 <li>
-                    <a href="calendario.html" title="Comprueba las citas registradas">Calendario de citas</a>
+                    <a href="calendario.php" title="Comprueba las citas registradas">Calendario de citas</a>
                 </li>
 
                 <li>
