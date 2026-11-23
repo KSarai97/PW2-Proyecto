@@ -1,7 +1,15 @@
 
 <?php
 
+session_start();
+
 require_once __DIR__ . '/Data/Conexion.php';
+
+// Comprobar sesión
+if (!isset($_SESSION['usuario'])) {
+    header("Location: login.html");
+    exit();
+}
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     header("Location: calendario.php");
@@ -10,25 +18,57 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 
 try {
 
-    // Obtener ID de la cita
+    $db = Conexion::conectar();
+
+    // =====================================
+    // 1. IDENTIFICAR AL USUARIO LOGUEADO
+    // =====================================
+
+    $nombreUsuario = $_SESSION['usuario'];
+
+    $documentoUsuario = $db->usuarios->findOne([
+        'usuarios.usuario' => $nombreUsuario
+    ]);
+
+    if (!$documentoUsuario) {
+        throw new Exception("Usuario no encontrado.");
+    }
+
+    $usuarioEncontrado = null;
+
+    foreach ($documentoUsuario['usuarios'] as $usuario) {
+        if ($usuario['usuario'] === $nombreUsuario) {
+            $usuarioEncontrado = $usuario;
+            break;
+        }
+    }
+
+    if (!$usuarioEncontrado) {
+        throw new Exception("No se encontraron los datos del usuario.");
+    }
+
+    $idUsuario = $usuarioEncontrado['id'];
+
+    // =====================================
+    // 2. OBTENER ID DE LA CITA
+    // =====================================
+
     $idCita = $_POST['id_cita'] ?? '';
 
-    // Validar identificador
     if (!preg_match('/^[a-fA-F0-9]{24}$/', $idCita)) {
         throw new Exception("El identificador de la cita no es válido.");
     }
 
-    // Conectar con MongoDB
-    $db = Conexion::conectar();
-
-    $coleccion = $db->citas;
-
     $objectId = new MongoDB\BSON\ObjectId($idCita);
 
-    // Cancelar solamente citas que no estén canceladas
-    $resultado = $coleccion->updateOne(
+    // =====================================
+    // 3. CANCELAR SOLAMENTE SU PROPIA CITA
+    // =====================================
+
+    $resultado = $db->citas->updateOne(
         [
             '_id' => $objectId,
+            'id_usuario' => $idUsuario,
             'estado' => ['$ne' => 'cancelada']
         ],
         [
@@ -45,13 +85,15 @@ try {
 
     } else {
 
-        throw new Exception("No se encontró la cita o ya estaba cancelada.");
+        throw new Exception(
+            "No puedes cancelar esta cita o ya se encuentra cancelada."
+        );
 
     }
 
 } catch (Throwable $e) {
 
-    http_response_code(500);
+    http_response_code(403);
 
     echo "Error al cancelar la cita: " .
         htmlspecialchars($e->getMessage(), ENT_QUOTES, 'UTF-8');

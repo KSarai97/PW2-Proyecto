@@ -1,24 +1,65 @@
 
 <?php
 
+session_start();
+
 require_once __DIR__ . '/Data/Conexion.php';
+
+// =====================================
+// 1. COMPROBAR SESIÓN
+// =====================================
+
+if (!isset($_SESSION['usuario'])) {
+    header("Location: login.html");
+    exit();
+}
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     try {
 
         // =====================================
-        // 1. CONEXIÓN A MONGODB
+        // 2. CONEXIÓN A MONGODB
         // =====================================
 
         $db = Conexion::conectar();
 
-        // Seleccionar colección de citas
         $coleccion = $db->citas;
 
+        // =====================================
+        // 3. IDENTIFICAR USUARIO LOGUEADO
+        // =====================================
+
+        $nombreUsuario = $_SESSION['usuario'];
+
+        $documentoUsuario = $db->usuarios->findOne([
+            'usuarios.usuario' => $nombreUsuario
+        ]);
+
+        if (!$documentoUsuario) {
+            throw new Exception("Usuario no encontrado.");
+        }
+
+        $usuarioEncontrado = null;
+
+        foreach ($documentoUsuario['usuarios'] as $usuario) {
+
+            if ($usuario['usuario'] === $nombreUsuario) {
+                $usuarioEncontrado = $usuario;
+                break;
+            }
+
+        }
+
+        if (!$usuarioEncontrado) {
+            throw new Exception("No se encontraron los datos del usuario.");
+        }
+
+        // Obtener ID del usuario
+        $idUsuario = $usuarioEncontrado['id'];
 
         // =====================================
-        // 2. OBTENER DATOS DEL FORMULARIO
+        // 4. OBTENER DATOS DEL FORMULARIO
         // =====================================
 
         $idEspecialista = filter_input(
@@ -32,12 +73,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $hora = $_POST['hora'] ?? '';
         $motivo = trim($_POST['motivo'] ?? '');
 
-        // Obtener ID si se está modificando una cita
+        // ID de cita si se está modificando
         $idCita = $_POST['id_cita'] ?? '';
 
-
         // =====================================
-        // 3. VALIDAR DATOS
+        // 5. VALIDAR DATOS
         // =====================================
 
         $especialistas = [
@@ -50,14 +90,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             !isset($especialistas[$idEspecialista]) ||
             !in_array($modalidad, ['presencial', 'online'], true) ||
             !preg_match('/^\d{4}-\d{2}-\d{2}$/', $fecha) ||
-            !in_array($hora, ['10:00', '11:00', '12:00', '16:00', '17:00'], true)
+            !in_array(
+                $hora,
+                ['10:00', '11:00', '12:00', '16:00', '17:00'],
+                true
+            )
         ) {
 
             throw new Exception("Los datos de la cita no son válidos.");
 
         }
 
-        // Validar fecha
+        // Validar fecha real
         $fechaValidada = DateTime::createFromFormat('!Y-m-d', $fecha);
 
         if (
@@ -69,85 +113,103 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         }
 
+        // No permitir fechas anteriores al día actual
+        if ($fecha < date('Y-m-d')) {
+            throw new Exception("No puedes seleccionar una fecha pasada.");
+        }
 
         // =====================================
-        // 4. PREPARAR DATOS DE LA CITA
+        // 6. PREPARAR DATOS DE LA CITA
         // =====================================
 
         $datosCita = [
 
             'id_especialista' => $idEspecialista,
+
             'especialista' => $especialistas[$idEspecialista],
+
             'modalidad' => $modalidad,
+
             'fecha' => $fecha,
+
             'hora' => $hora,
+
             'motivo' => $motivo
 
         ];
 
-
         // =====================================
-        // 5. COMPROBAR SI ES MODIFICACIÓN
+        // 7. COMPROBAR SI ES MODIFICACIÓN
         // =====================================
 
         if (!empty($idCita)) {
 
-            // Validar identificador de MongoDB
+            // Validar ID de MongoDB
             if (!preg_match('/^[a-fA-F0-9]{24}$/', $idCita)) {
 
-    throw new Exception("El identificador de la cita no es válido.");
+                throw new Exception(
+                    "El identificador de la cita no es válido."
+                );
 
-}
+            }
 
-            // Convertir ID a ObjectId
             $objectId = new MongoDB\BSON\ObjectId($idCita);
 
-
             // =====================================
-            // 6. ACTUALIZAR CITA EXISTENTE
+            // 8. ACTUALIZAR SOLAMENTE SU PROPIA CITA
             // =====================================
 
             $resultado = $coleccion->updateOne(
 
-                ['_id' => $objectId],
+                [
+                    '_id' => $objectId,
+                    'id_usuario' => $idUsuario
+                ],
 
-                ['$set' => $datosCita]
+                [
+                    '$set' => $datosCita
+                ]
 
             );
 
-
-            // Comprobar actualización
+            // Comprobar si existe y pertenece al usuario
             if ($resultado->getMatchedCount() === 1) {
 
-                // Regresar al calendario
                 header("Location: calendario.php?modificacion=exitosa");
                 exit();
 
             } else {
 
-                throw new Exception("No se encontró la cita que deseas modificar.");
+                throw new Exception(
+                    "No puedes modificar esta cita porque no te pertenece o no existe."
+                );
 
             }
 
-
         } else {
 
-
             // =====================================
-            // 7. REGISTRAR UNA CITA NUEVA
+            // 9. REGISTRAR UNA CITA NUEVA
             // =====================================
 
+            // Guardar propietario de la cita
+            $datosCita['id_usuario'] = $idUsuario;
+
+            $datosCita['usuario'] = $nombreUsuario;
+
+            // Estado inicial
             $datosCita['estado'] = 'pendiente';
 
+            // Fecha de registro
             $datosCita['fecha_registro'] =
                 new MongoDB\BSON\UTCDateTime();
 
+            // =====================================
+            // 10. INSERTAR EN MONGODB
+            // =====================================
 
-            // Guardar en MongoDB
             $resultado = $coleccion->insertOne($datosCita);
 
-
-            // Comprobar que se guardó
             if ($resultado->getInsertedCount() === 1) {
 
                 header("Location: calendario.php?registro=exitoso");
@@ -161,12 +223,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         }
 
-
     } catch (Throwable $e) {
 
-        http_response_code(500);
+        http_response_code(400);
 
         echo "Error al procesar la cita: " .
+
             htmlspecialchars(
                 $e->getMessage(),
                 ENT_QUOTES,
@@ -177,7 +239,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 } else {
 
-    // Si no viene del formulario, regresar a citas.php
     header("Location: citas.php");
     exit();
 

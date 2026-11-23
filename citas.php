@@ -1,9 +1,23 @@
 
 <?php
 
+session_start();
+
 require_once __DIR__ . '/Data/Conexion.php';
 
-// Especialistas disponibles
+// =====================================
+// 1. COMPROBAR SESIÓN
+// =====================================
+
+if (!isset($_SESSION['usuario'])) {
+    header("Location: login.html");
+    exit();
+}
+
+// =====================================
+// 2. ESPECIALISTAS DISPONIBLES
+// =====================================
+
 $especialistas = [
     1 => 'Dra. María Fernández - Psicología Clínica',
     2 => 'Lic. Roberto Sánchez - Terapia Cognitivo-Conductual'
@@ -13,7 +27,10 @@ $fechaMinima = date('Y-m-d');
 
 $citaEditar = null;
 
-// Comprobar si se quiere modificar una cita
+// =====================================
+// 3. COMPROBAR SI SE QUIERE EDITAR
+// =====================================
+
 if (isset($_GET['id'])) {
 
     try {
@@ -22,31 +39,73 @@ if (isset($_GET['id'])) {
 
         // Validar identificador de MongoDB
         if (!preg_match('/^[a-fA-F0-9]{24}$/', $id)) {
-    throw new Exception('ID de cita no válido.');
-}
+            throw new Exception('ID de cita no válido.');
+        }
+
+        // =====================================
+        // 4. CONECTAR CON MONGODB
+        // =====================================
 
         $db = Conexion::conectar();
 
-        $coleccion = $db->citas;
+        // =====================================
+        // 5. IDENTIFICAR USUARIO LOGUEADO
+        // =====================================
 
-        // Buscar la cita
-        $citaEditar = $coleccion->findOne([
-            '_id' => new MongoDB\BSON\ObjectId($id)
+        $nombreUsuario = $_SESSION['usuario'];
+
+        $documentoUsuario = $db->usuarios->findOne([
+            'usuarios.usuario' => $nombreUsuario
+        ]);
+
+        if (!$documentoUsuario) {
+            throw new Exception('Usuario no encontrado.');
+        }
+
+        $usuarioEncontrado = null;
+
+        foreach ($documentoUsuario['usuarios'] as $usuario) {
+
+            if ($usuario['usuario'] === $nombreUsuario) {
+                $usuarioEncontrado = $usuario;
+                break;
+            }
+
+        }
+
+        if (!$usuarioEncontrado) {
+            throw new Exception('No se encontraron los datos del usuario.');
+        }
+
+        // Obtener ID del usuario
+        $idUsuario = $usuarioEncontrado['id'];
+
+        // =====================================
+        // 6. BUSCAR CITA Y COMPROBAR PROPIETARIO
+        // =====================================
+
+        $citaEditar = $db->citas->findOne([
+            '_id' => new MongoDB\BSON\ObjectId($id),
+            'id_usuario' => $idUsuario
         ]);
 
         if (!$citaEditar) {
-            throw new Exception('No se encontró la cita.');
+            throw new Exception(
+                'No se encontró la cita o no tienes permiso para modificarla.'
+            );
         }
 
     } catch (Throwable $e) {
 
-        http_response_code(404);
+        http_response_code(403);
 
-        exit(htmlspecialchars(
-            $e->getMessage(),
-            ENT_QUOTES,
-            'UTF-8'
-        ));
+        exit(
+            htmlspecialchars(
+                $e->getMessage(),
+                ENT_QUOTES,
+                'UTF-8'
+            )
+        );
 
     }
 
@@ -54,40 +113,63 @@ if (isset($_GET['id'])) {
 
 ?>
 
-
 <!DOCTYPE html>
 <html lang="es">
 
 <head>
+
     <meta charset="UTF-8">
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
 
-    <!-- Estilos generales -->
     <link rel="stylesheet" href="css/index.css">
 
-    <!-- Estilos específicos del formulario -->
     <link rel="stylesheet" href="css/citas.css">
 
     <link rel="icon" type="image/png" href="img/logo.png">
 
     <title>Detalles de la cita</title>
+
 </head>
 
 <body>
 
     <header class="site-header">
+
         <nav class="navbar">
+
             <ul>
-                <li><a href="index.php">Página principal</a></li>
-                <li><a href="perfilUs.php">Perfil de usuario</a></li>
-                <li><a href="perfilEspecialista.php">Perfil especialista</a></li>
-                <li><a href="calendario.php">Calendario de citas</a></li>
-                <li><a href="foro.html">Foro</a></li>
-                <li><a href="login.html" title="Cerrar sesión">Cerrar sesión</a></li>
+
+                <li>
+                    <a href="index.php">Página principal</a>
+                </li>
+
+                <li>
+                    <a href="perfilUs.php">Perfil de usuario</a>
+                </li>
+
+                <li>
+                    <a href="perfilEspecialista.php">Perfil especialista</a>
+                </li>
+
+                <li>
+                    <a href="calendario.php">Calendario de citas</a>
+                </li>
+
+                <li>
+                    <a href="foro.html">Foro</a>
+                </li>
+
+                <li>
+                    <a href="logout.php" title="Cerrar sesión">Cerrar sesión</a>
+                </li>
+
             </ul>
+
         </nav>
+
     </header>
 
     <main class="main-content">
@@ -95,71 +177,119 @@ if (isset($_GET['id'])) {
         <div class="container">
 
             <div class="form-header">
+
                 <h1>Agendar <em>Cita</em></h1>
-                <p>Selecciona a tu especialista y el horario de tu preferencia</p>
+
+                <p>
+                    Selecciona a tu especialista y el horario de tu preferencia
+                </p>
+
             </div>
 
             <form action="procesar_cita.php" method="POST">
 
+                <!-- =====================================
+                     ESPECIALISTA
+                ====================================== -->
+
                 <fieldset>
+
                     <legend>Detalles del especialista</legend>
 
                     <div class="field">
-                        <label for="especialista">Seleccionar Especialista:</label>
 
-                        <select id="especialista" name="id_especialista" required>
+                        <label for="especialista">
+                            Seleccionar Especialista:
+                        </label>
 
-                           <option value="" disabled
-                                    <?= !$citaEditar ? 'selected' : '' ?>>
-                                        </option>
-                                          <?php foreach ($especialistas as $id => $nombre): ?>
-                                         <option value="<?= $id ?>"
-                                         <?= $citaEditar &&
-                                            $citaEditar['id_especialista'] == $id
-                                            ? 'selected' : '' ?>>
-                                            <?= htmlspecialchars($nombre, ENT_QUOTES, 'UTF-8') ?>
-                                        </option>
-                                <?php endforeach; ?>
+                        <select
+                            id="especialista"
+                            name="id_especialista"
+                            required
+                        >
+
+                            <option value="" disabled
+                                <?= !$citaEditar ? 'selected' : '' ?>>
+                            </option>
+
+                            <?php foreach ($especialistas as $id => $nombre): ?>
+
+                                <option
+                                    value="<?= $id ?>"
+                                    <?= $citaEditar &&
+                                        $citaEditar['id_especialista'] == $id
+                                        ? 'selected' : '' ?>
+                                >
+
+                                    <?= htmlspecialchars(
+                                        $nombre,
+                                        ENT_QUOTES,
+                                        'UTF-8'
+                                    ) ?>
+
+                                </option>
+
+                            <?php endforeach; ?>
 
                         </select>
+
                     </div>
 
                     <div class="field">
+
                         <label for="modalidad">Modalidad:</label>
 
                         <select id="modalidad" name="modalidad" required>
 
-                <option value="presencial"
-                     <?= $citaEditar &&
-                     $citaEditar['modalidad'] === 'presencial'
-                        ? 'selected' : '' ?>>
-                        Presencial (Consultorio)
-                </option>
+                            <option value="presencial"
+                                <?= $citaEditar &&
+                                    $citaEditar['modalidad'] === 'presencial'
+                                    ? 'selected' : '' ?>>
 
-                <option value="online"
-                    <?= $citaEditar &&
-                        $citaEditar['modalidad'] === 'online'
-                        ? 'selected' : '' ?>>
-                    En línea (Videollamada)
-                </option>
+                                Presencial (Consultorio)
 
-                    </select>
+                            </option>
+
+                            <option value="online"
+                                <?= $citaEditar &&
+                                    $citaEditar['modalidad'] === 'online'
+                                    ? 'selected' : '' ?>>
+
+                                En línea (Videollamada)
+
+                            </option>
+
+                        </select>
+
                     </div>
 
                 </fieldset>
 
+                <!-- =====================================
+                     FECHA Y HORARIO
+                ====================================== -->
+
                 <fieldset>
+
                     <legend>Fecha y Horario</legend>
+
                     <div class="field-grid">
+
                         <div class="field">
+
                             <label for="fecha">Fecha:</label>
-                           <input
+
+                            <input
                                 type="date"
                                 id="fecha"
                                 name="fecha"
                                 min="<?= $fechaMinima ?>"
                                 value="<?= $citaEditar
-                                    ? htmlspecialchars($citaEditar['fecha'], ENT_QUOTES, 'UTF-8')
+                                    ? htmlspecialchars(
+                                        $citaEditar['fecha'],
+                                        ENT_QUOTES,
+                                        'UTF-8'
+                                    )
                                     : '' ?>"
                                 required
                             >
@@ -167,41 +297,41 @@ if (isset($_GET['id'])) {
                         </div>
 
                         <div class="field">
-                        <label for="hora">Horario disponible:</label>
-                           <select id="hora" name="hora" required>
 
-                        <option value="" disabled
-                            <?= !$citaEditar ? 'selected' : '' ?>>
-                            -- Selecciona hora --
-                        </option>
+                            <label for="hora">Horario disponible:</label>
 
-               <?php foreach (['10:00', '11:00', '12:00', '16:00', '17:00'] as $hora): ?>
+                            <select id="hora" name="hora" required>
 
-                    <option value="<?= $hora ?>"
-                        <?= $citaEditar &&
-                            $citaEditar['hora'] === $hora
-                            ? 'selected' : '' ?>>
+                                <option value="" disabled
+                                    <?= !$citaEditar ? 'selected' : '' ?>>
 
-                        <?= $hora ?>
+                                  
+                                </option>
 
-                    </option>
-
-    <?php endforeach; ?>
-
-</select>
-
+                                <?php foreach (
+                                    ['10:00', '11:00', '12:00', '16:00', '17:00']
+                                    as $hora
+                                ): ?>
+                                    <option
+                                        value="<?= $hora ?>"
+                                        <?= $citaEditar &&
+                                            $citaEditar['hora'] === $hora
+                                            ? 'selected' : '' ?>
+                                    >
+                                        <?= $hora ?>
+                                    </option>
+                                <?php endforeach; ?>
+                            </select>
                         </div>
-
                     </div>
-
                 </fieldset>
 
+                <!-- =====================================
+                     MOTIVO
+                ====================================== -->
                 <fieldset>
-
                     <legend>Motivo o Notas (Opcional)</legend>
-
                     <div class="field">
-
                         <label for="motivo">
                             Breve motivo de la consulta:
                         </label>
@@ -212,59 +342,70 @@ if (isset($_GET['id'])) {
                             rows="3"
                             placeholder="Describe brevemente tus inquietudes o síntomas..."
                         ><?= $citaEditar
-                            ? htmlspecialchars($citaEditar['motivo'] ?? '', ENT_QUOTES, 'UTF-8')
+                            ? htmlspecialchars(
+                                $citaEditar['motivo'] ?? '',
+                                ENT_QUOTES,
+                                'UTF-8'
+                            )
                             : '' ?></textarea>
-
                     </div>
-
                 </fieldset>
+
+                <!-- =====================================
+                     ACCIONES
+                ====================================== -->
 
                 <fieldset>
 
-                <legend>Acciones</legend>
+                    <legend>Acciones</legend>
 
-            <div class="button-group">
+                    <div class="button-group">
 
-                <?php if ($citaEditar): ?>
+                        <?php if ($citaEditar): ?>
 
-                    <input
-                        type="hidden"
-                        name="id_cita"
-                        value="<?= htmlspecialchars(
-                            (string) $citaEditar['_id'],
-                            ENT_QUOTES,
-                            'UTF-8'
-                        ) ?>"
-                    >
+                            <input
+                                type="hidden"
+                                name="id_cita"
+                                value="<?= htmlspecialchars(
+                                    (string) $citaEditar['_id'],
+                                    ENT_QUOTES,
+                                    'UTF-8'
+                                ) ?>"
+                            >
 
-                    <button type="submit" name="actualizar" value="Actualizar">
-                        Guardar cambios
-                    </button>
+                            <button
+                                type="submit"
+                                name="actualizar"
+                                value="Actualizar"
+                            >
+                                Guardar cambios
+                            </button>
 
-                <?php else: ?>
+                        <?php else: ?>
 
-                    <button type="submit" name="registrar" value="Registrar">
-                        Agendar cita
-                    </button>
+                            <button
+                                type="submit"
+                                name="registrar"
+                                value="Registrar"
+                            >
+                                Agendar cita
+                            </button>
 
-                <?php endif; ?>
+                        <?php endif; ?>
 
-                <a href="calendario.php" class="button cancel-button">
-                    Cancelar
-                </a>
-
-            </div>
-
-                    </fieldset>
-
+                        <a href="calendario.php" class="button cancel-button">
+                            Cancelar
+                        </a>
+                    </div>
+                </fieldset>
             </form>
-
         </div>
-
     </main>
 
     <footer class="site-footer">
-        <p>&copy; 2026 Brote psique. Todos los derechos reservados.</p>
+        <p>
+            &copy; 2026 Brote psique. Todos los derechos reservados.
+        </p>
     </footer>
 
 </body>

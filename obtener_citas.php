@@ -1,12 +1,22 @@
 
 <?php
 
+session_start();
+
 require_once __DIR__ . '/Data/Conexion.php';
 
 header('Content-Type: application/json; charset=utf-8');
 
-// Zona horaria de Monterrey
 date_default_timezone_set('America/Monterrey');
+
+// Comprobar que exista una sesión activa
+if (!isset($_SESSION['usuario'])) {
+    http_response_code(401);
+    echo json_encode([
+        'error' => 'Debes iniciar sesión.'
+    ]);
+    exit();
+}
 
 try {
 
@@ -15,19 +25,60 @@ try {
     // =====================================
 
     $db = Conexion::conectar();
-    $coleccion = $db->citas;
+
+    $coleccionUsuarios = $db->usuarios;
+    $coleccionCitas = $db->citas;
+
+    // =====================================
+    // 2. IDENTIFICAR AL USUARIO LOGUEADO
+    // =====================================
+
+    $nombreUsuario = $_SESSION['usuario'];
+
+    $documentoUsuario = $coleccionUsuarios->findOne([
+        'usuarios.usuario' => $nombreUsuario
+    ]);
+
+    if (!$documentoUsuario) {
+        throw new Exception('Usuario no encontrado.');
+    }
+
+    $usuarioEncontrado = null;
+
+    foreach ($documentoUsuario['usuarios'] as $usuario) {
+
+        if ($usuario['usuario'] === $nombreUsuario) {
+            $usuarioEncontrado = $usuario;
+            break;
+        }
+
+    }
+
+    if (!$usuarioEncontrado) {
+        throw new Exception('No se encontraron los datos del usuario.');
+    }
+
+    $idUsuario = $usuarioEncontrado['id'];
+
+    // =====================================
+    // 3. CONSULTAR SOLAMENTE SUS CITAS
+    // =====================================
+
+    $filtroUsuario = [
+        'id_usuario' => $idUsuario
+    ];
 
     $zonaHoraria = new DateTimeZone('America/Monterrey');
 
-    // Fecha y hora actuales
     $ahora = new DateTimeImmutable('now', $zonaHoraria);
 
-
     // =====================================
-    // 2. REVISAR ESTADOS DE LAS CITAS
+    // 4. ACTUALIZAR ESTADOS DE SUS CITAS
     // =====================================
 
-    $resultadoRevision = $coleccion->find([]);
+    $resultadoRevision = $coleccionCitas->find(
+        $filtroUsuario
+    );
 
     foreach ($resultadoRevision as $cita) {
 
@@ -35,12 +86,10 @@ try {
         $hora = $cita['hora'] ?? '';
         $estadoActual = $cita['estado'] ?? 'pendiente';
 
-        // No modificar citas canceladas
         if ($estadoActual === 'cancelada') {
             continue;
         }
 
-        // Validar formato de fecha y hora
         if (
             !preg_match('/^\d{4}-\d{2}-\d{2}$/', $fecha) ||
             !preg_match('/^\d{2}:\d{2}(:\d{2})?$/', $hora)
@@ -48,7 +97,6 @@ try {
             continue;
         }
 
-        // Construir fecha y hora de la cita
         $hora = substr($hora, 0, 5);
 
         $fechaHoraTexto = $fecha . ' ' . $hora;
@@ -59,7 +107,6 @@ try {
             $zonaHoraria
         );
 
-        // Comprobar que la fecha sea válida
         if (
             !$fechaHoraCita ||
             $fechaHoraCita->format('Y-m-d H:i') !== $fechaHoraTexto
@@ -67,53 +114,34 @@ try {
             continue;
         }
 
-
-        // =====================================
-        // 3. DETERMINAR EL ESTADO CORRECTO
-        // =====================================
-
-        if ($fechaHoraCita < $ahora) {
-
-            $nuevoEstado = 'completada';
-
-        } else {
-
-            $nuevoEstado = 'pendiente';
-
-        }
-
-
-        // =====================================
-        // 4. ACTUALIZAR SI ES NECESARIO
-        // =====================================
+        $nuevoEstado = ($fechaHoraCita < $ahora)
+            ? 'completada'
+            : 'pendiente';
 
         if ($estadoActual !== $nuevoEstado) {
 
-            $coleccion->updateOne(
-
+            $coleccionCitas->updateOne(
                 [
-                    '_id' => $cita['_id']
+                    '_id' => $cita['_id'],
+                    'id_usuario' => $idUsuario
                 ],
-
                 [
                     '$set' => [
                         'estado' => $nuevoEstado
                     ]
                 ]
-
             );
 
         }
 
     }
 
-
     // =====================================
-    // 5. CONSULTAR TODAS LAS CITAS
+    // 5. OBTENER SOLAMENTE SUS CITAS
     // =====================================
 
-    $resultado = $coleccion->find(
-        [],
+    $resultado = $coleccionCitas->find(
+        $filtroUsuario,
         [
             'sort' => [
                 'fecha' => 1,
@@ -138,16 +166,14 @@ try {
 
     }
 
-
     // =====================================
-    // 6. ENVIAR CITAS EN FORMATO JSON
+    // 6. ENVIAR RESPUESTA JSON
     // =====================================
 
     echo json_encode(
         $citas,
         JSON_UNESCAPED_UNICODE
     );
-
 
 } catch (Throwable $e) {
 

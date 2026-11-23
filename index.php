@@ -1,26 +1,22 @@
+
 <?php
 session_start();
-$esEspecialista = false;
 
-// Si hay una sesión activa, leemos el JSON para comprobar su rol
-if (isset($_SESSION['usuario'])) {
-    $usuarioLogueado = $_SESSION['usuario'];
-    $archivoJson = 'datos.json';
-    
-    if (file_exists($archivoJson)) {
-        $jsonData = file_get_contents($archivoJson);
-        $data = json_decode($jsonData, true);
-        
-        foreach ($data['usuarios'] as $user) {
-            if ($user['usuario'] === $usuarioLogueado) {
-                // Comprobamos si el rol es '1' (Especialista)
-                $esEspecialista = (isset($user['rol']) && $user['rol'] == '1');
-                break;
-            }
-        }
-    }
+
+
+// Comprobar si el usuario inició sesión
+if (!isset($_SESSION['id_usuario'])) {
+    header("Location: login.html");
+    exit();
 }
+
+// Obtener el rol desde la sesión
+$esEspecialista = (
+    isset($_SESSION['rol']) &&
+    $_SESSION['rol'] == '1'
+);
 ?>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>

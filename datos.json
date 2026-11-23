@@ -27,6 +27,20 @@
             "estado": "1",
             "rol": "0",
             "avatar": "foto_perfil\/default.png"
+        },
+        {
+            "id": 1795410917,
+            "nombre": "Gabriel",
+            "apellido_paterno": "Gonzalez",
+            "apellido_materno": "Oliva",
+            "usuario": "toon",
+            "email": "toon4@hotmail.com",
+            "password": "$2y$12$\/D4x8cRSwVQWIMlIk\/v6bOaijM0E6fdhccsCWwhbvKxdTyupV1ura",
+            "fecha_nacimiento": "2006-08-01",
+            "genero": "0",
+            "estado": "0",
+            "rol": "0",
+            "avatar": "foto_perfil\/default.png"
         }
     ],
     "citas": []
