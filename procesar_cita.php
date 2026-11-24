@@ -52,7 +52,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
 
         if (!$usuarioEncontrado) {
-            throw new Exception("No se encontraron los datos del usuario.");
+            throw new Exception(
+                "No se encontraron los datos del usuario."
+            );
         }
 
         // Obtener ID del usuario
@@ -97,29 +99,85 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             )
         ) {
 
-            throw new Exception("Los datos de la cita no son válidos.");
+            throw new Exception(
+                "Los datos de la cita no son válidos."
+            );
 
         }
 
-        // Validar fecha real
-        $fechaValidada = DateTime::createFromFormat('!Y-m-d', $fecha);
+        // =====================================
+        // 6. VALIDAR FECHA REAL
+        // =====================================
+
+        $fechaValidada = DateTime::createFromFormat(
+            '!Y-m-d',
+            $fecha
+        );
 
         if (
             !$fechaValidada ||
             $fechaValidada->format('Y-m-d') !== $fecha
         ) {
 
-            throw new Exception("La fecha seleccionada no es válida.");
+            throw new Exception(
+                "La fecha seleccionada no es válida."
+            );
 
-        }
-
-        // No permitir fechas anteriores al día actual
-        if ($fecha < date('Y-m-d')) {
-            throw new Exception("No puedes seleccionar una fecha pasada.");
         }
 
         // =====================================
-        // 6. PREPARAR DATOS DE LA CITA
+        // 7. VALIDAR FECHA Y HORA
+        // =====================================
+
+        // Zona horaria de México
+        $zonaHoraria = new DateTimeZone(
+            'America/Mexico_City'
+        );
+
+        // Obtener fecha y hora actuales
+        $ahora = new DateTimeImmutable(
+            'now',
+            $zonaHoraria
+        );
+
+        // Obtener fecha actual
+        $fechaActual = $ahora->format('Y-m-d');
+
+        // No permitir fechas anteriores al día actual
+        if ($fecha < $fechaActual) {
+
+            throw new Exception(
+                "No puedes seleccionar una fecha pasada."
+            );
+
+        }
+
+        // Crear fecha y hora completas de la cita
+        $fechaHoraCita = DateTimeImmutable::createFromFormat(
+            '!Y-m-d H:i',
+            $fecha . ' ' . $hora,
+            $zonaHoraria
+        );
+
+        if (!$fechaHoraCita) {
+
+            throw new Exception(
+                "No se pudo validar la fecha y hora."
+            );
+
+        }
+
+        // No permitir horarios que ya pasaron
+        if ($fechaHoraCita <= $ahora) {
+
+            throw new Exception(
+                "No puedes agendar o modificar una cita en un horario que ya pasó."
+            );
+
+        }
+
+        // =====================================
+        // 8. PREPARAR DATOS DE LA CITA
         // =====================================
 
         $datosCita = [
@@ -139,7 +197,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         ];
 
         // =====================================
-        // 7. COMPROBAR SI ES MODIFICACIÓN
+        // 9. COMPROBAR SI ES MODIFICACIÓN
         // =====================================
 
         if (!empty($idCita)) {
@@ -156,7 +214,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $objectId = new MongoDB\BSON\ObjectId($idCita);
 
             // =====================================
-            // 8. ACTUALIZAR SOLAMENTE SU PROPIA CITA
+            // 10. ACTUALIZAR SOLAMENTE SU PROPIA CITA
             // =====================================
 
             $resultado = $coleccion->updateOne(
@@ -175,7 +233,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // Comprobar si existe y pertenece al usuario
             if ($resultado->getMatchedCount() === 1) {
 
-                header("Location: calendario.php?modificacion=exitosa");
+                header(
+                    "Location: calendario.php?modificacion=exitosa"
+                );
+
                 exit();
 
             } else {
@@ -189,7 +250,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         } else {
 
             // =====================================
-            // 9. REGISTRAR UNA CITA NUEVA
+            // 11. REGISTRAR UNA CITA NUEVA
             // =====================================
 
             // Guardar propietario de la cita
@@ -205,37 +266,62 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 new MongoDB\BSON\UTCDateTime();
 
             // =====================================
-            // 10. INSERTAR EN MONGODB
+            // 12. INSERTAR EN MONGODB
             // =====================================
 
             $resultado = $coleccion->insertOne($datosCita);
 
             if ($resultado->getInsertedCount() === 1) {
 
-                header("Location: calendario.php?registro=exitoso");
+                header(
+                    "Location: calendario.php?registro=exitoso"
+                );
+
                 exit();
 
             } else {
 
-                throw new Exception("No se pudo guardar la cita.");
+                throw new Exception(
+                    "No se pudo guardar la cita."
+                );
 
             }
 
         }
 
-    } catch (Throwable $e) {
+   
+   } catch (Throwable $e) {
 
-        http_response_code(400);
+    // Identificar el tipo de error
+    $tipoError = 'datos';
 
-        echo "Error al procesar la cita: " .
-
-            htmlspecialchars(
-                $e->getMessage(),
-                ENT_QUOTES,
-                'UTF-8'
-            );
-
+    if (
+        strpos(
+            $e->getMessage(),
+            'horario que ya pasó'
+        ) !== false
+    ) {
+        $tipoError = 'horario';
     }
+
+    // Si se estaba modificando una cita,
+    // conservar su identificador.
+    $idCita = $_POST['id_cita'] ?? '';
+
+    $url = 'citas.php?error=' . urlencode($tipoError);
+
+    if (
+        !empty($idCita) &&
+        preg_match('/^[a-fA-F0-9]{24}$/', $idCita)
+    ) {
+        $url .= '&id=' . urlencode($idCita);
+    }
+
+    header("Location: $url");
+    exit();
+
+}
+
 
 } else {
 

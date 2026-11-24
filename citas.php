@@ -2,6 +2,27 @@
 <?php
 
 session_start();
+// =====================================
+// MENSAJES DE ERROR
+// =====================================
+
+$mensajeError = '';
+
+if (isset($_GET['error'])) {
+
+    $errores = [
+        'horario' => 'No puedes agendar o modificar una cita en un horario que ya pasó.',
+        'fecha' => 'La fecha seleccionada no es válida.',
+        'datos' => 'Los datos de la cita no son válidos.'
+    ];
+
+    $tipoError = $_GET['error'];
+
+    if (isset($errores[$tipoError])) {
+        $mensajeError = $errores[$tipoError];
+    }
+
+}
 
 require_once __DIR__ . '/Data/Conexion.php';
 
@@ -99,13 +120,21 @@ if (isset($_GET['id'])) {
 // 4. OBTENER VALORES PARA EL FORMULARIO
 // =====================================
 
-$fechaSeleccionada = $citaEditar
-    ? $citaEditar['fecha']
-    : '';
 
-$horaSeleccionada = $citaEditar
-    ? $citaEditar['hora']
-    : '';
+$fechaSeleccionada = $datosError['fecha']
+    ?? ($citaEditar ? $citaEditar['fecha'] : '');
+
+$horaSeleccionada = $datosError['hora']
+    ?? ($citaEditar ? $citaEditar['hora'] : '');
+
+$especialistaSeleccionado = $datosError['id_especialista']
+    ?? ($citaEditar ? $citaEditar['id_especialista'] : '');
+
+$modalidadSeleccionada = $datosError['modalidad']
+    ?? ($citaEditar ? $citaEditar['modalidad'] : '');
+
+$motivoSeleccionado = $datosError['motivo']
+    ?? ($citaEditar ? ($citaEditar['motivo'] ?? '') : '');
 
 $horarios = [
     '10:00' => '10:00 AM',
@@ -121,11 +150,15 @@ $meses = [
     'septiembre', 'octubre', 'noviembre', 'diciembre'
 ];
 
+// La fecha puede venir de una cita editada o de un intento fallido.
 $fechaTexto = '';
 
 if ($fechaSeleccionada !== '') {
 
-    $fechaObjeto = DateTime::createFromFormat('!Y-m-d', $fechaSeleccionada);
+    $fechaObjeto = DateTime::createFromFormat(
+        '!Y-m-d',
+        $fechaSeleccionada
+    );
 
     if ($fechaObjeto) {
 
@@ -217,6 +250,17 @@ if ($fechaSeleccionada !== '') {
                 id="form-cita"
             >
 
+<?php if ($mensajeError !== ''): ?>
+
+    <p class="form-error" role="alert">
+        <?= htmlspecialchars(
+            $mensajeError,
+            ENT_QUOTES,
+            'UTF-8'
+        ) ?>
+    </p>
+
+<?php endif; ?>
                 <!-- ESPECIALISTA -->
 
                 <fieldset>

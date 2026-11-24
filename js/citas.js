@@ -19,6 +19,9 @@ const textoFecha = document.getElementById('fecha-elegida');
 const errorFecha = document.getElementById('fecha-error');
 const formulario = document.getElementById('form-cita');
 
+// NUEVO: obtener el selector de horarios.
+const campoHora = document.getElementById('hora');
+
 const hoy = new Date();
 hoy.setHours(0, 0, 0, 0);
 
@@ -41,6 +44,128 @@ if (fechaInicial) {
 
 function pad(n) {
     return String(n).padStart(2, '0');
+}
+
+
+function actualizarHorarios() {
+
+    const horarios = document.querySelectorAll(
+        'input[name="hora"]'
+    );
+
+    if (!campoFecha.value) return;
+
+    const ahora = new Date();
+
+    const fechaActual =
+        ahora.getFullYear() + '-' +
+        pad(ahora.getMonth() + 1) + '-' +
+        pad(ahora.getDate());
+
+    horarios.forEach(radio => {
+
+        let deshabilitar = false;
+
+        if (campoFecha.value < fechaActual) {
+
+            deshabilitar = true;
+
+        } else if (campoFecha.value === fechaActual) {
+
+            const [horas, minutos] = radio.value.split(':');
+
+            const horaSeleccionada = new Date();
+
+            horaSeleccionada.setHours(
+                Number(horas),
+                Number(minutos),
+                0,
+                0
+            );
+
+            if (horaSeleccionada <= ahora) {
+                deshabilitar = true;
+            }
+
+        }
+
+        radio.disabled = deshabilitar;
+
+        if (deshabilitar && radio.checked) {
+            radio.checked = false;
+        }
+
+    });
+
+}
+
+
+// =====================================
+// NUEVO: ACTUALIZAR HORARIOS DISPONIBLES
+// =====================================
+
+function actualizarHorarios() {
+
+    if (!campoHora || !campoFecha.value) return;
+
+    const ahora = new Date();
+
+    const fechaActual =
+        ahora.getFullYear() + '-' +
+        pad(ahora.getMonth() + 1) + '-' +
+        pad(ahora.getDate());
+
+    const fechaSeleccionada = campoFecha.value;
+
+    Array.from(campoHora.options).forEach(opcion => {
+
+        if (!opcion.value) return;
+
+        let deshabilitar = false;
+
+        // No permitir fechas anteriores.
+        if (fechaSeleccionada < fechaActual) {
+
+            deshabilitar = true;
+
+        }
+
+        // Si se selecciona el día actual,
+        // comprobar si la hora ya pasó.
+        else if (fechaSeleccionada === fechaActual) {
+
+            const [horas, minutos] = opcion.value.split(':');
+
+            const horaSeleccionada = new Date();
+
+            horaSeleccionada.setHours(
+                Number(horas),
+                Number(minutos),
+                0,
+                0
+            );
+
+            if (horaSeleccionada <= ahora) {
+
+                deshabilitar = true;
+
+            }
+
+        }
+
+        opcion.disabled = deshabilitar;
+
+    });
+
+    // Limpiar el horario si dejó de estar disponible.
+    const opcionSeleccionada = campoHora.selectedOptions[0];
+
+    if (opcionSeleccionada && opcionSeleccionada.disabled) {
+
+        campoHora.value = '';
+
+    }
+
 }
 
 function dibujarCalendario() {
@@ -129,6 +254,9 @@ function elegirDia(fecha, objetoFecha) {
         MESES[objetoFecha.getMonth()].toLowerCase() +
         ' de ' + objetoFecha.getFullYear();
 
+    // NUEVO: actualizar horarios al elegir otro día.
+    actualizarHorarios();
+
     dibujarCalendario();
 
 }
@@ -174,10 +302,32 @@ formulario.addEventListener('submit', e => {
             block: 'center'
         });
 
+        return;
+
+    }
+
+    // NUEVO: actualizar horarios antes del envío.
+    actualizarHorarios();
+
+    // Comprobar que se haya seleccionado un horario válido.
+    if (
+        !campoHora.value ||
+        campoHora.selectedOptions[0]?.disabled
+    ) {
+
+        e.preventDefault();
+
+        alert('Selecciona un horario disponible para continuar.');
+
     }
 
 });
 
 // Dibujar calendario.
-
 dibujarCalendario();
+
+// NUEVO: comprobar horarios al abrir el formulario.
+actualizarHorarios();
+
+// NUEVO: actualizar horarios si el usuario deja abierta la página.
+setInterval(actualizarHorarios, 30000);
