@@ -92,7 +92,7 @@ $esEspecialista = (isset($datosUsuario['rol']) && $datosUsuario['rol'] == '1');
         <nav class="navbar">
             <ul>
                 <li><a href="index.php">Página principal</a></li>
-                <li><a href="citas.html">Agendar citas</a></li>
+                <li><a href="citas.php">Agendar citas</a></li>
                 <li><a href="calendario.php">Calendario de citas</a></li>
                 <li><a href="foro.html">Foro</a></li>
                 <li><a href="login.html" title="Cerrar sesión">Cerrar sesión</a></li>
