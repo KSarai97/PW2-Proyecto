@@ -2,8 +2,18 @@
 <?php
 
 session_start();
+
 // =====================================
-// MENSAJES DE ERROR
+// 1. RECUPERAR DATOS DE UN INTENTO FALLIDO
+// =====================================
+
+$datosError = $_SESSION['datosError'] ?? [];
+
+// Eliminar los datos temporales de la sesión
+unset($_SESSION['datosError']);
+
+// =====================================
+// 2. MENSAJES DE ERROR
 // =====================================
 
 $mensajeError = '';
@@ -27,7 +37,7 @@ if (isset($_GET['error'])) {
 require_once __DIR__ . '/Data/Conexion.php';
 
 // =====================================
-// 1. COMPROBAR SESIÓN
+// 3. COMPROBAR SESIÓN
 // =====================================
 
 if (!isset($_SESSION['usuario'])) {
@@ -36,7 +46,7 @@ if (!isset($_SESSION['usuario'])) {
 }
 
 // =====================================
-// 2. ESPECIALISTAS DISPONIBLES
+// 4. ESPECIALISTAS DISPONIBLES
 // =====================================
 
 $especialistas = [
@@ -47,7 +57,7 @@ $especialistas = [
 $citaEditar = null;
 
 // =====================================
-// 3. COMPROBAR SI SE QUIERE EDITAR
+// 5. COMPROBAR SI SE QUIERE EDITAR
 // =====================================
 
 if (isset($_GET['id'])) {
@@ -117,9 +127,8 @@ if (isset($_GET['id'])) {
 }
 
 // =====================================
-// 4. OBTENER VALORES PARA EL FORMULARIO
+// 6. OBTENER VALORES PARA EL FORMULARIO
 // =====================================
-
 
 $fechaSeleccionada = $datosError['fecha']
     ?? ($citaEditar ? $citaEditar['fecha'] : '');
@@ -136,6 +145,10 @@ $modalidadSeleccionada = $datosError['modalidad']
 $motivoSeleccionado = $datosError['motivo']
     ?? ($citaEditar ? ($citaEditar['motivo'] ?? '') : '');
 
+// =====================================
+// 7. HORARIOS DISPONIBLES
+// =====================================
+
 $horarios = [
     '10:00' => '10:00 AM',
     '11:00' => '11:00 AM',
@@ -144,13 +157,16 @@ $horarios = [
     '17:00' => '05:00 PM'
 ];
 
+// =====================================
+// 8. FORMATEAR FECHA SELECCIONADA
+// =====================================
+
 $meses = [
     'enero', 'febrero', 'marzo', 'abril',
     'mayo', 'junio', 'julio', 'agosto',
     'septiembre', 'octubre', 'noviembre', 'diciembre'
 ];
 
-// La fecha puede venir de una cita editada o de un intento fallido.
 $fechaTexto = '';
 
 if ($fechaSeleccionada !== '') {
@@ -250,17 +266,22 @@ if ($fechaSeleccionada !== '') {
                 id="form-cita"
             >
 
-<?php if ($mensajeError !== ''): ?>
+                <!-- MENSAJE DE ERROR -->
 
-    <p class="form-error" role="alert">
-        <?= htmlspecialchars(
-            $mensajeError,
-            ENT_QUOTES,
-            'UTF-8'
-        ) ?>
-    </p>
+                <?php if ($mensajeError !== ''): ?>
 
-<?php endif; ?>
+                    <p class="form-error" role="alert">
+
+                        <?= htmlspecialchars(
+                            $mensajeError,
+                            ENT_QUOTES,
+                            'UTF-8'
+                        ) ?>
+
+                    </p>
+
+                <?php endif; ?>
+
                 <!-- ESPECIALISTA -->
 
                 <fieldset>
@@ -278,16 +299,18 @@ if ($fechaSeleccionada !== '') {
                         >
 
                             <option value="" disabled
-                                <?= !$citaEditar ? 'selected' : '' ?>>
+                                <?= $especialistaSeleccionado === ''
+                                    ? 'selected' : '' ?>>
+
                                 Elige un profesional
+
                             </option>
 
                             <?php foreach ($especialistas as $id => $nombre): ?>
 
                                 <option
                                     value="<?= $id ?>"
-                                    <?= $citaEditar &&
-                                        $citaEditar['id_especialista'] == $id
+                                    <?= (string)$especialistaSeleccionado === (string)$id
                                         ? 'selected' : '' ?>
                                 >
 
@@ -316,8 +339,7 @@ if ($fechaSeleccionada !== '') {
                         >
 
                             <option value="presencial"
-                                <?= $citaEditar &&
-                                    $citaEditar['modalidad'] === 'presencial'
+                                <?= $modalidadSeleccionada === 'presencial'
                                     ? 'selected' : '' ?>>
 
                                 Presencial (Consultorio)
@@ -325,8 +347,7 @@ if ($fechaSeleccionada !== '') {
                             </option>
 
                             <option value="online"
-                                <?= $citaEditar &&
-                                    $citaEditar['modalidad'] === 'online'
+                                <?= $modalidadSeleccionada === 'online'
                                     ? 'selected' : '' ?>>
 
                                 En línea (Videollamada)
@@ -399,9 +420,15 @@ if ($fechaSeleccionada !== '') {
                             id="fecha-elegida"
                             aria-live="polite"
                         >
+
                             <?= $fechaTexto !== ''
-                                ? htmlspecialchars($fechaTexto, ENT_QUOTES, 'UTF-8')
+                                ? htmlspecialchars(
+                                    $fechaTexto,
+                                    ENT_QUOTES,
+                                    'UTF-8'
+                                )
                                 : 'Aún no eliges un día.' ?>
+
                         </p>
 
                     </div>
@@ -418,22 +445,36 @@ if ($fechaSeleccionada !== '') {
 
                         <?php foreach ($horarios as $hora => $etiqueta): ?>
 
-                            <label class="time-option">
+    <label class="time-option">
 
-                                <input
-                                    type="radio"
-                                    name="hora"
-                                    value="<?= $hora ?>"
-                                    <?= $horaSeleccionada === $hora
-                                        ? 'checked' : '' ?>
-                                    required
-                                >
+        <input
+            type="radio"
+            name="hora"
+            value="<?= htmlspecialchars($hora, ENT_QUOTES, 'UTF-8') ?>"
+            <?= $horaSeleccionada === $hora ? 'checked' : '' ?>
+            required
+        >
 
-                                <span><?= $etiqueta ?></span>
+        <span>
+            <?= htmlspecialchars($etiqueta, ENT_QUOTES, 'UTF-8') ?>
 
-                            </label>
+            <?php if (
+                $mensajeError ===
+                'No puedes agendar o modificar una cita en un horario que ya pasó.'
+                && $horaSeleccionada === $hora
+            ): ?>
 
-                        <?php endforeach; ?>
+                <small class="hora-no-disponible">
+                    — No disponible
+                </small>
+
+            <?php endif; ?>
+
+        </span>
+
+    </label>
+
+<?php endforeach; ?>
 
                     </div>
 
@@ -456,17 +497,17 @@ if ($fechaSeleccionada !== '') {
                             name="motivo"
                             rows="3"
                             placeholder="Cuéntanos lo que quieras. Si prefieres, déjalo en blanco y háblalo en la sesión."
-                        ><?= $citaEditar
-                            ? htmlspecialchars(
-                                $citaEditar['motivo'] ?? '',
-                                ENT_QUOTES,
-                                'UTF-8'
-                            )
-                            : '' ?></textarea>
+                        ><?= htmlspecialchars(
+                            $motivoSeleccionado,
+                            ENT_QUOTES,
+                            'UTF-8'
+                        ) ?></textarea>
 
                     </div>
 
                 </fieldset>
+
+                <!-- ERROR DE FECHA -->
 
                 <p
                     class="form-error"

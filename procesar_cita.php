@@ -289,8 +289,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         }
 
-   
-   } catch (Throwable $e) {
+ } catch (Throwable $e) {
 
     // Identificar el tipo de error
     $tipoError = 'datos';
@@ -302,10 +301,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         ) !== false
     ) {
         $tipoError = 'horario';
+    } elseif (
+        strpos(
+            $e->getMessage(),
+            'fecha'
+        ) !== false
+    ) {
+        $tipoError = 'fecha';
     }
 
-    // Si se estaba modificando una cita,
-    // conservar su identificador.
+    // Conservar los datos enviados por el usuario
+    $_SESSION['datosError'] = [
+    'fecha' => $_POST['fecha'] ?? '',
+    'hora' => $_POST['hora'] ?? '',
+    'id_especialista' => $_POST['id_especialista'] ?? '',
+    'modalidad' => $_POST['modalidad'] ?? '',
+    'motivo' => $_POST['motivo'] ?? ''
+];
+
+    // Conservar el identificador si se modifica una cita
     $idCita = $_POST['id_cita'] ?? '';
 
     $url = 'citas.php?error=' . urlencode($tipoError);

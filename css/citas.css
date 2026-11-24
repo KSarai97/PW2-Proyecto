@@ -346,3 +346,53 @@ legend {
         width: fit-content;
     }
 }
+
+/* =====================================
+   HORARIO QUE YA PASÓ
+===================================== */
+
+.time-option-error span {
+    background-color: #f5d6d2;
+    border: 1px solid #c65d52;
+    color: #9b3028;
+}
+
+.time-option-error:hover span {
+    background-color: #edc1bb;
+}
+
+/* Opción seleccionada normalmente: verde */
+.time-option input:checked + span {
+    background-color: var(--salvia-oscuro);
+    color: #ffffff;
+    border-color: var(--salvia-oscuro);
+}
+
+/* Opción que produjo un error: rojo */
+.time-option-error span {
+    background-color: #d9534f !important;
+    border: 1px solid #b52b27 !important;
+    color: #ffffff !important;
+}
+
+/* Mantener el rojo aunque esté seleccionada */
+.time-option-error input:checked + span {
+    background-color: #d9534f !important;
+    border-color: #b52b27 !important;
+    color: #ffffff !important;
+}
+
+/* Efecto hover */
+.time-option-error:hover span {
+    background-color: #c9302c !important;
+}
+
+/* Mensaje de horario no disponible */
+
+.hora-no-disponible {
+    display: block;
+    margin-top: 4px;
+    color: #b5705f;
+    font-size: 12px;
+    font-weight: 700;
+}
